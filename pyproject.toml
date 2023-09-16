@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "efrms"
+version = "0.1.0"
+description = "Eurofurence Radio Management System"
+authors = ["Niels Gandraß <niels@gandrass.de>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.2.5"
+djangorestframework = "^3.14.0"
+whitenoise = "^6.5.0"
+gunicorn = "^21.2.0"
+psycopg-binary = "^3.1.10"
+django-environ = "^0.11.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
