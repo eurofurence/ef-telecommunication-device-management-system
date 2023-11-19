@@ -45,6 +45,7 @@ axios.interceptors.response.use((response) => {
 
 export const useAuthStore = defineStore({
     id: 'auth',
+
     state: () => {
         // Restore the access token from localStorage, if it exists
         if (localStorage.getItem('auth.accessToken') !== null) {
@@ -53,19 +54,30 @@ export const useAuthStore = defineStore({
 
         return {
             /** The access token, used with every API request */
-            accessToken: localStorage.getItem('auth.accessToken'),
+            _accessToken: localStorage.getItem('auth.accessToken'),
 
             /** The refresh token, used to refresh the access token */
-            refreshToken: localStorage.getItem('auth.refreshToken'),
+            _refreshToken: localStorage.getItem('auth.refreshToken'),
+
+            /** The username of the currently logged-in user */
+            _username: localStorage.getItem('auth.username'),
         };
     },
+
     getters: {
         /**
          * Returns true if the user is logged in, false otherwise.
          * @param state
          */
-        isLoggedIn: state => state.refreshToken !== null,
+        isLoggedIn: state => state._refreshToken !== null,
+
+        /**
+         * Returns the username of the currently logged-in user.
+         * @param state
+         */
+        username: state => state._username,
     },
+
     actions: {
         /**
          * Sets the access and refresh tokens and persists them to local storage.
@@ -73,13 +85,15 @@ export const useAuthStore = defineStore({
          *
          * @param accessToken
          * @param refreshToken
+         * @param username
          */
-        setAuthTokens(accessToken: string | null, refreshToken: string | null) {
-            this.accessToken = accessToken;
-            this.refreshToken = refreshToken;
+        setAuthTokens(accessToken: string | null, refreshToken: string | null, username: string | null) {
+            this._accessToken = accessToken;
+            this._refreshToken = refreshToken;
+            this._username = username;
 
-            if (this.accessToken !== null) {
-                axios.defaults.headers['Authorization'] = `Bearer ${this.accessToken}`;
+            if (this._accessToken !== null) {
+                axios.defaults.headers['Authorization'] = `Bearer ${this._accessToken}`;
             } else {
                 axios.defaults.headers['Authorization'] = null;
             }
@@ -91,16 +105,22 @@ export const useAuthStore = defineStore({
          * Persists the access and refresh tokens to localStorage.
          */
         persist() {
-            if (this.refreshToken !== null) {
-                localStorage.setItem('auth.refreshToken', this.refreshToken);
+            if (this._refreshToken !== null) {
+                localStorage.setItem('auth.refreshToken', this._refreshToken);
             } else {
                 localStorage.removeItem('auth.refreshToken');
             }
 
-            if (this.accessToken !== null) {
-                localStorage.setItem('auth.accessToken', this.accessToken);
+            if (this._accessToken !== null) {
+                localStorage.setItem('auth.accessToken', this._accessToken);
             } else {
                 localStorage.removeItem('auth.accessToken');
+            }
+
+            if (this._username !== null) {
+                localStorage.setItem('auth.username', this._username);
+            } else {
+                localStorage.removeItem('auth.username');
             }
         },
 
@@ -115,7 +135,7 @@ export const useAuthStore = defineStore({
                 username: username,
                 password: password,
             }).then((response) => {
-                this.setAuthTokens(response.data.access, response.data.refresh);
+                this.setAuthTokens(response.data.access, response.data.refresh, username);
             }).catch((error) => {
                 throw error;
             })
@@ -125,7 +145,7 @@ export const useAuthStore = defineStore({
          * Logs out the user.
          */
         logout() {
-            this.setAuthTokens(null, null);
+            this.setAuthTokens(null, null, null);
         },
 
         /**
@@ -133,9 +153,9 @@ export const useAuthStore = defineStore({
          */
         async refresh() {
              await axios.post(`${import.meta.env.VITE_EFRMS_API_BASE_URL}/token/refresh/`, {
-                refresh: this.refreshToken
+                refresh: this._refreshToken
              }).then((response) => {
-                 this.setAuthTokens(response.data.access, response.data.refresh);
+                 this.setAuthTokens(response.data.access, response.data.refresh, this.username);
              }).catch((error) => {
                 throw error;
              });
