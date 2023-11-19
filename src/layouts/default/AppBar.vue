@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar flat>
+    <v-app-bar >
         <v-app-bar-title>
             <router-link to="/" class="text-decoration-none text-muted">
                 <v-icon icon="mdi-circle-slice-6"/>
@@ -8,8 +8,8 @@
         </v-app-bar-title>
 
         <v-btn v-if="!authStore.isLoggedIn" to="/login" text>Login</v-btn>
-        <router-link v-if="authStore.isLoggedIn" to="/login">
-            <v-avatar color="grey" size="36">
+        <router-link v-if="authStore.isLoggedIn" to="/profile">
+            <v-avatar color="grey" size="36" class="mx-2">
                 <span class="white--text headline">{{authStore.username.slice(0, 2).toUpperCase()}}</span>
             </v-avatar>
         </router-link>
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-    import {useAuthStore} from "@/store/auth";
+import {useAuthStore} from "@/store/auth";
 
-    const authStore = useAuthStore();
+const authStore = useAuthStore();
 </script>
