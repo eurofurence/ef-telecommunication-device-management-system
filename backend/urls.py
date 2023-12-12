@@ -21,10 +21,17 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from backend.views import UserViewSet
+from backend.views import UserViewSet, ItemOwnerViewSet
+from backend.views.radio import RadioDeviceViewSet, RadioDeviceTemplateViewSet, RadioAccessoryViewSet, \
+    RadioAccessoryTemplateViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'item_owners', ItemOwnerViewSet)
+router.register(r'radios', RadioDeviceViewSet)
+router.register(r'radio_templates', RadioDeviceTemplateViewSet)
+router.register(r'radio_accessories', RadioAccessoryViewSet)
+router.register(r'radio_accessories_templates', RadioAccessoryTemplateViewSet)
 
 urlpatterns = [
     # API

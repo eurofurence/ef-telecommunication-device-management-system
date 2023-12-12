@@ -1,5 +1,5 @@
 <template>
-    <h1>Users</h1>
+    <h1>Item Owners</h1>
     <v-data-table-server
         v-model:items-per-page="itemsPerPage"
         :headers="headers"
@@ -30,12 +30,9 @@ const usersStore = useUsersStore();
 export default {
     data: () => ({
         headers: [
-            {key: 'id', title: 'User-ID', align: 'start', sortable: true},
-            {key: 'ef_reg_id', title: 'Reg-ID', align: 'start', sortable: true},
-            {key: 'username', title: 'Username', align: 'start', sortable: true},
-            {key: 'email', title: 'E-Mail', align: 'start', sortable: false},
-            {key: 'ef_security_collar_id', title: 'Collar-ID', align: 'start', sortable: true},
-            {key: 'last_seen', title: 'Last seen', align: 'start', sortable: false},
+            {key: 'id', title: 'Owner-ID', align: 'start', sortable: true},
+            {key: 'shortname', title: 'Shortname', align: 'start', sortable: true},
+            {key: 'name', title: 'Name', align: 'start', sortable: true},
         ],
         search: '',
         serverItems: [],
@@ -47,7 +44,7 @@ export default {
     methods: {
         loadItems({page, itemsPerPage, sortBy, search}) {
             this.loading = true;
-            usersStore.fetchUsersPage(page, itemsPerPage, sortBy, search).then(({items, total}) => {
+            usersStore.fetchItemOwnersPage(page, itemsPerPage, sortBy, search).then(({items, total}) => {
                 this.serverItems = items;
                 this.totalItems = total;
                 this.loading = false;
