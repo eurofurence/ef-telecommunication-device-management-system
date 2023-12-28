@@ -31,7 +31,7 @@ router.register(r'item_owners', ItemOwnerViewSet)
 router.register(r'radios', RadioDeviceViewSet)
 router.register(r'radio_templates', RadioDeviceTemplateViewSet)
 router.register(r'radio_accessories', RadioAccessoryViewSet)
-router.register(r'radio_accessories_templates', RadioAccessoryTemplateViewSet)
+router.register(r'radio_accessory_templates', RadioAccessoryTemplateViewSet)
 
 urlpatterns = [
     # API
