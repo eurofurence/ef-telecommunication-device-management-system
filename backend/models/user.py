@@ -44,3 +44,8 @@ class ItemOwner(models.Model):
         null=False,
         help_text="Short name of the owner"
     )
+
+    def __str__(self):
+        return self.name
+
+
