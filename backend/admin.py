@@ -14,14 +14,14 @@ class ItemOwnerAdmin(admin.ModelAdmin):
     ordering = ['name']
 
 
-@admin.register(item.ItemTemplate, callbox.CallboxTemplate, phone.PhoneTemplate, radio.RadioAccessoryTemplate, radio.RadioDeviceTemplate)
+@admin.register(item.ItemTemplate, callbox.CallboxTemplate, phone.PhoneTemplate, radio.PagerTemplate, radio.RadioAccessoryTemplate, radio.RadioDeviceTemplate)
 class ItemTemplateAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'owner']
     search_fields = ['name', 'description', 'owner']
     ordering = ['name', 'owner']
 
 
-@admin.register(item.Item)
+@admin.register(item.Item, radio.Pager, radio.RadioAccessory)
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'get_owner', 'serialnumber', 'notes', 'handed_out']
     search_fields = ['get_name', 'get_owner', 'serialnumber', 'notes']
@@ -53,20 +53,6 @@ class PhoneAdmin(admin.ModelAdmin):
     @admin.display(description="Name", ordering='template__name')
     def get_name(self, obj):
         return obj.template.name
-
-
-@admin.register(radio.RadioAccessory)
-class RadioAccessoryAdmin(admin.ModelAdmin):
-    list_display = ['get_name', 'get_owner', 'serialnumber', 'notes', 'handed_out']
-    search_fields = ['get_name', 'get_owner', 'serialnumber', 'notes']
-
-    @admin.display(description="Name", ordering='template__name')
-    def get_name(self, obj):
-        return obj.template.name
-
-    @admin.display(description="Owner", ordering='template__owner__name')
-    def get_owner(self, obj):
-        return obj.template.owner.name
 
 
 @admin.register(radio.RadioDevice)

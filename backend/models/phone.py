@@ -17,6 +17,7 @@ class Phone(Item):
         STAFF = 'STAFF', 'Staff'
         SECU = 'SECU', 'Security'
 
+    template = models.ForeignKey(PhoneTemplate, on_delete=models.PROTECT)
     extension = models.CharField(
         max_length=32,
         blank=False,

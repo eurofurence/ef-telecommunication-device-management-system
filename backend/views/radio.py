@@ -30,7 +30,7 @@ class RadioDeviceViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['template__name', 'template__description', 'template__owner', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at', 'callsign']
+    search_fields = ['template__name', 'template__description', 'template__owner__name', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at', 'callsign']
 
 
 class RadioAccessoryTemplateViewSet(viewsets.ModelViewSet):

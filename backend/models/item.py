@@ -31,7 +31,7 @@ class ItemTemplate(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name} ({self.pk})"
+        return f"{self.name} ({self.owner.shortname}) #{self.pk}"
 
 
 class Item(PolymorphicModel):
@@ -39,7 +39,6 @@ class Item(PolymorphicModel):
     Model for all items (e.g., radios, accessories, telephones, ...)
     """
 
-    template = models.ForeignKey(ItemTemplate, on_delete=models.PROTECT)
     notes = models.CharField(
         max_length=512,
         blank=True,
@@ -81,4 +80,4 @@ class Item(PolymorphicModel):
     )
 
     def __str__(self):
-        return f"{self.template.name} ({self.pk})"
+        return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"
