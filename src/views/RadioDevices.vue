@@ -19,7 +19,8 @@ export default {
         itemsTable: {
             headers: [
                 {key: 'id', title: 'Device-ID', align: 'start', sortable: true},
-                {key: 'template', title: 'Template', align: 'start', sortable: true},
+                {key: 'template.name', title: 'Template', align: 'start', sortable: true},
+                {key: 'template.owner.name', title: 'Owner', align: 'start', sortable: true},
                 {key: 'callsign', title: 'Callsign', align: 'start', sortable: true},
                 {key: 'serialnumber', title: 'S/N', align: 'start', sortable: true},
                 {key: 'handed_out', title: 'Status', align: 'start', sortable: true},
@@ -37,6 +38,7 @@ export default {
                 {key: 'id', title: 'Template-ID', align: 'start', sortable: true},
                 {key: 'name', title: 'Name', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
+                {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
             ],
             fetchFunction: itemsStore.fetchRadioTemplatesPage,
             search: '',
