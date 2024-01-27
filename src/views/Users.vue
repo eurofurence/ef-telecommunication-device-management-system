@@ -1,58 +1,36 @@
 <template>
-    <h1>Users</h1>
-    <v-data-table-server
-        v-model:items-per-page="itemsPerPage"
-        :headers="headers"
-        :items-length="totalItems"
-        :items="serverItems"
-        :loading="loading"
-        :search="search"
-        item-value="name"
-        @update:options="loadItems"
-    >
-        <template v-slot:top>
-            <v-text-field
-                v-model="search"
-                label="Search"
-                single-line
-                hide-details
-                clearable
-            ></v-text-field>
-        </template>
-    </v-data-table-server>
+    <ItemTable
+        title="Users"
+        icon="mdi-account-group-outline"
+        :items-table="itemsTable"
+    />
 </template>
 
-<script type="ts">
+<script lang="ts">
 import {useUsersStore} from "@/store/users";
+import ItemTable from "@/components/ItemTable.vue";
 
 const usersStore = useUsersStore();
 
 export default {
+    components: {ItemTable},
     data: () => ({
-        headers: [
-            {key: 'id', title: 'User-ID', align: 'start', sortable: true},
-            {key: 'ef_reg_id', title: 'Reg-ID', align: 'start', sortable: true},
-            {key: 'username', title: 'Username', align: 'start', sortable: true},
-            {key: 'email', title: 'E-Mail', align: 'start', sortable: false},
-            {key: 'ef_security_collar_id', title: 'Collar-ID', align: 'start', sortable: true},
-            {key: 'last_seen', title: 'Last seen', align: 'start', sortable: false},
-        ],
-        search: '',
-        serverItems: [],
-        loading: true,
-        itemsPerPage: 25,
-        totalItems: 0,
-    }),
-
-    methods: {
-        loadItems({page, itemsPerPage, sortBy, search}) {
-            this.loading = true;
-            usersStore.fetchUsersPage(page, itemsPerPage, sortBy, search).then(({items, total}) => {
-                this.serverItems = items;
-                this.totalItems = total;
-                this.loading = false;
-            });
+        itemsTable: {
+            headers: [
+                {key: 'id', title: 'User-ID', align: 'start', sortable: true},
+                {key: 'ef_reg_id', title: 'Reg-ID', align: 'start', sortable: true},
+                {key: 'username', title: 'Username', align: 'start', sortable: true},
+                {key: 'email', title: 'E-Mail', align: 'start', sortable: false},
+                {key: 'ef_security_collar_id', title: 'Collar-ID', align: 'start', sortable: true},
+                {key: 'last_seen', title: 'Last seen', align: 'start', sortable: false},
+            ],
+            fetchFunction: usersStore.fetchUsersPage,
+            search: '',
+            serverItems: [],
+            loading: true,
+            itemsPerPage: 25,
+            totalItems: 0,
         }
-    }
+    }),
 }
 </script>

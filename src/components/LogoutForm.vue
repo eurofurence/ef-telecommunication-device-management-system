@@ -32,7 +32,7 @@
 
 </style>
 
-<script type="ts">
+<script lang="ts">
 import {useAuthStore} from "@/store/auth";
 import router from "@/router";
 
