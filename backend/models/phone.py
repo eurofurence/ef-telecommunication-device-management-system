@@ -8,29 +8,27 @@ class PhoneTemplate(ItemTemplate):
     Model for phone templates.
     """
 
-    class Network(models.TextChoices):
-        STAFF = 'STAFF', 'Staff'
-        SECU = 'SECU', 'Security'
-
-    network = models.CharField(
-        max_length=8,
-        blank=False,
-        null=False,
-        choices=Network.choices,
-        help_text="Network the phone is on"
-    )
-
 
 class Phone(Item):
     """
     Model for phones.
     """
+    class Network(models.TextChoices):
+        STAFF = 'STAFF', 'Staff'
+        SECU = 'SECU', 'Security'
 
     extension = models.CharField(
         max_length=32,
         blank=False,
         null=False,
         help_text="Extension (e.g., call number) of the phone"
+    )
+    network = models.CharField(
+        max_length=8,
+        blank=False,
+        null=False,
+        choices=Network.choices,
+        help_text="Network the phone is on"
     )
     dhcp = models.BooleanField(
         blank=False,

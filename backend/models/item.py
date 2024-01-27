@@ -30,6 +30,9 @@ class ItemTemplate(models.Model):
         help_text="User that owns the items that use this template"
     )
 
+    def __str__(self):
+        return f"{self.name} ({self.pk})"
+
 
 class Item(PolymorphicModel):
     """
@@ -76,3 +79,6 @@ class Item(PolymorphicModel):
         auto_now=True,
         help_text="Date and time when the item was last updated"
     )
+
+    def __str__(self):
+        return f"{self.template.name} ({self.pk})"
