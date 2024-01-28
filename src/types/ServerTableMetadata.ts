@@ -10,9 +10,14 @@ export type ServerTableMetadata = {
         sortable?: boolean;
     }[];
     fetchFunction: Function;
+    expandedRowProps?: {
+        key: string;
+        title: string;
+    }[];
     search: string;
     loading: boolean;
     itemsPerPage: number;
     serverItems?: any[];
     totalItems?: number;
+    selected?: any[];
 }

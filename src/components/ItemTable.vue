@@ -21,17 +21,21 @@
         </template>
 
         <v-card-text>
-            <v-window v-model="tab" direction="vertical">
+            <v-window v-model="tab" direction="horizontal">
                 <v-window-item value="items" v-if="itemsTable">
                     <v-data-table-server
+                        v-model="itemsTableSelected"
                         v-model:items-per-page="itemsTable.itemsPerPage"
                         :headers="itemsTable.headers"
                         :items-length="itemsTable.totalItems"
                         :items="itemsTable.serverItems"
                         :loading="itemsTable.loading"
                         :search="itemsTable.search"
-                        item-value="name"
+                        item-value="id"
                         @update:options="loadItems"
+                        density="comfortable"
+                        show-select
+                        show-expand
                     >
                         <template v-slot:top>
                             <v-text-field
@@ -42,19 +46,51 @@
                                 clearable
                             ></v-text-field>
                         </template>
+
+                        <template v-slot:item.handed_out="{item}">
+                            <v-chip
+                                :color="item.handed_out ? 'error' : 'success'"
+                                text-color="white"
+                            >
+                                {{ item.handed_out ? 'Handed out' : 'Available' }}
+                            </v-chip>
+                        </template>
+
+                        <template v-slot:expanded-row="{ columns, item }">
+                            <tr>
+                                <td :colspan="columns.length">
+                                    <ul v-if="itemsTable.expandedRowProps">
+                                        <li v-for="prop in itemsTable.expandedRowProps">
+                                            {{ prop.title }}: {{ PropUtils.getPropByStringPath(item, prop.key) }}
+                                        </li>
+                                    </ul>
+                                    <v-btn
+                                        color="error"
+                                        @click="console.log('TODO', item)"
+                                    >
+                                        <v-icon left>mdi-trash-can-outline</v-icon>
+                                        Delete
+                                    </v-btn>
+                                </td>
+                            </tr>
+                        </template>
                     </v-data-table-server>
                 </v-window-item>
 
                 <v-window-item value="templates" v-if="templatesTable">
                     <v-data-table-server
+                        v-model="templatesTableSelected"
                         v-model:items-per-page="templatesTable.itemsPerPage"
                         :headers="templatesTable.headers"
                         :items-length="templatesTable.totalItems"
                         :items="templatesTable.serverItems"
                         :loading="templatesTable.loading"
                         :search="templatesTable.search"
-                        item-value="name"
+                        item-value="id"
                         @update:options="loadTempaltes"
+                        density="comfortable"
+                        show-select
+                        show-expand
                     >
                         <template v-slot:top>
                             <v-text-field
@@ -64,6 +100,25 @@
                                 hide-details
                                 clearable
                             ></v-text-field>
+                        </template>
+
+                        <template v-slot:expanded-row="{ columns, item }">
+                            <tr>
+                                <td :colspan="columns.length">
+                                    <ul v-if="templatesTable.expandedRowProps">
+                                        <li v-for="prop in templatesTable.expandedRowProps">
+                                            {{ prop.title }}: {{ PropUtils.getPropByStringPath(item, prop.key) }}
+                                        </li>
+                                    </ul>
+                                    <v-btn
+                                        color="error"
+                                        @click="console.log('TODO', item)"
+                                    >
+                                        <v-icon left>mdi-trash-can-outline</v-icon>
+                                        Delete
+                                    </v-btn>
+                                </td>
+                            </tr>
                         </template>
                     </v-data-table-server>
                 </v-window-item>
@@ -77,8 +132,14 @@ import { defineComponent } from "vue";
 import type { PropType } from "vue";
 
 import type { ServerTableMetadata } from "@/types/ServerTableMetadata";
+import {PropUtils} from "@/classes/util/PropUtils";
 
 export default defineComponent({
+    computed: {
+        PropUtils() {
+            return PropUtils
+        }
+    },
     props: {
         title: {type: String, required: true},
         icon: {type: String, required: false},
@@ -88,6 +149,8 @@ export default defineComponent({
 
     data: () => ({
         tab: 'items',
+        itemsTableSelected: [],
+        templatesTableSelected: [],
     }),
 
     methods: {

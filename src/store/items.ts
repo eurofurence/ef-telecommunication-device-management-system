@@ -100,5 +100,29 @@ export const useItemsStore = defineStore("item", {
         async fetchPhoneTemplatesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/phone_templates/', page, itemsPerPage, sortBy, search);
         },
+
+        /**
+         * Fetches a page of callboxes from the API.
+         *
+         * @param page Number of the page to fetch.
+         * @param itemsPerPage Number of items per page.
+         * @param sortBy Field to sort by.
+         * @param search Search string to filter by.
+         */
+        async fetchCallboxesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
+            return APIUtils.fetchPage('/callboxes/', page, itemsPerPage, sortBy, search);
+        },
+
+        /**
+         * Fetches a page of callbox templates from the API.
+         *
+         * @param page Number of the page to fetch.
+         * @param itemsPerPage Number of items per page.
+         * @param sortBy Field to sort by.
+         * @param search Search string to filter by.
+         */
+        async fetchCallboxTemplatesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
+            return APIUtils.fetchPage('/callbox_templates/', page, itemsPerPage, sortBy, search);
+        },
     },
 })
