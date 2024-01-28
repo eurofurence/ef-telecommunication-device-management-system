@@ -38,6 +38,12 @@ const routes = [
                 meta: { requiresAuth: true },
             },
             {
+                path: 'deployment-map',
+                name: 'Deployment Map',
+                component: () => import('@/views/DeploymentMap.vue'),
+                meta: { requiresAuth: true },
+            },
+            {
                 path: 'bindings/overview',
                 name: 'Bindings Overview',
                 component: () => import('@/views/BindingsOverview.vue'),
