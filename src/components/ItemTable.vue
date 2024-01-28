@@ -56,6 +56,15 @@
                             </v-chip>
                         </template>
 
+                        <template v-slot:item.has_camera="{item}">
+                            <v-chip
+                                :color="item.has_camera ? 'success' : 'error'"
+                                text-color="white"
+                            >
+                                {{ item.has_camera ? 'Yes' : 'No' }}
+                            </v-chip>
+                        </template>
+
                         <template v-slot:expanded-row="{ columns, item }">
                             <tr>
                                 <td :colspan="columns.length">

@@ -1,9 +1,9 @@
 <template>
     <v-app-bar >
         <v-app-bar-title>
-            <router-link to="/" class="text-decoration-none font-weight-medium" style="color: #d900d9">
+            <router-link to="/" class="text-decoration-none font-weight-medium text-black">
                 <v-icon icon="mdi-radio-tower"/>
-                EF-RMS
+                Eurofurence Radio Management System
             </router-link>
         </v-app-bar-title>
 
