@@ -33,7 +33,6 @@ export default {
                 {key: 'dhcp', title: 'DHCP'},
                 {key: 'ip_address', title: 'IP Address'},
                 {key: 'mac_address', title: 'MAC Address'},
-                {key: 'has_camera', title: 'Has Camera'},
                 {key: 'camera_ip_address', title: 'Camera IP Address'},
                 {key: 'camera_mac_address', title: 'Camera MAC Address'},
                 {key: 'created_at', title: 'Created at'},

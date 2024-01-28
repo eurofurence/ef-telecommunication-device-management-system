@@ -70,4 +70,13 @@ export class APIUtils {
         return ret;
     }
 
+    /**
+     * Issues a delete call to the given API path, followed by optional the args
+     * @param apipath API path to query (e.g. '/users/').
+     * @param args Arguments to append to the API path (e.g. '1' for '/users/1').
+     */
+    public static async delete(apipath: string, args: string) {
+        return axios.delete(`${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}${args}`);
+    }
+
 }

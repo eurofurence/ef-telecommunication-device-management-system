@@ -41,6 +41,10 @@ export const useItemsStore = defineStore("item", {
             return APIUtils.fetchPage('/radio_accessories/', page, itemsPerPage, sortBy, search);
         },
 
+        async deleteRadioAccessory(id: number) {
+            return APIUtils.delete('/radio_accessories/', id.toString());
+        },
+
         /**
          * Fetches a page of radio accessory templates from the API.
          *

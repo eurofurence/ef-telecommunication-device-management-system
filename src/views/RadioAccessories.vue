@@ -1,9 +1,11 @@
 <template>
     <ItemTable
+        ref="dataTable"
         title="Radio Accessories"
         icon="mdi-headset"
         :items-table="itemsTable"
         :templates-table="templatesTable"
+        @deleteItems="deleteRadioAccessories"
     />
 </template>
 
@@ -14,7 +16,10 @@ import ItemTable from "@/components/ItemTable.vue";
 const itemsStore = useItemsStore();
 
 export default {
-    components: {ItemTable},
+    components: {
+        ItemTable
+    },
+
     data: () => ({
         itemsTable: {
             headers: [
@@ -53,5 +58,31 @@ export default {
             totalItems: 0,
         },
     }),
+
+    methods: {
+        deleteRadioAccessories(itemIds: any[]) {
+            // TODO: Replace with proper dialog
+            if (confirm("Are you sure you want to delete these items?")) {
+                itemIds.forEach((id) => {
+                    itemsStore.deleteRadioAccessory(id);
+                });
+
+                // Force re-render of table
+                this.$refs.dataTable.reloadItems();
+            }
+        },
+        deleteRadioAccessoryTemplates(templateIds: any[]) {
+            // TODO: Replace with proper dialog
+            if (confirm("Are you sure you want to delete these templates?")) {
+                templateIds.forEach((id) => {
+                    // TODO
+                    console.log("deleting ... ", id);
+                });
+
+                // Force re-render of table
+                this.$refs.dataTable.reloadTempaltes();
+            }
+        }
+    }
 }
 </script>

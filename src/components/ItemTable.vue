@@ -24,6 +24,7 @@
             <v-window v-model="tab" direction="horizontal">
                 <v-window-item value="items" v-if="itemsTable">
                     <v-data-table-server
+                        :key="itemsTableKey"
                         v-model="itemsTableSelected"
                         v-model:items-per-page="itemsTable.itemsPerPage"
                         :headers="itemsTable.headers"
@@ -47,6 +48,10 @@
                             ></v-text-field>
                         </template>
 
+                        <template v-slot:loading>
+                            <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+                        </template>
+
                         <template v-slot:item.handed_out="{item}">
                             <v-chip
                                 :color="item.handed_out ? 'error' : 'success'"
@@ -65,17 +70,48 @@
                             </v-chip>
                         </template>
 
+                        <template v-slot:body.append>
+                            <v-btn
+                                v-if="itemsTableSelected.length > 0"
+                                color="error"
+                                @click="$emit('deleteItems', itemsTableSelected)"
+                            >
+                                <v-icon left>mdi-trash-can-outline</v-icon>
+                                Delete
+                            </v-btn>
+                            <v-btn
+                                color="primary"
+                                @click="$emit('createItem')"
+                            >
+                                <v-icon left>mdi-plus</v-icon>
+                                Create
+                            </v-btn>
+                            <v-btn
+                                color="info"
+                                @click="reloadItems"
+                            >
+                                <v-icon left>mdi-refresh</v-icon>
+                                Refresh
+                            </v-btn>
+                        </template>
+
                         <template v-slot:expanded-row="{ columns, item }">
                             <tr>
                                 <td :colspan="columns.length">
-                                    <ul v-if="itemsTable.expandedRowProps">
-                                        <li v-for="prop in itemsTable.expandedRowProps">
-                                            {{ prop.title }}: {{ PropUtils.getPropByStringPath(item, prop.key) }}
-                                        </li>
-                                    </ul>
+                                    <v-list lines="one" v-if="itemsTable.expandedRowProps">
+                                        <v-list-item
+                                            v-for="prop in itemsTable.expandedRowProps"
+                                            :key="prop.key"
+                                        >
+                                            <v-list-item-title>{{ prop.title }}</v-list-item-title>
+                                            <v-list-item-subtitle>{{ PropUtils.getPropByStringPath(item, prop.key) || "—" }}</v-list-item-subtitle>
+                                        </v-list-item>
+                                    </v-list>
+
                                     <v-btn
+                                        class="mx-4 mb-4"
                                         color="error"
-                                        @click="console.log('TODO', item)"
+                                        @click="$emit('deleteItems', [item.id])"
                                     >
                                         <v-icon left>mdi-trash-can-outline</v-icon>
                                         Delete
@@ -88,6 +124,7 @@
 
                 <v-window-item value="templates" v-if="templatesTable">
                     <v-data-table-server
+                        :key="templatesTableKey"
                         v-model="templatesTableSelected"
                         v-model:items-per-page="templatesTable.itemsPerPage"
                         :headers="templatesTable.headers"
@@ -111,6 +148,10 @@
                             ></v-text-field>
                         </template>
 
+                        <template v-slot:loading>
+                            <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+                        </template>
+
                         <template v-slot:expanded-row="{ columns, item }">
                             <tr>
                                 <td :colspan="columns.length">
@@ -121,7 +162,7 @@
                                     </ul>
                                     <v-btn
                                         color="error"
-                                        @click="console.log('TODO', item)"
+                                        @click="$emit('deleteItemTemplates', [item.id])"
                                     >
                                         <v-icon left>mdi-trash-can-outline</v-icon>
                                         Delete
@@ -153,12 +194,14 @@ export default defineComponent({
         title: {type: String, required: true},
         icon: {type: String, required: false},
         itemsTable: {type: Object as PropType<ServerTableMetadata>, required: true},
-        templatesTable: {type: Object as PropType<ServerTableMetadata>, required: false}
+        templatesTable: {type: Object as PropType<ServerTableMetadata>, required: false},
     },
 
     data: () => ({
         tab: 'items',
+        itemsTableKey: 0,
         itemsTableSelected: [],
+        templatesTableKey: 0,
         templatesTableSelected: [],
     }),
 
@@ -191,7 +234,15 @@ export default defineComponent({
                 this.templatesTable.totalItems = total;
                 this.templatesTable.loading = false;
             });
+        },
+
+        reloadItems() {
+            this.itemsTableKey++;
+        },
+
+        reloadTempaltes() {
+            this.templatesTableKey++;
         }
-    }
+    },
 })
 </script>
