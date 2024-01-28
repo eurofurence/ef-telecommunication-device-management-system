@@ -37,3 +37,6 @@ class ItemBinding(models.Model):
         related_name="+",
         help_text="User that bound the item"
     )
+
+    def __str__(self):
+        return f"{self.item} to {self.user} (by {self.bound_by})"
