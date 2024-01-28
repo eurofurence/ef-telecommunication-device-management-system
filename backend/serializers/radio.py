@@ -43,3 +43,19 @@ class RadioAccessorySerializer(serializers.ModelSerializer):
     class Meta:
         model = RadioAccessory
         fields = ['id', 'template', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at']
+
+
+class PagerTemplateSerializer(serializers.ModelSerializer):
+    owner = ItemOwnerSerializer()
+
+    class Meta:
+        model = RadioAccessoryTemplate
+        fields = ['id', 'name', 'description', 'owner']
+
+
+class PagerSerializer(serializers.ModelSerializer):
+    template = PagerTemplateSerializer()
+
+    class Meta:
+        model = RadioAccessory
+        fields = ['id', 'template', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at']

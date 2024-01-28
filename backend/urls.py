@@ -22,16 +22,24 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from backend.views import UserViewSet, ItemOwnerViewSet
+from backend.views.callbox import CallboxTemplateViewSet, CallboxViewSet
+from backend.views.phone import PhoneTemplateViewSet, PhoneViewSet
 from backend.views.radio import RadioDeviceViewSet, RadioDeviceTemplateViewSet, RadioAccessoryViewSet, \
-    RadioAccessoryTemplateViewSet
+    RadioAccessoryTemplateViewSet, PagerTemplateViewSet, PagerViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
+router.register(r'callbox_templates', CallboxTemplateViewSet)
+router.register(r'callboxes', CallboxViewSet)
 router.register(r'item_owners', ItemOwnerViewSet)
-router.register(r'radios', RadioDeviceViewSet)
-router.register(r'radio_templates', RadioDeviceTemplateViewSet)
+router.register(r'pager_templates', PagerTemplateViewSet)
+router.register(r'pagers', PagerViewSet)
+router.register(r'phone_templates', PhoneTemplateViewSet)
+router.register(r'phones', PhoneViewSet)
 router.register(r'radio_accessories', RadioAccessoryViewSet)
 router.register(r'radio_accessory_templates', RadioAccessoryTemplateViewSet)
+router.register(r'radio_templates', RadioDeviceTemplateViewSet)
+router.register(r'radios', RadioDeviceViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
     # API

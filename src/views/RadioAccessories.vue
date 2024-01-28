@@ -40,7 +40,7 @@ export default {
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
                 {key: 'allow_quickadd', title: 'Quickadd', align: 'start', sortable: true},
             ],
-            fetchFunction: itemsStore.fetchRadioAccessorieTemplatesPage,
+            fetchFunction: itemsStore.fetchRadioAccessoryTemplatesPage,
             search: '',
             loading: true,
             itemsPerPage: 25,
