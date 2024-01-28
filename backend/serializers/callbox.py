@@ -30,7 +30,7 @@ class CallboxSerializer(serializers.ModelSerializer):
             'dhcp',
             'ip_address',
             'mac_address',
-            'location'
+            'location',
             'has_camera',
             'camera_ip_address',
             'camera_mac_address'
