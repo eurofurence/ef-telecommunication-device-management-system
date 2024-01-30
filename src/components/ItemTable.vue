@@ -37,15 +37,62 @@
                         density="comfortable"
                         show-select
                         show-expand
+                        expand-on-click
                     >
                         <template v-slot:top>
-                            <v-text-field
-                                v-model="itemsTable.search"
-                                label="Search"
-                                single-line
-                                hide-details
-                                clearable
-                            ></v-text-field>
+                                <div class="d-flex justify-end flex-nowrap">
+                                    <div class="flex-grow-1 flex-shrink-1">
+                                        <v-sheet>
+                                            <v-text-field
+                                                v-model="itemsTable.search"
+                                                label="Search"
+                                                prepend-inner-icon="mdi-magnify"
+                                                single-line
+                                                hide-details
+                                                clearable
+                                            ></v-text-field>
+                                        </v-sheet>
+                                    </div>
+                                    <div class="flex-align-end flex-shrink-1 ml-2">
+                                        <v-btn
+                                            v-if="itemsTableSelected.length > 0"
+                                            color="error"
+                                            @click="$emit('deleteItems', itemsTableSelected)"
+                                            class="my-3 mx-1"
+                                        >
+                                            <v-icon left>mdi-trash-can-outline</v-icon>
+                                            Delete
+                                            <v-tooltip activator="parent" location="top">
+                                                Delete selected items
+                                            </v-tooltip>
+                                        </v-btn>
+                                        <v-btn
+                                            v-if="itemsTableSelected.length === 0"
+                                            color="success"
+                                            @click="$emit('createItem')"
+                                            class="my-3 mx-1"
+                                        >
+                                            <v-icon left>mdi-plus</v-icon>
+                                            Create
+                                            <v-tooltip activator="parent" location="top">
+                                                Create a new item
+                                            </v-tooltip>
+                                        </v-btn>
+                                        <v-tooltip location="top">
+                                            <template v-slot:activator="{ props }">
+                                                <v-btn
+                                                    v-bind="props"
+                                                    color="grey-darken-1"
+                                                    @click="reloadItems"
+                                                    class="my-3 mx-1 pa-0"
+                                                    icon="mdi-refresh"
+                                                    density="comfortable"
+                                                ></v-btn>
+                                            </template>
+                                            <span>Reload</span>
+                                        </v-tooltip>
+                                    </div>
+                                </div>
                         </template>
 
                         <template v-slot:loading>
@@ -68,31 +115,6 @@
                             >
                                 {{ item.has_camera ? 'Yes' : 'No' }}
                             </v-chip>
-                        </template>
-
-                        <template v-slot:body.append>
-                            <v-btn
-                                v-if="itemsTableSelected.length > 0"
-                                color="error"
-                                @click="$emit('deleteItems', itemsTableSelected)"
-                            >
-                                <v-icon left>mdi-trash-can-outline</v-icon>
-                                Delete
-                            </v-btn>
-                            <v-btn
-                                color="primary"
-                                @click="$emit('createItem')"
-                            >
-                                <v-icon left>mdi-plus</v-icon>
-                                Create
-                            </v-btn>
-                            <v-btn
-                                color="info"
-                                @click="reloadItems"
-                            >
-                                <v-icon left>mdi-refresh</v-icon>
-                                Refresh
-                            </v-btn>
                         </template>
 
                         <template v-slot:expanded-row="{ columns, item }">
