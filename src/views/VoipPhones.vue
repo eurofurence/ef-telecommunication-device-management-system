@@ -1,5 +1,6 @@
 <template>
-    <ItemTable
+    <ItemOverview
+        ref="itemOverview"
         title="VoIP Phones"
         icon="mdi-phone"
         :items-table="itemsTable"
@@ -9,12 +10,12 @@
 
 <script lang="ts">
 import {useItemsStore} from "@/store/items";
-import ItemTable from "@/components/ItemTable.vue";
+import ItemOverview from "@/components/ItemOverview.vue";
 
 const itemsStore = useItemsStore();
 
 export default {
-    components: {ItemTable},
+    components: {ItemOverview},
     data: () => ({
         itemsTable: {
             headers: [
@@ -36,11 +37,6 @@ export default {
                 {key: 'updated_at', title: 'Updated at'},
             ],
             fetchFunction: itemsStore.fetchPhonesPage,
-            search: '',
-            loading: true,
-            itemsPerPage: 25,
-            serverItems: [],
-            totalItems: 0,
         },
         templatesTable: {
             headers: [
@@ -50,11 +46,6 @@ export default {
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
             ],
             fetchFunction: itemsStore.fetchPhoneTemplatesPage,
-            search: '',
-            loading: true,
-            itemsPerPage: 25,
-            serverItems: [],
-            totalItems: 0,
         },
     }),
 }

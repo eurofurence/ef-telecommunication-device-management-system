@@ -1,5 +1,6 @@
 <template>
-    <ItemTable
+    <ItemOverview
+        ref="itemOverview"
         title="Pagers"
         icon="mdi-bell-ring-outline"
         :items-table="itemsTable"
@@ -9,12 +10,12 @@
 
 <script lang="ts">
 import {useItemsStore} from "@/store/items";
-import ItemTable from "@/components/ItemTable.vue";
+import ItemOverview from "@/components/ItemOverview.vue";
 
 const itemsStore = useItemsStore();
 
 export default {
-    components: {ItemTable},
+    components: {ItemOverview},
     data: () => ({
         itemsTable: {
             headers: [
@@ -40,7 +41,7 @@ export default {
         templatesTable: {
             headers: [
                 {key: 'id', title: 'ID', align: 'start', sortable: true},
-                {key: 'name', title: 'Name', align: 'start', sortable: true},
+                {key: 'name', title: 'Template Name', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
             ],

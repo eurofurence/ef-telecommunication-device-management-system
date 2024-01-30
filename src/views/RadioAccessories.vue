@@ -1,23 +1,24 @@
 <template>
-    <ItemTable
-        ref="dataTable"
+    <ItemOverview
+        ref="itemOverview"
         title="Radio Accessories"
         icon="mdi-headset"
         :items-table="itemsTable"
         :templates-table="templatesTable"
         @deleteItems="deleteRadioAccessories"
+        @deleteTemplates="deleteRadioAccessoryTemplates"
     />
 </template>
 
 <script lang="ts">
 import {useItemsStore} from "@/store/items";
-import ItemTable from "@/components/ItemTable.vue";
+import ItemOverview from "@/components/ItemOverview.vue";
 
 const itemsStore = useItemsStore();
 
 export default {
     components: {
-        ItemTable
+        ItemOverview,
     },
 
     data: () => ({
@@ -36,26 +37,16 @@ export default {
                 {key: 'updated_at', title: 'Updated at'},
             ],
             fetchFunction: itemsStore.fetchRadioAccessoriesPage,
-            search: '',
-            loading: true,
-            itemsPerPage: 25,
-            serverItems: [],
-            totalItems: 0,
         },
         templatesTable: {
             headers: [
                 {key: 'id', title: 'ID', align: 'start', sortable: true},
-                {key: 'name', title: 'Name', align: 'start', sortable: true},
+                {key: 'name', title: 'Template Name', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
                 {key: 'allow_quickadd', title: 'Quickadd', align: 'start', sortable: true},
             ],
             fetchFunction: itemsStore.fetchRadioAccessoryTemplatesPage,
-            search: '',
-            loading: true,
-            itemsPerPage: 25,
-            serverItems: [],
-            totalItems: 0,
         },
     }),
 
@@ -68,7 +59,7 @@ export default {
                 });
 
                 // Force re-render of table
-                this.$refs.dataTable.reloadItems();
+                this.$refs.itemOverview.reloadItems();
             }
         },
         deleteRadioAccessoryTemplates(templateIds: any[]) {
@@ -80,7 +71,7 @@ export default {
                 });
 
                 // Force re-render of table
-                this.$refs.dataTable.reloadTempaltes();
+                this.$refs.itemOverview.reloadTemplates();
             }
         }
     }

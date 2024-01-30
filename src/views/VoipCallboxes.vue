@@ -1,5 +1,6 @@
 <template>
-    <ItemTable
+    <ItemOverview
+        ref="itemOverview"
         title="Callboxes"
         icon="mdi-webcam"
         :items-table="itemsTable"
@@ -9,12 +10,12 @@
 
 <script lang="ts">
 import {useItemsStore} from "@/store/items";
-import ItemTable from "@/components/ItemTable.vue";
+import ItemOverview from "@/components/ItemOverview.vue";
 
 const itemsStore = useItemsStore();
 
 export default {
-    components: {ItemTable},
+    components: {ItemOverview},
     data: () => ({
         itemsTable: {
             headers: [
@@ -39,25 +40,15 @@ export default {
                 {key: 'updated_at', title: 'Updated at'},
             ],
             fetchFunction: itemsStore.fetchCallboxesPage,
-            search: '',
-            loading: true,
-            itemsPerPage: 25,
-            serverItems: [],
-            totalItems: 0,
         },
         templatesTable: {
             headers: [
                 {key: 'id', title: 'ID', align: 'start', sortable: true},
-                {key: 'name', title: 'Name', align: 'start', sortable: true},
+                {key: 'name', title: 'Template Name', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
             ],
             fetchFunction: itemsStore.fetchCallboxTemplatesPage,
-            search: '',
-            loading: true,
-            itemsPerPage: 25,
-            serverItems: [],
-            totalItems: 0,
         },
     }),
 }

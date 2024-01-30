@@ -1,5 +1,6 @@
 <template>
-    <ItemTable
+    <ItemOverview
+        ref="itemOverview"
         title="Item Owners"
         icon="mdi-account-arrow-right"
         :items-table="itemsTable"
@@ -9,11 +10,12 @@
 <script lang="ts">
 import {useUsersStore} from "@/store/users";
 import ItemTable from "@/components/ItemTable.vue";
+import ItemOverview from "@/components/ItemOverview.vue";
 
 const usersStore = useUsersStore();
 
 export default {
-    components: {ItemTable},
+    components: {ItemOverview, ItemTable},
     data: () => ({
         itemsTable: {
             headers: [
@@ -22,11 +24,6 @@ export default {
                 {key: 'name', title: 'Name', align: 'start', sortable: true},
             ],
             fetchFunction: usersStore.fetchItemOwnersPage,
-            search: '',
-            serverItems: [],
-            loading: true,
-            itemsPerPage: 25,
-            totalItems: 0,
         }
     }),
 }

@@ -1,5 +1,6 @@
 <template>
-    <ItemTable
+    <ItemOverview
+        ref="itemOverview"
         title="Users"
         icon="mdi-account-group-outline"
         :items-table="itemsTable"
@@ -8,12 +9,13 @@
 
 <script lang="ts">
 import {useUsersStore} from "@/store/users";
-import ItemTable from "@/components/ItemTable.vue";
+import ItemOverview from "@/components/ItemOverview.vue";
 
 const usersStore = useUsersStore();
 
 export default {
-    components: {ItemTable},
+    // TODO: Remove user creation button. This should only be done via the backend. Need to adjust this in ItemTable component
+    components: {ItemOverview},
     data: () => ({
         itemsTable: {
             headers: [
@@ -25,11 +27,6 @@ export default {
                 {key: 'last_seen', title: 'Last seen', align: 'start', sortable: false},
             ],
             fetchFunction: usersStore.fetchUsersPage,
-            search: '',
-            serverItems: [],
-            loading: true,
-            itemsPerPage: 25,
-            totalItems: 0,
         }
     }),
 }
