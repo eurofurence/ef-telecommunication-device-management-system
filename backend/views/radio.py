@@ -18,7 +18,12 @@ class RadioDeviceTemplateViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['name', 'description', 'owner']
+    search_fields = [
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname'
+    ]
 
 
 class RadioDeviceViewSet(viewsets.ModelViewSet):
@@ -31,7 +36,18 @@ class RadioDeviceViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['template__name', 'template__description', 'template__owner__name', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at', 'callsign']
+    search_fields = [
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'notes',
+        'serialnumber',
+        'handed_out',
+        'created_at',
+        'updated_at',
+        'callsign'
+    ]
 
 
 class RadioAccessoryTemplateViewSet(viewsets.ModelViewSet):
@@ -44,7 +60,13 @@ class RadioAccessoryTemplateViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['name', 'description', 'owner', 'allow_quickadd']
+    search_fields = [
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname',
+        'allow_quickadd'
+    ]
 
 
 class RadioAccessoryViewSet(viewsets.ModelViewSet):
@@ -57,7 +79,17 @@ class RadioAccessoryViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['template__name', 'template__description', 'template__owner', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at']
+    search_fields = [
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'notes',
+        'serialnumber',
+        'handed_out',
+        'created_at',
+        'updated_at'
+    ]
 
 
 class PagerTemplateViewSet(viewsets.ModelViewSet):
@@ -70,7 +102,12 @@ class PagerTemplateViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['name', 'description', 'owner']
+    search_fields = [
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname',
+    ]
 
 
 class PagerViewSet(viewsets.ModelViewSet):
@@ -83,4 +120,13 @@ class PagerViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['template__name', 'template__description', 'template__owner', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at']
+    search_fields = [
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'notes',
+        'serialnumber',
+        'handed_out',
+        'created_at',
+        'updated_at'
+    ]
