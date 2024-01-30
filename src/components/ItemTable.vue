@@ -139,7 +139,7 @@ export default defineComponent({
         headers: {type: Array as PropType<TableHeader[]>, required: true},
         fetchFunction: {type: Function, required: true},
         expandedRowProps: {type: Array as PropType<ExpandedRowProp[]>, required: false, default: null},
-        search: {type: String, required: false, default: ''},
+        initialSearch: {type: String, required: false, default: ''},
         itemsPerPage: {type: Number, required: false, default: 25},
     },
 
@@ -149,7 +149,12 @@ export default defineComponent({
         totalItems: 0,
         serverItems: [],
         selected: [],
+        search: '',
     }),
+
+    created() {
+        this.search = this.initialSearch;
+    },
 
     methods: {
         loadItems({page, itemsPerPage, sortBy, search}) {

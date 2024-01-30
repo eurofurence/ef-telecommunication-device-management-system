@@ -28,7 +28,7 @@
                         :headers="itemsTable.headers"
                         :expanded-row-props="itemsTable.expandedRowProps ?? []"
                         :fetch-function="itemsTable.fetchFunction"
-                        :search="itemsTable.search ?? ''"
+                        :initial-search="itemsTable.search ?? ''"
                         :items-per-page="itemsTable.itemsPerPage ?? 25"
                     ></ItemTable>
                 </v-window-item>
@@ -39,7 +39,7 @@
                         :headers="templatesTable.headers"
                         :expanded-row-props="templatesTable.expandedRowProps ?? []"
                         :fetch-function="templatesTable.fetchFunction"
-                        :search="templatesTable.search ?? ''"
+                        :initial-search="templatesTable.search ?? ''"
                         :items-per-page="templatesTable.itemsPerPage ?? 25"
                     ></ItemTable>
                 </v-window-item>
