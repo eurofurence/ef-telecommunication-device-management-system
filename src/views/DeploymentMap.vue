@@ -1,5 +1,4 @@
 <template>
-    <h1>Deployment Map</h1>
     <l-map
         ref="map"
         v-model:zoom="zoom"
