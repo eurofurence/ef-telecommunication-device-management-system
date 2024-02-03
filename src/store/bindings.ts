@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import {APIUtils} from "@/classes/util/APIUtils";
+import {SystemStatistics} from "@/types/SystemStatistics";
 
 export const useBindingsStore = defineStore("bindings", {
     state: () => ({}),
@@ -16,5 +17,14 @@ export const useBindingsStore = defineStore("bindings", {
         async fetchBindingsPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/item_bindings/', page, itemsPerPage, sortBy, search);
         },
+
+        /**
+         * Fetches statistical information from the API.
+         *
+         * @return Object containing statistical information.
+         */
+        async fetchStatistics(): Promise<SystemStatistics> {
+            return await APIUtils.get('/statistics/').then(response => response.data);
+        }
     },
 })

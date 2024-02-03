@@ -25,6 +25,15 @@ export class APIUtils {
     }
 
     /**
+     * Fetches data from the API using HTTP GET.
+     *
+     * @param apipath API path to query (e.g. '/users/').
+     */
+    public static async get(apipath: string) {
+        return axios.get(`${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}`);
+    }
+
+    /**
      * Fetches a page of data from the API.
      *
      * @param apipath API path to query (e.g. '/users/').
