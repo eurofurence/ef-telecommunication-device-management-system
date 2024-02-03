@@ -16,7 +16,7 @@ class PhoneTemplateViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['name', 'description', 'owner']
+    search_fields = ['name', 'description', 'owner__name', 'owner__shortname']
 
 
 class PhoneViewSet(viewsets.ModelViewSet):
