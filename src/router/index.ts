@@ -102,6 +102,12 @@ const routes = [
                 name: 'Callboxes',
                 component: () => import('@/views/voip/VoipCallboxes.vue'),
                 meta: {requiresAuth: true},
+            },
+            {
+                path: 'eventlog',
+                name: 'Event Log',
+                component: () => import('@/views/EventLog.vue'),
+                meta: {requiresAuth: true},
             }
         ],
     },

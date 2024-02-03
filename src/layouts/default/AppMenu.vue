@@ -37,6 +37,7 @@
                 <v-list-item prepend-icon="mdi-phone" title="Phones" value="voip-phones" to="/voip/phones"></v-list-item>
                 <v-list-item prepend-icon="mdi-webcam" title="Callboxes" value="voip-callboxes" to="/voip/callboxes"></v-list-item>
             </v-list-group>
+            <v-list-item prepend-icon="mdi-clipboard-text-search-outline" title="Event Log" value="eventlog" to="/eventlog"></v-list-item>
         </v-list>
 
         <template v-slot:append>
