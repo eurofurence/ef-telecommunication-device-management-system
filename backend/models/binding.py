@@ -40,3 +40,11 @@ class ItemBinding(models.Model):
 
     def __str__(self):
         return f"{self.item} to {self.user} (by {self.bound_by})"
+
+    @classmethod
+    def count_users_with_bindings(cls):
+        """
+        Count the number of users with at least one binding.
+        :return: Number of users with at least one binding
+        """
+        return cls.objects.values('user').distinct().count()

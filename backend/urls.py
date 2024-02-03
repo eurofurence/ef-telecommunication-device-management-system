@@ -27,6 +27,7 @@ from backend.views.callbox import CallboxTemplateViewSet, CallboxViewSet
 from backend.views.phone import PhoneTemplateViewSet, PhoneViewSet
 from backend.views.radio import RadioDeviceViewSet, RadioDeviceTemplateViewSet, RadioAccessoryViewSet, \
     RadioAccessoryTemplateViewSet, PagerTemplateViewSet, PagerViewSet
+from backend.views.statistics import StatisticsView
 
 router = routers.DefaultRouter()
 router.register(r'callbox_templates', CallboxTemplateViewSet)
@@ -50,6 +51,7 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/token/obtain/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/statistics/', StatisticsView.as_view(), name='item_binding_statistics'),
 
     # Admin UI
     path('admin/', admin.site.urls),

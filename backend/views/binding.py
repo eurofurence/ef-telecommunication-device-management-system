@@ -36,4 +36,3 @@ class ItemBindingViewSet(viewsets.ModelViewSet):
             return ItemBinding.objects.filter(user__pk=self.request.query_params.get('userid'))
         else:
             return ItemBinding.objects.all()
-
