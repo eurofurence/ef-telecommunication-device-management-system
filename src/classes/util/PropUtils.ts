@@ -5,9 +5,14 @@ export class PropUtils {
      *
      * @param obj Object to get the property from.
      * @param path Dot-delimited string path to the property.
+     * @returns The property value, or undefined if the path is invalid.
      */
     public static getPropByStringPath(obj: any, path: string) {
-        return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+        try {
+            return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+        } catch (e) {
+            return undefined;
+        }
     }
 
 }

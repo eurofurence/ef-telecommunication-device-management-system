@@ -97,13 +97,15 @@
             <tr>
                 <td :colspan="columns.length">
                     <v-list lines="one" v-if="expandedRowProps">
-                        <v-list-item
+                        <div
                             v-for="prop in expandedRowProps"
                             :key="prop.key"
                         >
-                            <v-list-item-title>{{ prop.title }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ PropUtils.getPropByStringPath(item, prop.key) || "—" }}</v-list-item-subtitle>
-                        </v-list-item>
+                            <v-list-item v-if="!prop.hideMissing || PropUtils.getPropByStringPath(item, prop.key) !== undefined">
+                                <v-list-item-title>{{ prop.title }}</v-list-item-title>
+                                <v-list-item-subtitle>{{ PropUtils.getPropByStringPath(item, prop.key) || "—" }}</v-list-item-subtitle>
+                            </v-list-item>
+                        </div>
                     </v-list>
 
                     <v-btn
