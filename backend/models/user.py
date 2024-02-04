@@ -26,6 +26,9 @@ class User(AbstractUser):
         help_text="Last time the user was seen on the platform"
     )
 
+    def get_pretty_name(self):
+        return f"{self.username} (Reg-ID: {self.ef_reg_id})"
+
 
 class ItemOwner(models.Model):
     """
@@ -47,5 +50,3 @@ class ItemOwner(models.Model):
 
     def __str__(self):
         return self.name
-
-

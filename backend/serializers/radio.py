@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from backend.models import RadioDeviceTemplate, RadioDevice, RadioAccessoryTemplate, RadioAccessory
+from backend.models import RadioDeviceTemplate, RadioDevice, RadioAccessoryTemplate, RadioAccessory, Pager
 from backend.serializers import ItemOwnerSerializer
 
 
@@ -14,18 +14,20 @@ class RadioDeviceTemplateSerializer(serializers.ModelSerializer):
 
 class RadioDeviceSerializer(serializers.ModelSerializer):
     template = RadioDeviceTemplateSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = RadioDevice
         fields = [
             'id',
+            'pretty_name',
             'template',
             'notes',
             'serialnumber',
             'handed_out',
             'created_at',
             'updated_at',
-            'callsign'
+            'callsign',
         ]
 
 
@@ -39,10 +41,20 @@ class RadioAccessoryTemplateSerializer(serializers.ModelSerializer):
 
 class RadioAccessorySerializer(serializers.ModelSerializer):
     template = RadioAccessoryTemplateSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = RadioAccessory
-        fields = ['id', 'template', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at']
+        fields = [
+            'id',
+            'pretty_name',
+            'template',
+            'notes',
+            'serialnumber',
+            'handed_out',
+            'created_at',
+            'updated_at'
+        ]
 
 
 class PagerTemplateSerializer(serializers.ModelSerializer):
@@ -55,7 +67,17 @@ class PagerTemplateSerializer(serializers.ModelSerializer):
 
 class PagerSerializer(serializers.ModelSerializer):
     template = PagerTemplateSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
-        model = RadioAccessory
-        fields = ['id', 'template', 'notes', 'serialnumber', 'handed_out', 'created_at', 'updated_at']
+        model = Pager
+        fields = [
+            'id',
+            'pretty_name',
+            'template',
+            'notes',
+            'serialnumber',
+            'handed_out',
+            'created_at',
+            'updated_at'
+        ]

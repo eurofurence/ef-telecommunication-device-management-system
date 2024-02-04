@@ -71,3 +71,6 @@ class Callbox(Item):
         null=True,
         help_text="MAC address of the camera"
     )
+
+    def get_pretty_name(self):
+        return f"{self.template.name} {self.notes} (EXT: {self.extension}) #{self.pk}"

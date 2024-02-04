@@ -22,6 +22,9 @@ class RadioDevice(Item):
         help_text="Callsign of the radio"
     )
 
+    def get_pretty_name(self):
+        return f"{self.template.name} ({self.template.owner.shortname}) (CS: {self.callsign}) #{self.pk}"
+
 
 class RadioAccessoryTemplate(ItemTemplate):
     """
@@ -42,6 +45,9 @@ class RadioAccessory(Item):
 
     template = models.ForeignKey(RadioAccessoryTemplate, on_delete=models.PROTECT)
 
+    def get_pretty_name(self):
+        return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"
+
 
 class PagerTemplate(ItemTemplate):
     """
@@ -55,3 +61,6 @@ class Pager(Item):
     """
 
     template = models.ForeignKey(PagerTemplate, on_delete=models.PROTECT)
+
+    def get_pretty_name(self):
+        return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"

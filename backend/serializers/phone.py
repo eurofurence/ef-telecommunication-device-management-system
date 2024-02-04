@@ -14,11 +14,13 @@ class PhoneTemplateSerializer(serializers.ModelSerializer):
 
 class PhoneSerializer(serializers.ModelSerializer):
     template = PhoneTemplateSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = Phone
         fields = [
             'id',
+            'pretty_name',
             'template',
             'notes',
             'serialnumber',

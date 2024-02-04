@@ -14,11 +14,13 @@ class CallboxTemplateSerializer(serializers.ModelSerializer):
 
 class CallboxSerializer(serializers.ModelSerializer):
     template = CallboxTemplateSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = Callbox
         fields = [
             'id',
+            'pretty_name',
             'template',
             'notes',
             'serialnumber',
