@@ -9,7 +9,7 @@
             <v-col>
                 <v-stepper
                     v-model="currentStep"
-                    :items="['User', 'Items', 'Create Binding', 'Confirmation']"
+                    :items="['User', 'Items', 'Review', 'Binding']"
                     :disabled="!stepperCanAdvance"
                     alt-labels
                 >
@@ -70,11 +70,11 @@
                     </template>
 
                     <template v-slot:item.3>
-                        <v-card title="Create Binding" flat>...</v-card>
+                        <v-card title="Review Binding" flat>...</v-card>
                     </template>
 
                     <template v-slot:item.4>
-                        <v-card title="Confirmation" flat>...</v-card>
+                        <v-card title="Binding Created" flat>...</v-card>
                     </template>
                 </v-stepper>
 
@@ -95,6 +95,8 @@ import {ItemType} from "@/types/ItemType";
 
 const usersStore = useUsersStore();
 const itemsStore = useItemsStore();
+
+// TODO: Only show items that are not already bound
 
 export default defineComponent({
 
