@@ -9,6 +9,7 @@
         @update:model-value="this.$emit('update:selection', $event)"
         :loading="loading"
         :prepend-inner-icon="icon"
+        :autofocus="autofocus"
         auto-select-first
         clearable
         persistent-clear
@@ -44,8 +45,10 @@ export default defineComponent({
         placeholder: {type: String, required: false},
         icon: {type: String, required: false},
         itemTitleKey: {type: String, required: false, default: 'title'},
+        autofocus: {type: Boolean, required: false, default: false},
         minimumSearchLength: {type: Number, required: false, default: 1},
         searchPageSize: {type: Number, required: false, default: 10},
+        itemIdsToExclude: {type: Array, required: false, default: []},
     },
 
     data: () => ({
@@ -101,11 +104,18 @@ export default defineComponent({
             this.searchDebounceTimeout = setTimeout(async () => {
                 // Execute search API call
                 let itemPage = await this.fetchFunction(1, this.searchPageSize, [this.itemTitleKey], query);
-                this.items = itemPage.items;
+                this.items = itemPage.items.filter((item: any) => !this.itemIdsToExclude.includes(item.id))
                 this.searchHasMore = itemPage.total > this.searchPageSize;
                 this.loading = false;
             }, 500);
         },
+
+        /**
+         * Clears the selection, if any
+         */
+        clear(): void {
+            this.selection = null;
+        }
     }
 
 })
