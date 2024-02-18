@@ -152,6 +152,7 @@ export default defineComponent({
         serverItems: [],
         selected: [],
         search: '',
+        searchDebounceTimeout: null as any,
     }),
 
     created() {
@@ -161,11 +162,18 @@ export default defineComponent({
     methods: {
         loadItems({page, itemsPerPage, sortBy, search}) {
             this.loading = true;
-            this.fetchFunction(page, itemsPerPage, sortBy, search).then(({items, total}) => {
-                this.serverItems = items;
-                this.totalItems = total;
-                this.loading = false;
-            });
+
+            // Debounce search
+            if (this.searchDebounceTimeout) {
+                clearTimeout(this.searchDebounceTimeout);
+            }
+            this.searchDebounceTimeout = setTimeout(async () => {
+                this.fetchFunction(page, itemsPerPage, sortBy, search).then(({items, total}) => {
+                    this.serverItems = items;
+                    this.totalItems = total;
+                    this.loading = false;
+                });
+            }, 500);
         },
 
         reload() {
