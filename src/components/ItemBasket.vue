@@ -3,30 +3,69 @@
         <v-card-title>Basket</v-card-title>
         <v-card-text>
             <v-list>
-                <v-list-item v-for="entry in basketItems.values()">
-                    <template v-slot:prepend>
-                        <v-icon>{{ entry.type.icon }}</v-icon>
-                    </template>
+                <v-list-subheader v-if="isEmpty()">
+                    No items added yet
+                </v-list-subheader>
+                <v-hover v-for="entry in basketItems.values()">
+                    <template v-slot:default="{ isHovering, props }">
+                        <v-list-item
+                            v-bind="props"
+                            @click="removeItem(entry.item.id)"
+                        >
+                            <template v-slot:prepend>
+                                <v-icon>{{ entry.type.icon }}</v-icon>
+                            </template>
 
-                    <v-list-item-title>{{ entry.item.pretty_name }}</v-list-item-title>
+                            <v-list-item-title>
+                                {{ entry.item.pretty_name }}
+                            </v-list-item-title>
 
-                    <template v-slot:append v-if="!readOnly">
-                        <v-btn icon="mdi-delete" @click="removeItem(entry.item.id)" variant="flat"></v-btn>
+                            <template v-slot:append v-if="!readOnly">
+                                <v-btn
+                                    icon="mdi-delete"
+                                    @click="removeItem(entry.item.id)"
+                                    variant="flat"
+                                    color="transparent"
+                                >
+                                    <template v-slot:default>
+                                        <v-icon :color="isHovering ? 'red' : undefined"></v-icon>
+                                    </template>
+                                </v-btn>
+                            </template>
+                        </v-list-item>
                     </template>
-                </v-list-item>
+                </v-hover>
+
                 <v-divider v-if="basketItems.size > 0 && basketItemTemplates.length > 0"></v-divider>
-                <v-list-item v-for="(entry, idx) in basketItemTemplates">
-                    <template v-slot:prepend>
-                        <v-icon>{{ entry.type.itemType.icon }}</v-icon>
-                    </template>
+                <v-hover v-for="(entry, idx) in basketItemTemplates">
+                    <template v-slot:default="{ isHovering, props }">
+                        <v-list-item
+                            v-bind="props"
+                            @click="removeItemTemplate(idx)"
+                        >
+                            <template v-slot:prepend>
+                                <v-icon>{{ entry.type.itemType.icon }}</v-icon>
+                            </template>
 
-                    <v-list-item-title>{{ entry.template.pretty_name }}</v-list-item-title>
+                            <v-list-item-title>
+                                {{ entry.template.pretty_name }}
+                            </v-list-item-title>
 
-                    <template v-slot:append v-if="!readOnly">
-                        <v-btn icon="mdi-delete" @click="removeItemTemplate(idx)"
-                               variant="flat"></v-btn>
+                            <template v-slot:append v-if="!readOnly">
+                                <v-btn
+                                    icon="mdi-delete"
+                                    @click="removeItemTemplate(idx)"
+                                    variant="flat"
+                                    color="transparent"
+                                >
+                                    <template v-slot:default>
+                                        <v-icon :color="isHovering ? 'red' : undefined"></v-icon>
+                                    </template>
+                                </v-btn>
+                            </template>
+                        </v-list-item>
                     </template>
-                </v-list-item>
+                </v-hover>
             </v-list>
         </v-card-text>
     </v-card>

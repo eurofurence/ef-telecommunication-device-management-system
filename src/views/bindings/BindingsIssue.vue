@@ -14,68 +14,74 @@
                 >
                     <template v-slot:item.1>
                         <v-card title="Select User" flat>
-                            <ServerItemSelector
-                                ref="userSelector"
-                                :fetch-function="usersStore.fetchUsersPage"
-                                label="User"
-                                icon="mdi-account"
-                                item-title-key="pretty_name"
-                                item-value-key="id"
-                                :autofocus="true"
-                                @update:selection="onUserSelected"
-                            ></ServerItemSelector>
+                            <v-card-text>
+                                <ServerItemSelector
+                                    ref="userSelector"
+                                    :fetch-function="usersStore.fetchUsersPage"
+                                    label="User"
+                                    icon="mdi-account"
+                                    item-title-key="pretty_name"
+                                    item-value-key="id"
+                                    :autofocus="true"
+                                    @update:selection="onUserSelected"
+                                ></ServerItemSelector>
+                            </v-card-text>
                         </v-card>
                     </template>
 
                     <template v-slot:item.2>
                         <v-card title="Select Items" flat>
-                            <v-btn-toggle
-                                v-model="itemSearchType"
-                                variant="outlined"
-                                color="primary"
-                                divided
-                                @update:model-value="$refs.itemSelector.clear(); onItemSelect(null);"
-                            >
-                                <v-btn v-for="type in ItemType.getAll()" :value="type">
-                                    <v-icon start>{{ type.icon }}</v-icon>
-                                    <span class="hidden-sm-and-down">{{ type.shortLabel }}</span>
+                            <v-card-text>
+                                <v-btn-toggle
+                                    v-model="itemSearchType"
+                                    variant="outlined"
+                                    color="primary"
+                                    divided
+                                    @update:model-value="$refs.itemSelector.clear(); onItemSelect(null);"
+                                >
+                                    <v-btn v-for="type in ItemType.getAll()" :value="type">
+                                        <v-icon start>{{ type.icon }}</v-icon>
+                                        <span class="hidden-sm-and-down">{{ type.shortLabel }}</span>
+                                    </v-btn>
+                                </v-btn-toggle>
+                                <ServerItemSelector
+                                    ref="itemSelector"
+                                    :fetch-function="itemSearchFetchFunction"
+                                    :available-only="true"
+                                    :label="itemSearchType.label"
+                                    :icon="itemSearchType.icon"
+                                    item-title-key="pretty_name"
+                                    item-value-key="id"
+                                    :item-ids-to-exclude="itemIdsToExclude"
+                                    :autofocus="true"
+                                    @update:selection="onItemSelect"
+                                ></ServerItemSelector>
+
+                                <v-btn
+                                    v-for="template in quickAddTemplates"
+                                    :key="template.id"
+                                    :disabled="template.statistics.available == 0"
+                                    prepend-icon="mdi-plus-circle"
+                                    variant="outlined"
+                                    color="green"
+                                    class="mx-2 my-1"
+                                    @click="$refs.basket.addItemTemplate(template, ItemTemplateType[template.type])"
+                                >
+                                    {{ template.name }} ({{ template.owner.shortname }})
+                                    <template v-slot:append>
+                                        [{{ template.statistics.available }}]
+                                    </template>
                                 </v-btn>
-                            </v-btn-toggle>
-                            <ServerItemSelector
-                                ref="itemSelector"
-                                :fetch-function="itemSearchFetchFunction"
-                                :available-only="true"
-                                :label="itemSearchType.label"
-                                :icon="itemSearchType.icon"
-                                item-title-key="pretty_name"
-                                item-value-key="id"
-                                :item-ids-to-exclude="itemIdsToExclude"
-                                :autofocus="true"
-                                @update:selection="onItemSelect"
-                            ></ServerItemSelector>
 
-                            <v-btn
-                                v-for="template in quickAddTemplates"
-                                :key="template.id"
-                                :disabled="template.statistics.available == 0"
-                                prepend-icon="mdi-plus-circle"
-                                variant="outlined"
-                                color="green"
-                                class="mx-2 my-1"
-                                @click="$refs.basket.addItemTemplate(template, ItemTemplateType[template.type])"
-                            >
-                                {{ template.name }} ({{ template.owner.shortname }})
-                                <template v-slot:append>
-                                    [{{ template.statistics.available }}]
-                                </template>
-                            </v-btn>
+                                <v-divider class="mt-5 mb-3"></v-divider>
 
-                            <ItemBasket
-                                ref="basket"
-                                :basket-items="itemsToBind"
-                                :basket-item-templates="itemTemplatesToBind"
-                                @update:basket="basketIsEmpty = $refs.basket.isEmpty(); itemIdsToExclude = $refs.basket.getItemIds();"
-                            ></ItemBasket>
+                                <ItemBasket
+                                    ref="basket"
+                                    :basket-items="itemsToBind"
+                                    :basket-item-templates="itemTemplatesToBind"
+                                    @update:basket="basketIsEmpty = $refs.basket.isEmpty(); itemIdsToExclude = $refs.basket.getItemIds();"
+                                ></ItemBasket>
+                            </v-card-text>
                         </v-card>
                     </template>
 
@@ -235,6 +241,9 @@ export default defineComponent({
 
         onUserSelected(user: any) {
             this.selectedUser = user;
+            setTimeout(() => {
+                this.currentStep++;
+            }, 250);
         },
 
         onItemSelect(item: any) {
