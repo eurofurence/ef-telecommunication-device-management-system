@@ -12,9 +12,10 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param availableOnly Whether to only fetch available radios.
          */
-        async fetchRadiosPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
-            return APIUtils.fetchPage('/radios/', page, itemsPerPage, sortBy, search);
+        async fetchRadiosPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
+            return APIUtils.fetchPage('/radios/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
         },
 
         /**
@@ -36,11 +37,17 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param availableOnly Whether to only fetch available radio accessories.
          */
-        async fetchRadioAccessoriesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
-            return APIUtils.fetchPage('/radio_accessories/', page, itemsPerPage, sortBy, search);
+        async fetchRadioAccessoriesPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
+            return APIUtils.fetchPage('/radio_accessories/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
         },
 
+        /**
+         * Deletes a radio accessory item via the API.
+         *
+         * @param id ID of the radio accessory to delete.
+         */
         async deleteRadioAccessory(id: number) {
             return APIUtils.delete('/radio_accessories/', id.toString());
         },
@@ -64,9 +71,10 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param availableOnly Whether to only fetch available pagers.
          */
-        async fetchPagersPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
-            return APIUtils.fetchPage('/pagers/', page, itemsPerPage, sortBy, search);
+        async fetchPagersPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
+            return APIUtils.fetchPage('/pagers/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
         },
 
         /**
@@ -88,9 +96,10 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param availableOnly Whether to only fetch available phones.
          */
-        async fetchPhonesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
-            return APIUtils.fetchPage('/phones/', page, itemsPerPage, sortBy, search);
+        async fetchPhonesPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
+            return APIUtils.fetchPage('/phones/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
         },
 
         /**
@@ -112,9 +121,10 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param availableOnly Whether to only fetch available callboxes.
          */
-        async fetchCallboxesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
-            return APIUtils.fetchPage('/callboxes/', page, itemsPerPage, sortBy, search);
+        async fetchCallboxesPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
+            return APIUtils.fetchPage('/callboxes/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
         },
 
         /**
@@ -128,5 +138,12 @@ export const useItemsStore = defineStore("item", {
         async fetchCallboxTemplatesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/callbox_templates/', page, itemsPerPage, sortBy, search);
         },
+
+        /**
+         * Fetches all quick add templates from the API.
+         */
+        async fetchQuickAddTemplates() {
+            return APIUtils.fetchPage('/quickadd_templates/', 1, 9999, [], '');
+        }
     },
 })

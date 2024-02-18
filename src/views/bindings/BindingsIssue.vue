@@ -10,7 +10,6 @@
                 <v-stepper
                     v-model="currentStep"
                     :items="['User', 'Items', 'Review', 'Binding']"
-                    :disabled="!stepperCanAdvance"
                     alt-labels
                 >
                     <template v-slot:item.1>
@@ -36,14 +35,15 @@
                                 divided
                                 @update:model-value="$refs.itemSelector.clear(); onItemSelect(null);"
                             >
-                                <v-btn v-for="type in [ItemType.RadioDevice, ItemType.Pager, ItemType.Phone, ItemType.Callbox]" :value="type">
+                                <v-btn v-for="type in ItemType.getAll()" :value="type">
                                     <v-icon start>{{ type.icon }}</v-icon>
-                                    <span class="hidden-sm-and-down">{{ type.label }}</span>
+                                    <span class="hidden-sm-and-down">{{ type.shortLabel }}</span>
                                 </v-btn>
                             </v-btn-toggle>
                             <ServerItemSelector
                                 ref="itemSelector"
                                 :fetch-function="itemSearchFetchFunction"
+                                :available-only="true"
                                 :label="itemSearchType.label"
                                 :icon="itemSearchType.icon"
                                 item-title-key="pretty_name"
@@ -53,19 +53,52 @@
                                 @update:selection="onItemSelect"
                             ></ServerItemSelector>
 
-                            <v-list>
-                                <v-list-item v-for="entry in itemsToBind.values()">
-                                    <template v-slot:prepend>
-                                        <v-icon>{{ entry.type.icon }}</v-icon>
-                                    </template>
+                            <v-btn
+                                v-for="template in quickAddTemplates"
+                                :key="template.id"
+                                prepend-icon="mdi-plus-circle"
+                                variant="outlined"
+                                color="green"
+                                class="mx-2 my-1"
+                                @click="addItemTemplateToBasket(template)"
+                            >
+                                {{ template.name }} ({{ template.owner.shortname }})
+                                <template v-slot:append>
+                                    [{{ template.statistics.available }}]
+                                </template>
+                            </v-btn>
 
-                                    <v-list-item-title>{{ entry.item.pretty_name }}</v-list-item-title>
+                            <v-card flat>
+                                <v-card-title>Basket</v-card-title>
+                                <v-card-text>
+                                    <v-list>
+                                        <v-list-item v-for="entry in itemsToBind.values()">
+                                            <template v-slot:prepend>
+                                                <v-icon>{{ entry.type.icon }}</v-icon>
+                                            </template>
 
-                                    <template v-slot:append>
-                                        <v-btn icon="mdi-delete" @click="removeItemFromBasket(entry.item.id)" variant="flat"></v-btn>
-                                    </template>
-                                </v-list-item>
-                            </v-list>
+                                            <v-list-item-title>{{ entry.item.pretty_name }}</v-list-item-title>
+
+                                            <template v-slot:append>
+                                                <v-btn icon="mdi-delete" @click="removeItemFromBasket(entry.item.id)" variant="flat"></v-btn>
+                                            </template>
+                                        </v-list-item>
+                                        <v-divider v-if="itemsToBind.size > 0 && itemTemplatesToBind.length > 0"></v-divider>
+                                        <v-list-item v-for="(entry, idx) in itemTemplatesToBind">
+                                            <template v-slot:prepend>
+                                                <v-icon>{{ entry.type.itemType.icon }}</v-icon>
+                                            </template>
+
+                                            <v-list-item-title>{{ entry.template.pretty_name }}</v-list-item-title>
+
+                                            <template v-slot:append>
+                                                <v-btn icon="mdi-delete" @click="removeItemTemplateFromBasket(idx)"
+                                                       variant="flat"></v-btn>
+                                            </template>
+                                        </v-list-item>
+                                    </v-list>
+                                </v-card-text>
+                            </v-card>
                         </v-card>
                     </template>
 
@@ -75,6 +108,15 @@
 
                     <template v-slot:item.4>
                         <v-card title="Binding Created" flat>...</v-card>
+                    </template>
+
+                    <template v-slot:next>
+                        <v-btn
+                            :disabled="!stepperCanAdvance"
+                            @click="currentStep++"
+                        >
+                            Next
+                        </v-btn>
                     </template>
                 </v-stepper>
 
@@ -91,7 +133,7 @@ import ServerItemSelector from "@/components/ServerItemSelector.vue";
 import { defineComponent } from "vue";
 import {useUsersStore} from "@/store/users";
 import {useItemsStore} from "@/store/items";
-import {ItemType} from "@/types/ItemType";
+import {ItemTemplateType, ItemType} from "@/types/ItemType";
 
 const usersStore = useUsersStore();
 const itemsStore = useItemsStore();
@@ -106,6 +148,8 @@ export default defineComponent({
             itemSearchType: ItemType.RadioDevice,
             currentStep: 1,
             itemsToBind: new Map(),
+            itemTemplatesToBind: [],
+            quickAddTemplates: [],
         }
     },
 
@@ -118,6 +162,8 @@ export default defineComponent({
             switch (this.itemSearchType.key) {
                 case ItemType.RadioDevice.key:
                     return itemsStore.fetchRadiosPage;
+                case ItemType.RadioAccessory.key:
+                    return itemsStore.fetchRadioAccessoriesPage;
                 case ItemType.Pager.key:
                     return itemsStore.fetchPagersPage;
                 case ItemType.Phone.key:
@@ -132,11 +178,22 @@ export default defineComponent({
                 case 1:
                     return !!this.selectedUser;
                 case 2:
-                    return this.itemsToBind.size > 0;
+                    return !this.basketIsEmpty();
                 case 3:
-                    return false;
+                    return true;
                 case 4:
-                    return false;
+                    return true;
+            }
+        },
+
+    },
+
+    watch: {
+        currentStep(newStep, oldStep) {
+            if (newStep == 2) {
+                itemsStore.fetchQuickAddTemplates().then((resp) => {
+                    this.quickAddTemplates = resp.items;
+                });
             }
         }
     },
@@ -160,12 +217,28 @@ export default defineComponent({
             });
         },
 
+        addItemTemplateToBasket(template: any) {
+            this.itemTemplatesToBind.push({
+                type: ItemTemplateType[template.type],
+                template: template
+            });
+        },
+
         removeItemFromBasket(itemId: number) {
             this.itemsToBind.delete(itemId);
         },
 
+        removeItemTemplateFromBasket(idx: number) {
+            this.itemTemplatesToBind.splice(idx, 1);
+        },
+
+        basketIsEmpty() {
+            return this.itemsToBind.size === 0 && this.itemTemplatesToBind.length === 0;
+        },
+
         clearBasket() {
             this.itemsToBind.clear();
+            this.itemTemplatesToBind = [];
         }
     }
 

@@ -10,7 +10,6 @@
         :loading="loading"
         :prepend-inner-icon="icon"
         :autofocus="autofocus"
-        auto-select-first
         clearable
         persistent-clear
         return-object
@@ -41,6 +40,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
     props: {
         fetchFunction: {type: Function, required: true},
+        availableOnly: {type: Boolean, required: false, default: false},
         label: {type: String, required: true},
         placeholder: {type: String, required: false},
         icon: {type: String, required: false},
@@ -82,7 +82,7 @@ export default defineComponent({
         updateSearch(query: string): void {
             this.searchQuery = query;
             if (this.searchQueryIsValid) {
-                this.searchUsers(this.searchQuery);
+                this.searchItems(this.searchQuery);
             } else {
                 this.loading = false;
                 this.items = [];
@@ -91,11 +91,11 @@ export default defineComponent({
         },
 
         /**
-         * Fetches a page of users from the API based on the search query
+         * Fetches a page of items from the API based on the search query
          *
          * @param query The search query
          */
-        async searchUsers(query: string): void {
+        async searchItems(query: string): void {
             // Debounce search
             this.loading = true;
             if (this.searchDebounceTimeout) {
@@ -103,7 +103,7 @@ export default defineComponent({
             }
             this.searchDebounceTimeout = setTimeout(async () => {
                 // Execute search API call
-                let itemPage = await this.fetchFunction(1, this.searchPageSize, [this.itemTitleKey], query);
+                let itemPage = await this.fetchFunction(1, this.searchPageSize, [this.itemTitleKey], query, this.availableOnly);
                 this.items = itemPage.items.filter((item: any) => !this.itemIdsToExclude.includes(item.id))
                 this.searchHasMore = itemPage.total > this.searchPageSize;
                 this.loading = false;
