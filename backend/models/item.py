@@ -53,12 +53,6 @@ class Item(PolymorphicModel):
         default=None,
         help_text="Optional serial number of the item"
     )
-    handed_out = models.BooleanField(
-        blank=False,
-        null=False,
-        default=False,
-        help_text="Whether the item is currently handed out"
-    )
     created_at = models.DateTimeField(
         blank=False,
         null=False,
@@ -78,6 +72,11 @@ class Item(PolymorphicModel):
         auto_now=True,
         help_text="Date and time when the item was last updated"
     )
+
+    def handed_out(self):
+        from backend.models import ItemBinding
+
+        return ItemBinding.objects.filter(item=self).exists()
 
     def __str__(self):
         return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"

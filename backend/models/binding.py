@@ -9,7 +9,7 @@ class ItemBinding(models.Model):
     Binding of an item to a user.
     """
 
-    item = models.ForeignKey(
+    item = models.OneToOneField(
         Item,
         blank=False,
         null=False,
