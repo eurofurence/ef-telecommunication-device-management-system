@@ -35,7 +35,6 @@ class CallboxViewSet(viewsets.ModelViewSet):
         'template__owner__name',
         'notes',
         'serialnumber',
-        'handed_out',
         'created_at',
         'updated_at',
         'extension',
