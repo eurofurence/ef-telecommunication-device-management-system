@@ -15,6 +15,7 @@
                     <template v-slot:item.1>
                         <v-card title="Select User" flat>
                             <ServerItemSelector
+                                ref="userSelector"
                                 :fetch-function="usersStore.fetchUsersPage"
                                 label="User"
                                 icon="mdi-account"
@@ -48,7 +49,7 @@
                                 :icon="itemSearchType.icon"
                                 item-title-key="pretty_name"
                                 item-value-key="id"
-                                :item-ids-to-exclude="Array.from(itemsToBind.keys())"
+                                :item-ids-to-exclude="itemIdsToExclude"
                                 :autofocus="true"
                                 @update:selection="onItemSelect"
                             ></ServerItemSelector>
@@ -56,11 +57,12 @@
                             <v-btn
                                 v-for="template in quickAddTemplates"
                                 :key="template.id"
+                                :disabled="template.statistics.available == 0"
                                 prepend-icon="mdi-plus-circle"
                                 variant="outlined"
                                 color="green"
                                 class="mx-2 my-1"
-                                @click="addItemTemplateToBasket(template)"
+                                @click="$refs.basket.addItemTemplate(template, ItemTemplateType[template.type])"
                             >
                                 {{ template.name }} ({{ template.owner.shortname }})
                                 <template v-slot:append>
@@ -68,54 +70,69 @@
                                 </template>
                             </v-btn>
 
-                            <v-card flat>
-                                <v-card-title>Basket</v-card-title>
-                                <v-card-text>
-                                    <v-list>
-                                        <v-list-item v-for="entry in itemsToBind.values()">
-                                            <template v-slot:prepend>
-                                                <v-icon>{{ entry.type.icon }}</v-icon>
-                                            </template>
-
-                                            <v-list-item-title>{{ entry.item.pretty_name }}</v-list-item-title>
-
-                                            <template v-slot:append>
-                                                <v-btn icon="mdi-delete" @click="removeItemFromBasket(entry.item.id)" variant="flat"></v-btn>
-                                            </template>
-                                        </v-list-item>
-                                        <v-divider v-if="itemsToBind.size > 0 && itemTemplatesToBind.length > 0"></v-divider>
-                                        <v-list-item v-for="(entry, idx) in itemTemplatesToBind">
-                                            <template v-slot:prepend>
-                                                <v-icon>{{ entry.type.itemType.icon }}</v-icon>
-                                            </template>
-
-                                            <v-list-item-title>{{ entry.template.pretty_name }}</v-list-item-title>
-
-                                            <template v-slot:append>
-                                                <v-btn icon="mdi-delete" @click="removeItemTemplateFromBasket(idx)"
-                                                       variant="flat"></v-btn>
-                                            </template>
-                                        </v-list-item>
-                                    </v-list>
-                                </v-card-text>
-                            </v-card>
+                            <ItemBasket
+                                ref="basket"
+                                :basket-items="itemsToBind"
+                                :basket-item-templates="itemTemplatesToBind"
+                                @update:basket="basketIsEmpty = $refs.basket.isEmpty(); itemIdsToExclude = $refs.basket.getItemIds();"
+                            ></ItemBasket>
                         </v-card>
                     </template>
 
                     <template v-slot:item.3>
-                        <v-card title="Review Binding" flat>...</v-card>
+                        <v-card title="Review Binding" flat>
+                            <v-card-text>
+                                Please review your binding before creating it. You are about to bind {{ $refs.basket.size() }} items to {{ selectedUser.username }}.
+                            </v-card-text>
+                        </v-card>
+
+                        <v-card title="User" flat>
+                            <v-card-text>
+                                {{ selectedUser.pretty_name }}
+                            </v-card-text>
+                        </v-card>
+
+                        <ItemBasket
+                            ref="basket"
+                            :basket-items="itemsToBind"
+                            :basket-item-templates="itemTemplatesToBind"
+                            :read-only="true"
+                        ></ItemBasket>
                     </template>
 
                     <template v-slot:item.4>
-                        <v-card title="Binding Created" flat>...</v-card>
+                        <v-card title="Binding Created" flat>
+                            <v-alert
+                                type="error"
+                                title="Not implemented yet"
+                                text="Sorry Dave, I'm afraid I can't do that. This functionality is not implemented yet. Please try again later."
+                            ></v-alert>
+                        </v-card>
+                    </template>
+
+                    <template v-slot:prev>
+                        <v-btn
+                            :disabled="currentStep == 1 || currentStep >= 4"
+                            @click="currentStep--"
+                        >
+                            Previous
+                        </v-btn>
                     </template>
 
                     <template v-slot:next>
                         <v-btn
+                            v-if="currentStep < 4"
                             :disabled="!stepperCanAdvance"
                             @click="currentStep++"
                         >
                             Next
+                        </v-btn>
+                        <v-btn
+                            v-if="currentStep == 4"
+                            :disabled="false"
+                            @click="reset()"
+                        >
+                            Restart
                         </v-btn>
                     </template>
                 </v-stepper>
@@ -127,6 +144,7 @@
 
 <script setup lang="ts">
 import ServerItemSelector from "@/components/ServerItemSelector.vue";
+import ItemBasket from "@/components/ItemBasket.vue";
 </script>
 
 <script lang="ts">
@@ -134,22 +152,30 @@ import { defineComponent } from "vue";
 import {useUsersStore} from "@/store/users";
 import {useItemsStore} from "@/store/items";
 import {ItemTemplateType, ItemType} from "@/types/ItemType";
+import { emptyItemsBasket, emptyItemTemplatesBasket } from "@/components/ItemBasket.vue";
 
 const usersStore = useUsersStore();
 const itemsStore = useItemsStore();
-
-// TODO: Only show items that are not already bound
 
 export default defineComponent({
 
     data() {
         return {
-            selectedUser: null,
-            itemSearchType: ItemType.RadioDevice,
+            // Global
             currentStep: 1,
-            itemsToBind: new Map(),
-            itemTemplatesToBind: [],
+
+            // Step 1 (User)
+            selectedUser: null,
+
+            // Step 2 (Items)
+            itemSearchType: ItemType.RadioDevice,
             quickAddTemplates: [],
+            basketIsEmpty: true,
+            itemIdsToExclude: [],
+
+            // Step 3 (Review)
+            itemsToBind: emptyItemsBasket(),
+            itemTemplatesToBind: emptyItemTemplatesBasket(),
         }
     },
 
@@ -178,14 +204,13 @@ export default defineComponent({
                 case 1:
                     return !!this.selectedUser;
                 case 2:
-                    return !this.basketIsEmpty();
+                    return !this.basketIsEmpty;
                 case 3:
                     return true;
                 case 4:
                     return true;
             }
         },
-
     },
 
     watch: {
@@ -199,47 +224,25 @@ export default defineComponent({
     },
 
     methods: {
+        reset() {
+            this.$refs.itemSelector.clear();
+            this.$refs.userSelector.clear();
+            this.$refs.basket.clear();
+            this.itemsToBind = emptyItemsBasket();
+            this.itemTemplatesToBind = emptyItemTemplatesBasket();
+            this.currentStep = 1;
+        },
+
         onUserSelected(user: any) {
             this.selectedUser = user;
         },
 
         onItemSelect(item: any) {
             if (item) {
-                this.addItemToBasket(item);
+                this.$refs.basket.addItem(item, this.itemSearchType)
                 this.$refs.itemSelector.clear();
             }
         },
-
-        addItemToBasket(item: any) {
-            this.itemsToBind.set(item.id, {
-                type: this.itemSearchType,
-                item: item
-            });
-        },
-
-        addItemTemplateToBasket(template: any) {
-            this.itemTemplatesToBind.push({
-                type: ItemTemplateType[template.type],
-                template: template
-            });
-        },
-
-        removeItemFromBasket(itemId: number) {
-            this.itemsToBind.delete(itemId);
-        },
-
-        removeItemTemplateFromBasket(idx: number) {
-            this.itemTemplatesToBind.splice(idx, 1);
-        },
-
-        basketIsEmpty() {
-            return this.itemsToBind.size === 0 && this.itemTemplatesToBind.length === 0;
-        },
-
-        clearBasket() {
-            this.itemsToBind.clear();
-            this.itemTemplatesToBind = [];
-        }
     }
 
 })
