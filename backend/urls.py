@@ -24,6 +24,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from backend.views import UserViewSet, ItemOwnerViewSet
 from backend.views.binding import ItemBindingViewSet
 from backend.views.callbox import CallboxTemplateViewSet, CallboxViewSet
+from backend.views.item import QuickAddItemTemplatesViewSet
 from backend.views.phone import PhoneTemplateViewSet, PhoneViewSet
 from backend.views.radio import RadioDeviceViewSet, RadioDeviceTemplateViewSet, RadioAccessoryViewSet, \
     RadioAccessoryTemplateViewSet, PagerTemplateViewSet, PagerViewSet
@@ -38,6 +39,7 @@ router.register(r'pager_templates', PagerTemplateViewSet)
 router.register(r'pagers', PagerViewSet)
 router.register(r'phone_templates', PhoneTemplateViewSet)
 router.register(r'phones', PhoneViewSet)
+router.register(r'quickadd_templates', QuickAddItemTemplatesViewSet)
 router.register(r'radio_accessories', RadioAccessoryViewSet)
 router.register(r'radio_accessory_templates', RadioAccessoryTemplateViewSet)
 router.register(r'radio_templates', RadioDeviceTemplateViewSet)

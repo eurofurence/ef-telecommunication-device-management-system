@@ -32,6 +32,9 @@ class ItemTemplate(models.Model):
         help_text="User that owns the items that use this template"
     )
 
+    def get_pretty_name(self):
+        return f"{self.name} ({self.owner.shortname})"
+
     def __str__(self):
         return f"{self.name} ({self.owner.shortname}) #{self.pk}"
 
@@ -80,6 +83,9 @@ class Item(PolymorphicModel):
         from backend.models import ItemBinding
 
         return ItemBinding.objects.filter(item=self).exists()
+
+    def get_pretty_name(self):
+        return f"{self.template.name} ({self.template.owner.shortname})"
 
     def __str__(self):
         return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"

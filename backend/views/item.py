@@ -7,6 +7,9 @@ from rest_framework import filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from backend.models import RadioAccessoryTemplate
+from backend.serializers.radio import RadioAccessoryTemplateQuickAddSerializer
+
 
 class AbstractItemTemplateViewSet(ABC, viewsets.ModelViewSet):
     """
@@ -28,8 +31,8 @@ class AbstractItemViewSet(ABC, viewsets.ModelViewSet):
     ordering = ['id']
 
     @action(detail=False, methods=['get'])
-    def available(self, request, pk=None):
-        available_items = self.queryset.filter(itembinding__isnull=True)
+    def available(self, request):
+        available_items = self.filter_queryset(self.queryset.filter(itembinding__isnull=True))
         page = self.paginate_queryset(available_items)
 
         if page is not None:
@@ -38,3 +41,21 @@ class AbstractItemViewSet(ABC, viewsets.ModelViewSet):
 
         serializer = self.get_serializer(available_items, many=True)
         return Response(serializer.data)
+
+
+class QuickAddItemTemplatesViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows to list quick-add item templates.
+    """
+    queryset = RadioAccessoryTemplate.objects.filter(allow_quickadd=True)
+    serializer_class = RadioAccessoryTemplateQuickAddSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = '__all__'
+    ordering = ['id']
+    search_fields = [
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname'
+    ]

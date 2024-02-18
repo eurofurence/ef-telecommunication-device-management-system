@@ -39,6 +39,26 @@ class RadioAccessoryTemplateSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'owner', 'allow_quickadd']
 
 
+class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
+    owner = ItemOwnerSerializer()
+    statistics = serializers.SerializerMethodField()
+    type = serializers.ReadOnlyField(default='RadioAccessoryTemplate')
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
+
+    class Meta:
+        model = RadioAccessoryTemplate
+        fields = ['id', 'type', 'name', 'pretty_name', 'description', 'owner', 'allow_quickadd', 'statistics']
+
+    def get_statistics(self, obj):
+        total = RadioAccessory.objects.filter(template_id=obj.id).count()
+        handed_out = RadioAccessory.objects.filter(template_id=obj.id, itembinding__isnull=False).count()
+        return {
+            'total': total,
+            'handed_out': handed_out,
+            'available': total - handed_out
+        }
+
+
 class RadioAccessorySerializer(serializers.ModelSerializer):
     template = RadioAccessoryTemplateSerializer()
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
