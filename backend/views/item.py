@@ -16,12 +16,6 @@ class AbstractItemTemplateViewSet(ABC, viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = [
-        'name',
-        'description',
-        'owner__name',
-        'owner__shortname'
-    ]
 
 
 class AbstractItemViewSet(ABC, viewsets.ModelViewSet):
@@ -32,16 +26,6 @@ class AbstractItemViewSet(ABC, viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = [
-        'template__name',
-        'template__description',
-        'template__owner__name',
-        'template__owner__shortname',
-        'notes',
-        'serialnumber',
-        'created_at',
-        'updated_at'
-    ]
 
     @action(detail=False, methods=['get'])
     def available(self, request, pk=None):

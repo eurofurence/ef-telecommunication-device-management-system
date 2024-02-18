@@ -11,6 +11,12 @@ class RadioDeviceTemplateViewSet(AbstractItemTemplateViewSet):
     """
     queryset = RadioDeviceTemplate.objects.all()
     serializer_class = RadioDeviceTemplateSerializer
+    search_fields = [
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname'
+    ]
 
 
 class RadioDeviceViewSet(AbstractItemViewSet):
@@ -19,12 +25,17 @@ class RadioDeviceViewSet(AbstractItemViewSet):
     """
     queryset = RadioDevice.objects.all()
     serializer_class = RadioDeviceSerializer
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.search_fields += [
-            'callsign'
-        ]
+    search_fields = [
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'notes',
+        'serialnumber',
+        'created_at',
+        'updated_at',
+        'callsign'
+    ]
 
 
 class RadioAccessoryTemplateViewSet(AbstractItemTemplateViewSet):
@@ -33,12 +44,13 @@ class RadioAccessoryTemplateViewSet(AbstractItemTemplateViewSet):
     """
     queryset = RadioAccessoryTemplate.objects.all()
     serializer_class = RadioAccessoryTemplateSerializer
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.search_fields += [
-            'allow_quickadd'
-        ]
+    search_fields = [
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname',
+        'allow_quickadd'
+    ]
 
 
 class RadioAccessoryViewSet(AbstractItemViewSet):
@@ -47,6 +59,16 @@ class RadioAccessoryViewSet(AbstractItemViewSet):
     """
     queryset = RadioAccessory.objects.all()
     serializer_class = RadioAccessorySerializer
+    search_fields = [
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'notes',
+        'serialnumber',
+        'created_at',
+        'updated_at'
+    ]
 
 
 class PagerTemplateViewSet(AbstractItemTemplateViewSet):
@@ -55,6 +77,12 @@ class PagerTemplateViewSet(AbstractItemTemplateViewSet):
     """
     queryset = PagerTemplate.objects.all()
     serializer_class = PagerTemplateSerializer
+    search_fields = [
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname'
+    ]
 
 
 class PagerViewSet(AbstractItemViewSet):
@@ -63,3 +91,13 @@ class PagerViewSet(AbstractItemViewSet):
     """
     queryset = Pager.objects.all()
     serializer_class = PagerSerializer
+    search_fields = [
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'notes',
+        'serialnumber',
+        'created_at',
+        'updated_at'
+    ]
