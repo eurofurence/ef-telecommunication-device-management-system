@@ -1,4 +1,6 @@
 from django.db import models
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
 from polymorphic.models import PolymorphicModel
 
 from backend.models.user import User, ItemOwner
@@ -73,6 +75,7 @@ class Item(PolymorphicModel):
         help_text="Date and time when the item was last updated"
     )
 
+    @extend_schema_field(OpenApiTypes.BOOL)
     def handed_out(self):
         from backend.models import ItemBinding
 

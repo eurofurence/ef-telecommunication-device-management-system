@@ -1,45 +1,29 @@
-from rest_framework import viewsets
-from rest_framework import permissions
-from rest_framework import filters
-
 from backend.models import PhoneTemplate, Phone
 from backend.serializers.phone import PhoneTemplateSerializer, PhoneSerializer
+from backend.views.item import AbstractItemTemplateViewSet, AbstractItemViewSet
 
 
-class PhoneTemplateViewSet(viewsets.ModelViewSet):
+class PhoneTemplateViewSet(AbstractItemTemplateViewSet):
     """
     API endpoint that allows PhoneTemplates to be viewed or edited.
     """
     queryset = PhoneTemplate.objects.all()
     serializer_class = PhoneTemplateSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
-    ordering_fields = '__all__'
-    ordering = ['id']
-    search_fields = ['name', 'description', 'owner__name', 'owner__shortname']
 
 
-class PhoneViewSet(viewsets.ModelViewSet):
+class PhoneViewSet(AbstractItemViewSet):
     """
     API endpoint that allows Phones to be viewed or edited.
     """
     queryset = Phone.objects.all()
     serializer_class = PhoneSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
-    ordering_fields = '__all__'
-    ordering = ['id']
-    search_fields = [
-        'template__name',
-        'template__description',
-        'template__owner__name',
-        'notes',
-        'serialnumber',
-        'created_at',
-        'updated_at',
-        'extension',
-        'network',
-        'ip_address',
-        'mac_address',
-        'location'
-    ]
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.search_fields += [
+            'extension',
+            'network',
+            'ip_address',
+            'mac_address',
+            'location'
+        ]
