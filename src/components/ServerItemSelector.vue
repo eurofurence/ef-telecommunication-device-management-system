@@ -38,6 +38,8 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+    name: "ServerItemSelector",
+
     props: {
         fetchFunction: {type: Function, required: true},
         availableOnly: {type: Boolean, required: false, default: false},
@@ -50,6 +52,10 @@ export default defineComponent({
         searchPageSize: {type: Number, required: false, default: 10},
         itemIdsToExclude: {type: Array, required: false, default: []},
     },
+
+    emits: [
+        'update:selection'
+    ],
 
     data: () => ({
         searchQuery: '' as string | null,

@@ -164,6 +164,7 @@ const usersStore = useUsersStore();
 const itemsStore = useItemsStore();
 
 export default defineComponent({
+    name: "BindingsIssue",
 
     data() {
         return {

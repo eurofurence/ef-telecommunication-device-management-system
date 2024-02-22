@@ -173,7 +173,10 @@ import EventTimeline from "@/components/EventTimeline.vue";
 const bindingsStore = useBindingsStore();
 
 export default defineComponent({
+    name: "Overview",
+
     components: {EventTimeline},
+
     data() {
         return {
             statisticsLodaded: false,

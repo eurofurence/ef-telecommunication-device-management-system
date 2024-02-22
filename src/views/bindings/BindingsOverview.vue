@@ -15,6 +15,8 @@ import ItemOverview from "@/components/ItemOverview.vue";
 const bindingsStore = useBindingsStore();
 
 export default {
+    name: "BindingsOverview",
+
     components: {
         ItemOverview,
     },

@@ -15,7 +15,10 @@ import ItemOverview from "@/components/ItemOverview.vue";
 const itemsStore = useItemsStore();
 
 export default {
+    name: "RadioPagers",
+
     components: {ItemOverview},
+
     data: () => ({
         itemsTable: {
             headers: [

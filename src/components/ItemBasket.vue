@@ -87,6 +87,10 @@ export default defineComponent({
         readOnly: {type: Boolean, required: false, default: false},
     },
 
+    emits: [
+        'update:basket'
+    ],
+
     methods: {
         addItem(item: any, type: ItemType) {
             if (this.readOnly) {

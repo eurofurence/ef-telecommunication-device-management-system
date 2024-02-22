@@ -18,6 +18,8 @@ import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LImageOverlay } from "@vue-leaflet/vue-leaflet";
 
 export default {
+    name: "DeploymentMap",
+
     components: {
         LImageOverlay,
         LMap,

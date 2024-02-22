@@ -15,7 +15,13 @@ import ItemOverview from "@/components/ItemOverview.vue";
 const usersStore = useUsersStore();
 
 export default {
-    components: {ItemOverview, ItemTable},
+    name: "ItemOwners",
+
+    components: {
+        ItemOverview,
+        ItemTable
+    },
+
     data: () => ({
         itemsTable: {
             headers: [

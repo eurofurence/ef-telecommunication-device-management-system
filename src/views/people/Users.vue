@@ -15,7 +15,12 @@ const usersStore = useUsersStore();
 
 export default {
     // TODO: Remove user creation button. This should only be done via the backend. Need to adjust this in ItemTable component
-    components: {ItemOverview},
+    name: "Users",
+
+    components: {
+        ItemOverview
+    },
+
     data: () => ({
         itemsTable: {
             headers: [

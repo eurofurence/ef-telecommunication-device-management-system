@@ -57,6 +57,8 @@ import {PropUtils} from "@/classes/util/PropUtils";
 import ItemTable from "@/components/ItemTable.vue";
 
 export default defineComponent({
+    name: "ItemOverview",
+
     components: {
         ItemTable,
     },

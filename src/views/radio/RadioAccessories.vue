@@ -17,6 +17,8 @@ import ItemOverview from "@/components/ItemOverview.vue";
 const itemsStore = useItemsStore();
 
 export default {
+    name: "RadioAccessories",
+
     components: {
         ItemOverview,
     },

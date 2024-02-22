@@ -15,7 +15,12 @@ import ItemOverview from "@/components/ItemOverview.vue";
 const itemsStore = useItemsStore();
 
 export default {
-    components: {ItemOverview},
+    name: "VoipCallboxes",
+
+    components: {
+        ItemOverview
+    },
+
     data: () => ({
         itemsTable: {
             headers: [

@@ -69,6 +69,7 @@ const authStore = useAuthStore();
 
 export default {
     name: 'LoginForm',
+
     data() {
         return {
             authStore: authStore,
@@ -77,6 +78,7 @@ export default {
             loginFormErrorMessage: '',
         }
     },
+
     methods: {
         async login() {
             try {

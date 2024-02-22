@@ -44,6 +44,7 @@ if (!authStore.isLoggedIn) {
 
 export default {
     name: 'LogoutForm',
+
     methods: {
         logout() {
             authStore.logout();

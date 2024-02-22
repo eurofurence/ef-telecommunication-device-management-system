@@ -131,6 +131,13 @@ import {ExpandedRowProp} from "@/types/ExpandedRowProps";
 import {TableHeader} from "@/types/TableHeader";
 
 export default defineComponent({
+    name: "ItemTable",
+
+    emits: [
+        'createItem',
+        'deleteItems',
+    ],
+
     computed: {
         PropUtils() {
             return PropUtils
