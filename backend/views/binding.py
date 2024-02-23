@@ -51,6 +51,14 @@ class ItemBindingViewSet(
             return ItemBinding.objects.all()
 
     def create(self, request, *args, **kwargs):
+        """
+        Creates new bindings from the given set of items and item templates.
+
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         # Sanitize and validate data
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -74,27 +82,36 @@ class ItemBindingViewSet(
         # Bind all items
         @transaction.atomic
         def create_bindings():
+            created = []
+
             # Get user to bind items to
             target_user = User.objects.get(pk=data['user_id'])
 
             # Bind items by ID
             for item_id in data['item_ids']:
-                ItemBinding(
+                binding = ItemBinding(
                     item=Item.objects.get(pk=item_id),
                     user=target_user,
                     bound_by=request.user,
-                ).save()
+                )
+                binding.save()
+                created.append(binding)
 
             # Bind quick add items
             for tpl_id in data['item_template_ids']:
-                ItemBinding(
+                binding = ItemBinding(
                     item=RadioAccessory.objects.filter(template=tpl_id, itembinding__isnull=True).order_by('?').first(),
                     user=target_user,
                     bound_by=request.user,
-                ).save()
-        try:
-            create_bindings()
-        except IntegrityError as e:
-            return Response(f"Item was already bound in the meantime ...", status=409)
+                )
+                binding.save()
+                created.append(binding)
 
-        return Response("TODO", status=200)
+            return created
+
+        try:
+            bindings = create_bindings()
+            created_bindings_serializer = self.get_serializer(bindings, many=True)
+            return Response(created_bindings_serializer.data, status=201)
+        except IntegrityError as e:
+            return Response(f"At least one requested item was already bound in the meantime. Aborting ...", status=409)
