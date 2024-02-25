@@ -42,6 +42,26 @@ export const useBindingsStore = defineStore("bindings", {
                 item_ids: itemIdsToBind,
                 item_template_ids: itemTemplateIdsToBind,
             });
+        },
+
+        /**
+         * Deletes a single item binding via the API.
+         *
+         * @param bindingId ID of the binding to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteBinding(bindingId: number) {
+            return APIUtils.delete('/item_bindings/', bindingId.toString());
+        },
+
+        /**
+         * Bulk deletes bindings via the API.
+         *
+         * @param bindingIds List of binding IDs to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteBindings(bindingIds: number[]) {
+            return APIUtils.delete('/item_bindings/bulk/', bindingIds.join(',') + '/');
         }
     },
 })

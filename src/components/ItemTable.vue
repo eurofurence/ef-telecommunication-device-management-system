@@ -33,7 +33,7 @@
                     <v-btn
                         v-if="selected.length > 0"
                         color="error"
-                        @click="$emit('deleteItems', selected)"
+                        @click="$emit('click:deleteItems', selected)"
                         class="my-3 mx-1"
                     >
                         <v-icon left>mdi-trash-can-outline</v-icon>
@@ -45,7 +45,7 @@
                     <v-btn
                         v-if="selected.length === 0"
                         color="success"
-                        @click="$emit('createItem')"
+                        @click="$emit('click:createItem')"
                         class="my-3 mx-1"
                     >
                         <v-icon left>mdi-plus</v-icon>
@@ -111,7 +111,7 @@
                     <v-btn
                         class="mx-4 mb-4"
                         color="error"
-                        @click="$emit('deleteItems', [item.id])"
+                        @click="$emit('click:deleteItems', [item.id])"
                     >
                         <v-icon left>mdi-trash-can-outline</v-icon>
                         Delete
@@ -134,8 +134,8 @@ export default defineComponent({
     name: "ItemTable",
 
     emits: [
-        'createItem',
-        'deleteItems',
+        'click:createItem',
+        'click:deleteItems',
     ],
 
     computed: {

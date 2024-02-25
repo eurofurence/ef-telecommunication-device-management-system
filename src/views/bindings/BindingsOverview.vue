@@ -4,8 +4,26 @@
         title="Bindings"
         icon="mdi-basket-outline"
         :items-table="itemsTable"
-        @deleteItems="console.error('deleteItems not implemented')"
+        @click:delete-items="deleteBindings"
+        @click:create-item="$router.push('/bindings/issue')"
     />
+    <v-snackbar
+        v-model="snackbar"
+        :color="snackbarColor"
+        :timeout="5000"
+    >
+        {{ snackbarContent }}
+
+        <template v-slot:actions>
+            <v-btn
+                color="blue"
+                variant="text"
+                @click="snackbar = false"
+            >
+                Dismiss
+            </v-btn>
+        </template>
+    </v-snackbar>
 </template>
 
 <script lang="ts">
@@ -42,6 +60,32 @@ export default {
             ],
             fetchFunction: bindingsStore.fetchBindingsPage,
         },
+        snackbar: false,
+        snackbarColor: "error",
+        snackbarContent: "",
     }),
+
+    methods: {
+        deleteBindings(bindingIds: any[]) {
+            // TODO: Replace with proper dialog
+            if (confirm("Are you sure you want to delete the selected bindings?")) {
+                bindingsStore.deleteBindings(bindingIds)
+                    .then((resp) => {
+                        this.snackbarContent = "Deleted " + bindingIds.length + " binding(s)";
+                        this.snackbarColor = "success";
+                        this.snackbar = true;
+                    })
+                    .catch((error) => {
+                        this.snackbarContent = "Failed to delete binding(s)";
+                        this.snackbarColor = "error";
+                        this.snackbar = true;
+                        console.error("Failed to delete binding(s):", error);
+                    });
+
+                // Force re-render of table
+                this.$refs.itemOverview.reloadItems();
+            }
+        }
+    }
 }
 </script>

@@ -30,6 +30,8 @@
                         :fetch-function="itemsTable.fetchFunction"
                         :initial-search="itemsTable.search ?? ''"
                         :items-per-page="itemsTable.itemsPerPage ?? 25"
+                        @click:createItem="$emit('click:createItem', $event)"
+                        @click:deleteItems="$emit('click:deleteItems', $event)"
                     ></ItemTable>
                 </v-window-item>
 
@@ -41,6 +43,8 @@
                         :fetch-function="templatesTable.fetchFunction"
                         :initial-search="templatesTable.search ?? ''"
                         :items-per-page="templatesTable.itemsPerPage ?? 25"
+                        @click:createItem="$emit('click:createItemTemplate', $event)"
+                        @click:deleteItems="$emit('click:deleteItemTemplates', $event)"
                     ></ItemTable>
                 </v-window-item>
             </v-window>
@@ -62,6 +66,13 @@ export default defineComponent({
     components: {
         ItemTable,
     },
+
+    emits: [
+        'click:createItem',
+        'click:createItemTemplate',
+        'click:deleteItems',
+        'click:deleteItemTemplates',
+    ],
 
     props: {
         title: {type: String, required: true},
