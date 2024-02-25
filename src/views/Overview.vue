@@ -151,6 +151,28 @@
             </v-col>
         </v-row>
         <v-row>
+            <v-col class="text-center">
+                <v-btn
+                    size="x-large"
+                    color="success"
+                    prepend-icon="mdi-plus"
+                    class="mx-4"
+                    @click="$router.push('/bindings/issue')"
+                >
+                    Issue Items
+                </v-btn>
+                <v-btn
+                    size="x-large"
+                    color="error"
+                    prepend-icon="mdi-trash-can-outline"
+                    class="mx-4"
+                    @click="$router.push('/bindings/return')"
+                >
+                    Return Items
+                </v-btn>
+            </v-col>
+        </v-row>
+        <v-row>
             <v-col>
                 <h2>Latest Events</h2>
             </v-col>
