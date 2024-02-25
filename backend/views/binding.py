@@ -5,6 +5,8 @@ from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework import permissions
 from rest_framework import filters
+from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from backend.models import ItemBinding, Item
@@ -49,6 +51,26 @@ class ItemBindingViewSet(
             return ItemBinding.objects.filter(user__pk=self.request.query_params.get('userid'))
         else:
             return ItemBinding.objects.all()
+
+    @action(detail=False, methods=['delete'], url_path="bulk/(?P<ids>[0-9,]+)")
+    def bulk(self, request, ids):
+        """
+        Deletes multiple bindings at once. This operation is atomic.
+
+        :param request:
+        :param ids:
+        :return:
+        """
+        binding_ids_to_delete = [int(pk) for pk in ids.split(',')]
+
+        @transaction.atomic
+        def delete_bindings():
+            for id in binding_ids_to_delete:
+                get_object_or_404(ItemBinding, pk=id).delete()
+
+        delete_bindings()
+
+        return Response(status=204)
 
     def create(self, request, *args, **kwargs):
         """
