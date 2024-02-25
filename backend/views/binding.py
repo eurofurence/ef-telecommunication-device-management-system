@@ -53,7 +53,7 @@ class ItemBindingViewSet(
             return ItemBinding.objects.all()
 
     @action(detail=False, methods=['delete'], url_path="bulk/(?P<ids>[0-9,]+)")
-    def bulk(self, request, ids):
+    def bulk_delete(self, request, ids):
         """
         Deletes multiple bindings at once. This operation is atomic.
 

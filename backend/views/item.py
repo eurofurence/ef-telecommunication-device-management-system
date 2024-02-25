@@ -1,13 +1,15 @@
 from abc import ABC
 
+from django.db import transaction
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters
 
 from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
-from backend.models import RadioAccessoryTemplate
+from backend.models import Item, RadioAccessoryTemplate
 from backend.serializers.radio import RadioAccessoryTemplateQuickAddSerializer
 
 
@@ -41,6 +43,26 @@ class AbstractItemViewSet(ABC, viewsets.ModelViewSet):
 
         serializer = self.get_serializer(available_items, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['delete'], url_path="bulk/(?P<ids>[0-9,]+)")
+    def bulk_delete(self, request, ids):
+        """
+        Deletes multiple items at once. This operation is atomic.
+
+        :param request:
+        :param ids:
+        :return:
+        """
+        item_ids_to_delete = [int(pk) for pk in ids.split(',')]
+
+        @transaction.atomic
+        def delete_bindings():
+            for id in item_ids_to_delete:
+                get_object_or_404(Item, pk=id).delete()
+
+        delete_bindings()
+
+        return Response(status=204)
 
 
 class QuickAddItemTemplatesViewSet(viewsets.ReadOnlyModelViewSet):
