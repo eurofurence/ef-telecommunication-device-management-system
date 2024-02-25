@@ -34,6 +34,16 @@ export class APIUtils {
     }
 
     /**
+     * Posts data to the API using HTTP POST.
+     *
+     * @param apipath API path to send request to (e.g. '/users/').
+     * @param data Data to post.
+     */
+    public static async post(apipath: string, data: any) {
+        return axios.post(`${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}`, data);
+    }
+
+    /**
      * Fetches a page of data from the API.
      *
      * @param apipath API path to query (e.g. '/users/').

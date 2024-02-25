@@ -80,6 +80,7 @@
                                     :basket-items="itemsToBind"
                                     :basket-item-templates="itemTemplatesToBind"
                                     @update:basket="basketIsEmpty = $refs.basket.isEmpty(); itemIdsToExclude = $refs.basket.getItemIds();"
+                                    :read-only="false"
                                 ></ItemBasket>
                             </v-card-text>
                         </v-card>
@@ -99,7 +100,7 @@
                         </v-card>
 
                         <ItemBasket
-                            ref="basket"
+                            ref="reviewBasket"
                             :basket-items="itemsToBind"
                             :basket-item-templates="itemTemplatesToBind"
                             :read-only="true"
@@ -107,12 +108,33 @@
                     </template>
 
                     <template v-slot:item.4>
-                        <v-card title="Binding Created" flat>
-                            <v-alert
-                                type="error"
-                                title="Not implemented yet"
-                                text="Sorry Dave, I'm afraid I can't do that. This functionality is not implemented yet. Please try again later."
-                            ></v-alert>
+                        <v-card title="Create Binding" flat>
+                            <div v-if="bindingInProgress">
+                                <v-alert
+                                    type="info"
+                                    title="Binding items"
+                                    text="Binding items to user. Please wait..."
+                                >
+                                </v-alert>
+                            </div>
+                            <div v-if="!bindingInProgress">
+                                <div v-if="bindingError">
+                                    <v-alert
+                                        v-if="bindingError"
+                                        type="error"
+                                        title="Error"
+                                        :text="bindingError"
+                                    ></v-alert>
+                                </div>
+                                <div v-if="!bindingError">
+                                    <v-alert
+                                        type="success"
+                                        title="Binding created"
+                                        :text="'Successfully bound ' + createdBindings.length + ' items to ' + selectedUser.pretty_name + '.'"
+                                    >
+                                    </v-alert>
+                                </div>
+                            </div>
                         </v-card>
                     </template>
 
@@ -159,9 +181,11 @@ import {useUsersStore} from "@/store/users";
 import {useItemsStore} from "@/store/items";
 import {ItemTemplateType, ItemType} from "@/types/ItemType";
 import { emptyItemsBasket, emptyItemTemplatesBasket } from "@/components/ItemBasket.vue";
+import {useBindingsStore} from "@/store/bindings";
 
 const usersStore = useUsersStore();
 const itemsStore = useItemsStore();
+const bindingsStore = useBindingsStore();
 
 export default defineComponent({
     name: "BindingsIssue",
@@ -183,6 +207,11 @@ export default defineComponent({
             // Step 3 (Review)
             itemsToBind: emptyItemsBasket(),
             itemTemplatesToBind: emptyItemTemplatesBasket(),
+
+            // Step 4 (Binding)
+            bindingInProgress: false,
+            bindingError: "",
+            createdBindings: [],
         }
     },
 
@@ -222,10 +251,42 @@ export default defineComponent({
 
     watch: {
         currentStep(newStep, oldStep) {
+            // Enter into item selection step
             if (newStep == 2) {
                 itemsStore.fetchQuickAddTemplates().then((resp) => {
                     this.quickAddTemplates = resp.items;
                 });
+            }
+
+            // Enter into binding creation step
+            if (newStep == 4) {
+                this.bindingInProgress = true;
+                bindingsStore.createBindings(
+                    this.selectedUser.id,
+                    [...this.itemsToBind.keys()],
+                    this.itemTemplatesToBind.map((template) => template.template.id)
+                )
+                    .then((resp) => {
+                        this.createdBindings = resp.data;
+                        this.bindingError = "";
+                        this.bindingInProgress = false;
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            // Print object as json is response.data is object
+                            if (typeof error.response.data === "object") {
+                                this.bindingError = JSON.stringify(error.response.data);
+                            } else {
+                                this.bindingError = error.response.data;
+                            }
+                        } else if (error.request) {
+                            this.bindingError = "The request was made but no response was received. Please try again later.";
+                        } else {
+                            this.bindingError = error.message;
+                        }
+
+                        this.bindingInProgress = false;
+                    })
             }
         }
     },
@@ -234,9 +295,11 @@ export default defineComponent({
         reset() {
             this.$refs.itemSelector.clear();
             this.$refs.userSelector.clear();
-            this.$refs.basket.clear();
             this.itemsToBind = emptyItemsBasket();
             this.itemTemplatesToBind = emptyItemTemplatesBasket();
+            this.bindingInProgress = false;
+            this.bindingError = "";
+            this.createdBindings = [];
             this.currentStep = 1;
         },
 

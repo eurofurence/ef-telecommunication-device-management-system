@@ -25,6 +25,23 @@ export const useBindingsStore = defineStore("bindings", {
          */
         async fetchStatistics(): Promise<SystemStatistics> {
             return await APIUtils.get('/statistics/').then(response => response.data);
+        },
+
+        /**
+         * Creates new bindings between given items and the given user.
+         *
+         * @param userid ID of the user to bind the items to
+         * @param itemIdsToBind IDs of the items to bind
+         * @param itemTemplateIdsToBind IDs of quick add item templates to bind matching items
+         *
+         * @return API response. Created bindings on success.
+         */
+        async createBindings(userid: number, itemIdsToBind: number[], itemTemplateIdsToBind: number[]) {
+            return APIUtils.post('/item_bindings/', {
+                user_id: userid,
+                item_ids: itemIdsToBind,
+                item_template_ids: itemTemplateIdsToBind,
+            });
         }
     },
 })
