@@ -186,6 +186,10 @@ export default defineComponent({
         reload() {
             this.tableKey++;
         },
+
+        deselectItemsByKey(keys: number[]) {
+            this.selected = this.selected.filter((key: any) => !keys.includes(key));
+        },
     },
 })
 </script>

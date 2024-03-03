@@ -82,7 +82,8 @@ export default {
                         console.error("Failed to delete binding(s):", error);
                     });
 
-                // Force re-render of table
+                // Deselect deleted items and force re-render of table
+                this.$refs.itemOverview.deselectItemsByKey(bindingIds);
                 this.$refs.itemOverview.reloadItems();
             }
         }

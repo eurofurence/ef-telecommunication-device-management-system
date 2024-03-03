@@ -101,6 +101,14 @@ export default defineComponent({
         reloadTemplates() {
             this.$refs.templatesTable.reload();
         },
+
+        deselectItemsByKey(keys: number[]) {
+            this.$refs.itemsTable.deselectItemsByKey(keys);
+        },
+
+        deselectTemplatesByKey(keys: number[]) {
+            this.$refs.templatesTable.deselectItemsByKey(keys);
+        },
     },
 })
 </script>
