@@ -19,6 +19,16 @@ export const useBindingsStore = defineStore("bindings", {
         },
 
         /**
+         * Fetches all bindings for a given user from the API.
+         *
+         * @param userid ID of the user to fetch the bindings for.
+         * @return List of item bindings for the given user.
+         */
+        async fetchBindingsForUser(userid: number) {
+            return APIUtils.get('/item_bindings/user/' + userid + '/');
+        },
+
+        /**
          * Fetches statistical information from the API.
          *
          * @return Object containing statistical information.

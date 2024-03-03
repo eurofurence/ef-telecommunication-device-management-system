@@ -1,6 +1,6 @@
 <template>
     <v-card flat>
-        <v-card-title>Basket</v-card-title>
+        <v-card-title :v-if="title">{{ title }}</v-card-title>
         <v-card-text>
             <v-list>
                 <v-list-subheader v-if="isEmpty()">
@@ -82,8 +82,9 @@ export default defineComponent({
     name: "ItemBasket",
 
     props: {
-        basketItems: {type: Map, required: true},
-        basketItemTemplates: {type: Array, required: true},
+        title: {type: [String, null], required: false, default: "Basket"},
+        basketItems: {type: Map, required: false, default: emptyItemsBasket},
+        basketItemTemplates: {type: Array, required: false, default: emptyItemTemplatesBasket},
         readOnly: {type: Boolean, required: false, default: false},
     },
 
