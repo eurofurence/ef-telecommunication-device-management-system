@@ -72,6 +72,19 @@ class ItemBindingViewSet(
 
         return Response(status=204)
 
+    @action(detail=False, methods=['get'], url_path="user/(?P<userid>\\d+)")
+    def get_user_bindings(self, request, userid):
+        """
+        Returns all bindings for the given user ID.
+
+        :param request:
+        :param userid:
+        :return:
+        """
+        bindings = ItemBinding.objects.filter(user__id=userid)
+        serializer = self.get_serializer(bindings, many=True)
+        return Response(serializer.data)
+
     def create(self, request, *args, **kwargs):
         """
         Creates new bindings from the given set of items and item templates.
