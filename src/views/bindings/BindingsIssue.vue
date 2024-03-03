@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <h1>Create Binding</h1>
+                <h1>Hand Out Items</h1>
             </v-col>
         </v-row>
         <v-row>
@@ -112,9 +112,13 @@
                             <div v-if="bindingInProgress">
                                 <v-alert
                                     type="info"
-                                    title="Binding items"
                                     text="Binding items to user. Please wait..."
                                 >
+                                    <v-progress-linear
+                                        class="mt-3"
+                                        color="primary"
+                                        indeterminate
+                                    ></v-progress-linear>
                                 </v-alert>
                             </div>
                             <div v-if="!bindingInProgress">
@@ -131,8 +135,7 @@
                                         type="success"
                                         title="Binding created"
                                         :text="'Successfully bound ' + createdBindings.length + ' items to ' + selectedUser.pretty_name + '.'"
-                                    >
-                                    </v-alert>
+                                    ></v-alert>
                                 </div>
                             </div>
                         </v-card>
@@ -153,7 +156,8 @@
                             :disabled="!stepperCanAdvance"
                             @click="currentStep++"
                         >
-                            Next
+                            <span v-if="currentStep != 3">Next</span>
+                            <span v-if="currentStep == 3">Confirm</span>
                         </v-btn>
                         <v-btn
                             v-if="currentStep == 4"
@@ -265,28 +269,26 @@ export default defineComponent({
                     this.selectedUser.id,
                     [...this.itemsToBind.keys()],
                     this.itemTemplatesToBind.map((template) => template.template.id)
-                )
-                    .then((resp) => {
-                        this.createdBindings = resp.data;
-                        this.bindingError = "";
-                        this.bindingInProgress = false;
-                    })
-                    .catch((error) => {
-                        if (error.response) {
-                            // Print object as json is response.data is object
-                            if (typeof error.response.data === "object") {
-                                this.bindingError = JSON.stringify(error.response.data);
-                            } else {
-                                this.bindingError = error.response.data;
-                            }
-                        } else if (error.request) {
-                            this.bindingError = "The request was made but no response was received. Please try again later.";
+                ).then((resp) => {
+                    this.createdBindings = resp.data;
+                    this.bindingError = "";
+                    this.bindingInProgress = false;
+                }).catch((error) => {
+                    if (error.response) {
+                        // Print object as json is response.data is object
+                        if (typeof error.response.data === "object") {
+                            this.bindingError = JSON.stringify(error.response.data);
                         } else {
-                            this.bindingError = error.message;
+                            this.bindingError = error.response.data;
                         }
+                    } else if (error.request) {
+                        this.bindingError = "The request was made but no response was received. Please try again later.";
+                    } else {
+                        this.bindingError = error.message;
+                    }
 
-                        this.bindingInProgress = false;
-                    })
+                    this.bindingInProgress = false;
+                })
             }
         }
     },
