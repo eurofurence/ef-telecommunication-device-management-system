@@ -48,6 +48,36 @@ export class LogEventType {
         }
     }
 
+    static readonly CREATE_ITEM_OWNER: LogEventTypeDeclaration = {
+        key: 'CREATE_ITEM_OWNER',
+        label: 'Item owner created',
+        color: 'green-lighten-1',
+        icon: 'mdi-head-plus-outline',
+        description(data: any): string {
+            return `TODO: ${data}`;
+        }
+    }
+
+    static readonly DELETE_ITEM_OWNER: LogEventTypeDeclaration = {
+        key: 'DELETE_ITEM_OWNER',
+        label: 'Item owner deleted',
+        color: 'red-lighten-1',
+        icon: 'mdi-head-remove-outline',
+        description(data: any): string {
+            return `TODO: ${data}`;
+        }
+    }
+
+    static readonly UPDATE_ITEM_OWNER: LogEventTypeDeclaration = {
+        key: 'UPDATE_ITEM_OWNER',
+        label: 'Item owner updated',
+        color: 'orange-darken-1',
+        icon: 'mdi-head-outline',
+        description(data: any): string {
+            return `TODO: ${data}`;
+        }
+    }
+
     static readonly CREATE_ITEM: LogEventTypeDeclaration = {
         key: 'CREATE_ITEM',
         label: 'Item created',
