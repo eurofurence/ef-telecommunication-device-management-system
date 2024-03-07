@@ -179,7 +179,9 @@
         </v-row>
         <v-row>
             <v-col>
-                <EventTimeline/>
+                <EventTimeline
+                    :events="logEvents"
+                ></EventTimeline>
             </v-col>
         </v-row>
     </v-container>
@@ -191,8 +193,10 @@ import {defineComponent} from "vue";
 import {useBindingsStore} from "@/store/bindings";
 import {SystemStatistics} from "@/types/SystemStatistics";
 import EventTimeline from "@/components/EventTimeline.vue";
+import {useEventLogStore} from "@/store/eventlog";
 
 const bindingsStore = useBindingsStore();
+const eventLogStore = useEventLogStore();
 
 export default defineComponent({
     name: "Overview",
@@ -203,6 +207,9 @@ export default defineComponent({
         return {
             statisticsLodaded: false,
             statistics: Object as SystemStatistics,
+
+            logEventsLoaded: false,
+            logEvents: []
         }
     },
 
@@ -219,7 +226,12 @@ export default defineComponent({
         bindingsStore.fetchStatistics().then((response) => {
             this.statistics = response;
             this.statisticsLodaded = true;
-        })
+        });
+
+        eventLogStore.fetchEventLogsPage(1, 10, ['timestamp'], '').then((response) => {
+            this.logEvents = response.items;
+            this.logEventsLoaded = true;
+        });
     },
 })
 </script>
