@@ -164,7 +164,7 @@ def item_post_delete(instance, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
-    EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM_TEMPLATE, {
+    EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM, {
         'id': instance.id,
         # TODO: Not implemented yet
     })
