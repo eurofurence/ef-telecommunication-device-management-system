@@ -1,6 +1,6 @@
 from django.db import models
 
-from backend.models.user import User
+from backend.models import User
 
 
 class EventLogEntry(models.Model):
@@ -18,6 +18,7 @@ class EventLogEntry(models.Model):
         UPDATE_ITEM_TEMPLATE = 'UPDATE_ITEM_TEMPLATE', 'Item template updated'
         CREATE_ITEM_BINDING = 'CREATE_ITEM_BINDING', 'Item binding created'
         DELETE_ITEM_BINDING = 'DELETE_ITEM_BINDING', 'Item binding deleted'
+        UPDATE_ITEM_BINDING = 'UPDATE_ITEM_BINDING', 'Item binding updated'
 
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     timestamp = models.DateTimeField(

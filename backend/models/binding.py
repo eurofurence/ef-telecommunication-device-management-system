@@ -1,7 +1,10 @@
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
-from backend.models.item import Item
-from backend.models.user import User
+from backend.models import Item
+from backend.models import User
+from backend.models import EventLogEntry
 
 
 class ItemBinding(models.Model):
@@ -48,3 +51,47 @@ class ItemBinding(models.Model):
         :return: Number of users with at least one binding
         """
         return cls.objects.values('user').distinct().count()
+
+
+@receiver(post_save, sender=ItemBinding, dispatch_uid="item_binding_post_save")
+def post_save_receiver(instance, created, update_fields, **kwargs):
+    """
+    Post-save signal receiver for ItemBinding model.
+
+    :param instance: The saved model instance
+    :param created: True if the instance was created right now, False on update
+    :param update_fields: Saved fields
+    """
+    if created:
+        EventLogEntry.log(instance.bound_by, EventLogEntry.Action.CREATE_ITEM_BINDING, {
+            "id": instance.id,
+            "item": {
+                "pretty_name": instance.item.get_pretty_name(),
+            },
+            "user": {
+                "pretty_name": instance.user.get_pretty_name(),
+            }
+        })
+    else:
+        EventLogEntry.log(instance.bound_by, EventLogEntry.Action.UPDATE_ITEM_BINDING, {
+            "id": instance.id,
+            **update_fields
+        })
+
+
+@receiver(post_delete, sender=ItemBinding, dispatch_uid="item_binding_post_delete")
+def post_delete_receiver(instance, **kwargs):
+    """
+    Post-delete signal receiver for ItemBinding model.
+
+    :param instance: The deleted model instance
+    """
+    EventLogEntry.log(instance.bound_by, EventLogEntry.Action.DELETE_ITEM_BINDING, {
+        "id": instance.id,
+        "item": {
+            "pretty_name": instance.item.get_pretty_name(),
+        },
+        "user": {
+            "pretty_name": instance.user.get_pretty_name(),
+        }
+    })
