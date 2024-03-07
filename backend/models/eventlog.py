@@ -10,6 +10,9 @@ class EventLogEntry(models.Model):
 
     class Action(models.TextChoices):
         USER_LOGIN = 'USER_LOGIN', 'User logged in'
+        CREATE_ITEM_OWNER = 'CREATE_ITEM_OWNER', 'Item owner created'
+        DELETE_ITEM_OWNER = 'DELETE_ITEM_OWNER', 'Item owner deleted'
+        UPDATE_ITEM_OWNER = 'UPDATE_ITEM_OWNER', 'Item owner updated'
         CREATE_ITEM = 'CREATE_ITEM', 'Item created'
         DELETE_ITEM = 'DELETE_ITEM', 'Item deleted'
         UPDATE_ITEM = 'UPDATE_ITEM', 'Item updated'

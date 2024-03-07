@@ -1,9 +1,14 @@
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.forms import model_to_dict
+from django_currentuser.middleware import get_current_user
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema_field
 from polymorphic.models import PolymorphicModel
 
 from backend.models.user import User, ItemOwner
+from backend.models import EventLogEntry
 
 
 class ItemTemplate(models.Model):
@@ -37,6 +42,44 @@ class ItemTemplate(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.owner.shortname}) #{self.pk}"
+
+
+@receiver(post_save, sender=ItemTemplate, dispatch_uid="item_template_post_save")
+def item_template_post_save(instance, created, **kwargs):
+    """
+    Logs creation and update of item templates.
+
+    :param instance: Saved model instance
+    :param created: True if instance was created. False if updated
+    :param kwargs: Additional arguments
+    :return: None
+    """
+    if created:
+        action = EventLogEntry.Action.CREATE_ITEM_TEMPLATE
+    else:
+        action = EventLogEntry.Action.UPDATE_ITEM_TEMPLATE
+
+    EventLogEntry.log(get_current_user(), action, {
+        'id': instance.id,
+        'name': instance.name,
+        'owner': model_to_dict(instance.owner, fields=['name', 'shortname'])
+    })
+
+
+@receiver(post_delete, sender=ItemTemplate, dispatch_uid="item_template_post_delete")
+def item_template_post_delete(instance, **kwargs):
+    """
+    Logs deletion of item templates.
+
+    :param instance: Saved model instance
+    :param kwargs: Additional arguments
+    :return: None
+    """
+    EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM_TEMPLATE, {
+        'id': instance.id,
+        'name': instance.name,
+        'owner': model_to_dict(instance.owner, fields=['name', 'shortname'])
+    })
 
 
 class Item(PolymorphicModel):
@@ -89,3 +132,39 @@ class Item(PolymorphicModel):
 
     def __str__(self):
         return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"
+
+
+@receiver(post_save, sender=Item, dispatch_uid="item_post_save")
+def item_post_save(instance, created, **kwargs):
+    """
+    Logs creation and update of item templates.
+
+    :param instance: Saved model instance
+    :param created: True if instance was created. False if updated
+    :param kwargs: Additional arguments
+    :return: None
+    """
+    if created:
+        action = EventLogEntry.Action.CREATE_ITEM
+    else:
+        action = EventLogEntry.Action.UPDATE_ITEM
+
+    EventLogEntry.log(get_current_user(), action, {
+        'id': instance.id,
+        # TODO: Not implemented yet
+    })
+
+
+@receiver(post_delete, sender=Item, dispatch_uid="item_post_delete")
+def item_post_delete(instance, **kwargs):
+    """
+    Logs deletion of items.
+
+    :param instance: Saved model instance
+    :param kwargs: Additional arguments
+    :return: None
+    """
+    EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM_TEMPLATE, {
+        'id': instance.id,
+        # TODO: Not implemented yet
+    })

@@ -54,37 +54,39 @@ class ItemBinding(models.Model):
 
 
 @receiver(post_save, sender=ItemBinding, dispatch_uid="item_binding_post_save")
-def post_save_receiver(instance, created, update_fields, **kwargs):
+def item_binding_post_save(instance, created, **kwargs):
     """
     Post-save signal receiver for ItemBinding model.
 
     :param instance: The saved model instance
     :param created: True if the instance was created right now, False on update
-    :param update_fields: Saved fields
+    :param kwargs: Additional arguments
+    :return: None
     """
     if created:
-        EventLogEntry.log(instance.bound_by, EventLogEntry.Action.CREATE_ITEM_BINDING, {
-            "id": instance.id,
-            "item": {
-                "pretty_name": instance.item.get_pretty_name(),
-            },
-            "user": {
-                "pretty_name": instance.user.get_pretty_name(),
-            }
-        })
+        action = EventLogEntry.Action.CREATE_ITEM_BINDING
     else:
-        EventLogEntry.log(instance.bound_by, EventLogEntry.Action.UPDATE_ITEM_BINDING, {
-            "id": instance.id,
-            **update_fields
-        })
+        action = EventLogEntry.Action.UPDATE_ITEM_BINDING
+
+    EventLogEntry.log(instance.bound_by, action, {
+        "id": instance.id,
+        "item": {
+            "pretty_name": instance.item.get_pretty_name(),
+        },
+        "user": {
+            "pretty_name": instance.user.get_pretty_name(),
+        }
+    })
 
 
 @receiver(post_delete, sender=ItemBinding, dispatch_uid="item_binding_post_delete")
-def post_delete_receiver(instance, **kwargs):
+def item_binding_post_delete(instance, **kwargs):
     """
     Post-delete signal receiver for ItemBinding model.
 
     :param instance: The deleted model instance
+    :param kwargs: Additional arguments
+    :return: None
     """
     EventLogEntry.log(instance.bound_by, EventLogEntry.Action.DELETE_ITEM_BINDING, {
         "id": instance.id,
