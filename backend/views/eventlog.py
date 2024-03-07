@@ -20,7 +20,7 @@ class EventLogEntryViewSet(
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
-    ordering = ['id']
+    ordering = ['-id']
     search_fields = [
         'user__name',
         'user__shortname',

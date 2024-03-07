@@ -44,7 +44,7 @@ export default defineComponent({
                     message: type.label,
                     description: type.description(entry.data),
                 }
-            }).reverse()
+            })
         }
     },
 })
