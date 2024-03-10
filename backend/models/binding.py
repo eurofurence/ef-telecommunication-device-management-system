@@ -71,9 +71,11 @@ def item_binding_post_save(instance, created, **kwargs):
     EventLogEntry.log(instance.bound_by, action, {
         "id": instance.id,
         "item": {
+            "id": instance.item.id,
             "pretty_name": instance.item.get_pretty_name(),
         },
         "user": {
+            "id": instance.user.id,
             "pretty_name": instance.user.get_pretty_name(),
         }
     })
@@ -91,9 +93,11 @@ def item_binding_post_delete(instance, **kwargs):
     EventLogEntry.log(instance.bound_by, EventLogEntry.Action.DELETE_ITEM_BINDING, {
         "id": instance.id,
         "item": {
+            "id": instance.item.id,
             "pretty_name": instance.item.get_pretty_name(),
         },
         "user": {
+            "id": instance.user.id,
             "pretty_name": instance.user.get_pretty_name(),
         }
     })

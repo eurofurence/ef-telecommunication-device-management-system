@@ -16,6 +16,11 @@ class ItemTemplate(models.Model):
     Model for item templates (e.g., radio device templates)
     """
 
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        post_save.connect(item_template_post_save, sender=cls)
+        post_delete.connect(item_template_post_delete, sender=cls)
+
     name = models.CharField(
         max_length=128,
         blank=False,
@@ -87,6 +92,11 @@ class Item(PolymorphicModel):
     Model for all items (e.g., radios, accessories, telephones, ...)
     """
 
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        post_save.connect(item_post_save, sender=cls)
+        post_delete.connect(item_post_delete, sender=cls)
+
     notes = models.CharField(
         max_length=512,
         blank=True,
@@ -157,7 +167,7 @@ def item_post_save(instance, created, **kwargs):
 
     EventLogEntry.log(get_current_user(), action, {
         'id': instance.id,
-        # TODO: Not implemented yet
+        'pretty_name': instance.get_pretty_name()
     })
 
 
@@ -172,5 +182,5 @@ def item_post_delete(instance, **kwargs):
     """
     EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM, {
         'id': instance.id,
-        # TODO: Not implemented yet
+        'pretty_name': instance.get_pretty_name()
     })
