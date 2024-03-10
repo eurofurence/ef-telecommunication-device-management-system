@@ -26,17 +26,6 @@ type LogEventTypeDeclaration = {
  */
 export class LogEventType {
 
-    static readonly UNKNOWN: LogEventTypeDeclaration = {
-        key: 'UNKNOWN',
-        label: 'Unknown',
-        color: 'grey',
-        icon: 'mdi-help',
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        description(data: any): string {
-            return 'Unknown event';
-        }
-    }
-
     static readonly USER_LOGIN: LogEventTypeDeclaration = {
         key: 'USER_LOGIN',
         label: 'User logged in',
@@ -168,6 +157,17 @@ export class LogEventType {
         }
     }
 
+    static readonly UNKNOWN: LogEventTypeDeclaration = {
+        key: 'UNKNOWN',
+        label: 'Unknown',
+        color: 'grey',
+        icon: 'mdi-help',
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        description(data: any): string {
+            return 'Unknown event';
+        }
+    }
+
     /**
      * Returns the LogEventTypeDeclaration for the given key or UNKNOWN
      *
@@ -176,6 +176,13 @@ export class LogEventType {
      */
     static get(key: string): LogEventTypeDeclaration {
         return <LogEventTypeDeclaration>LogEventType[key as keyof typeof LogEventType] ?? LogEventType.UNKNOWN;
+    }
+
+    /**
+     * Returns all existing LogEventTypes
+     */
+    static getAll(): LogEventTypeDeclaration[] {
+        return Object.values(this).filter(obj => obj.key) as LogEventTypeDeclaration[];
     }
 
 }
