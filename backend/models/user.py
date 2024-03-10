@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.forms import model_to_dict
 from django_currentuser.middleware import get_current_user
 
 
@@ -88,7 +89,7 @@ def item_owner_post_save(instance, created, **kwargs):
     else:
         action = EventLogEntry.Action.UPDATE_ITEM_OWNER
 
-    EventLogEntry.log(get_current_user(), action, instance)
+    EventLogEntry.log(get_current_user(), action, model_to_dict(instance))
 
 
 @receiver(post_delete, sender=ItemOwner, dispatch_uid="item_owner_post_delete")
@@ -101,4 +102,4 @@ def item_owner_post_delete(instance, **kwargs):
     :return: None
     """
     from backend.models import EventLogEntry
-    EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM_OWNER, instance)
+    EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM_OWNER, model_to_dict(instance))
