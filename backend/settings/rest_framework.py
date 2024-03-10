@@ -9,7 +9,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
     ],
-    'PAGE_SIZE': 100  # This is the max page size when using LimitOffsetPagination
+    'PAGE_SIZE': 100,  # This is the max page size when using LimitOffsetPagination
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
 }
 
 SIMPLE_JWT = {
