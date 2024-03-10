@@ -59,6 +59,10 @@ def item_template_post_save(instance, created, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
+    # Do not log operations on polymorphic base classes
+    if type(instance) is ItemTemplate:
+        return
+
     if created:
         action = EventLogEntry.Action.CREATE_ITEM_TEMPLATE
     else:
@@ -80,6 +84,10 @@ def item_template_post_delete(instance, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
+    # Do not log operations on polymorphic base classes
+    if type(instance) is ItemTemplate:
+        return
+
     EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM_TEMPLATE, {
         'id': instance.id,
         'name': instance.name,
@@ -160,6 +168,10 @@ def item_post_save(instance, created, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
+    # Do not log operations on polymorphic base classes
+    if type(instance) is Item:
+        return
+
     if created:
         action = EventLogEntry.Action.CREATE_ITEM
     else:
@@ -180,6 +192,10 @@ def item_post_delete(instance, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
+    # Do not log operations on polymorphic base classes
+    if type(instance) is Item:
+        return
+
     EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM, {
         'id': instance.id,
         'pretty_name': instance.get_pretty_name()
