@@ -54,7 +54,7 @@ export class LogEventType {
         color: 'green-lighten-1',
         icon: 'mdi-head-plus-outline',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.name} (${data.shortname})`;
         }
     }
 
@@ -64,7 +64,7 @@ export class LogEventType {
         color: 'red-lighten-1',
         icon: 'mdi-head-remove-outline',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.name} (${data.shortname})`;
         }
     }
 
@@ -74,7 +74,7 @@ export class LogEventType {
         color: 'orange-darken-1',
         icon: 'mdi-head-outline',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.name} (${data.shortname})`;
         }
     }
 
@@ -84,7 +84,7 @@ export class LogEventType {
         color: 'green-lighten-1',
         icon: 'mdi-plus',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.pretty_name}`;
         }
     }
 
@@ -94,7 +94,7 @@ export class LogEventType {
         color: 'red-lighten-1',
         icon: 'mdi-minus',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.pretty_name}`;
         }
     }
 
@@ -104,7 +104,7 @@ export class LogEventType {
         color: 'orange-darken-1',
         icon: 'mdi-pencil',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.pretty_name}`;
         }
     }
 
@@ -114,7 +114,7 @@ export class LogEventType {
         color: 'green-lighten-1',
         icon: 'mdi-toy-brick-plus-outline',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.pretty_name}`;
         }
     }
 
@@ -124,7 +124,7 @@ export class LogEventType {
         color: 'red-lighten-1',
         icon: 'mdi-toy-brick-remove-outline',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.pretty_name}`;
         }
     }
 
@@ -134,7 +134,7 @@ export class LogEventType {
         color: 'orange-darken-1',
         icon: 'mdi-toy-brick-outline',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.pretty_name}`;
         }
     }
 
@@ -144,7 +144,7 @@ export class LogEventType {
         color: 'green-lighten-1',
         icon: 'mdi-basket-plus-outline',
         description(data: any): string {
-            return `To user: ${data.user.pretty_name} - Item: ${data.item}}`;
+            return `${data.item.pretty_name} to ${data.user.pretty_name}`;
         }
     }
 
@@ -154,7 +154,7 @@ export class LogEventType {
         color: 'red-lighten-1',
         icon: 'mdi-basket-minus-outline',
         description(data: any): string {
-            return `From user: ${data.user.pretty_name} - Item: ${data.item}}`;
+            return `${data.item.pretty_name} from ${data.user.pretty_name}`;
         }
     }
 
@@ -164,7 +164,7 @@ export class LogEventType {
         color: 'orange-darken-1',
         icon: 'mdi-basket-outline',
         description(data: any): string {
-            return `TODO: ${data}`;
+            return `${data.item.pretty_name} to ${data.user.pretty_name}`;
         }
     }
 
