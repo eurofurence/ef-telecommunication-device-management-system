@@ -205,6 +205,8 @@ export default defineComponent({
 
     data() {
         return {
+            refreshIntervallId: null as number,
+
             statisticsLodaded: false,
             statistics: Object as SystemStatistics,
 
@@ -222,16 +224,27 @@ export default defineComponent({
         }
     },
 
-    mounted() {
-        bindingsStore.fetchStatistics().then((response) => {
-            this.statistics = response;
-            this.statisticsLodaded = true;
-        });
+    methods: {
+        refreshData() {
+            bindingsStore.fetchStatistics().then((response) => {
+                this.statistics = response;
+                this.statisticsLodaded = true;
+            });
 
-        eventLogStore.fetchEventLogsPage(1, 10, ['timestamp'], '').then((response) => {
-            this.logEvents = response.items;
-            this.logEventsLoaded = true;
-        });
+            eventLogStore.fetchEventLogsPage(1, 10, ['timestamp'], '').then((response) => {
+                this.logEvents = response.items;
+                this.logEventsLoaded = true;
+            });
+        }
     },
+
+    mounted() {
+        this.refreshData();
+        this.refreshIntervallId = setInterval(this.refreshData, 15000);
+    },
+
+    beforeUnmount() {
+        clearInterval(this.refreshIntervallId);
+    }
 })
 </script>
