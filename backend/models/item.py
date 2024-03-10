@@ -128,10 +128,16 @@ class Item(PolymorphicModel):
         return ItemBinding.objects.filter(item=self).exists()
 
     def get_pretty_name(self):
-        return f"{self.template.name} ({self.template.owner.shortname})"
+        if self.__class__.__name__ == "Item":
+            return f"Item Base #{self.pk}"
+        else:
+            return f"{self.template.name} ({self.template.owner.shortname})"
 
     def __str__(self):
-        return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"
+        if self.__class__.__name__ == "Item":
+            return f"Item Base #{self.pk}"
+        else:
+            return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"
 
 
 @receiver(post_save, sender=Item, dispatch_uid="item_post_save")
