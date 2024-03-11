@@ -21,18 +21,18 @@
     </v-timeline>
     <v-timeline v-if="loading" side="end">
         <v-timeline-item
-            v-for="idx in 10"
+            v-for="idx in this.loaderHeight"
             :key="idx"
             dot-color="grey"
             fill-dot
         >
             <template v-slot:opposite>
                 <div class="text-right" style="width: 200px; max-width: 200px;">
-                    <v-skeleton-loader type="list-item-two-line"></v-skeleton-loader>
+                    <v-skeleton-loader type="list-item"></v-skeleton-loader>
                 </div>
             </template>
             <div class="text-left" style="width: 400px; max-width: 400px;">
-                <v-skeleton-loader type="list-item-two-line"></v-skeleton-loader>
+                <v-skeleton-loader type="list-item"></v-skeleton-loader>
             </div>
         </v-timeline-item>
     </v-timeline>
@@ -47,7 +47,8 @@ export default defineComponent({
 
     props: {
         events: {type: Array, required: true},
-        loading: {type: Boolean, required: false, default: false}
+        loading: {type: Boolean, required: false, default: false},
+        loaderHeight: {type: Number, required: false, default: 10}
     },
 
     computed: {
