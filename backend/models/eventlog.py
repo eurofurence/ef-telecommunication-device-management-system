@@ -22,6 +22,9 @@ class EventLogEntry(models.Model):
         CREATE_ITEM_BINDING = 'CREATE_ITEM_BINDING', 'Item binding created'
         DELETE_ITEM_BINDING = 'DELETE_ITEM_BINDING', 'Item binding deleted'
         UPDATE_ITEM_BINDING = 'UPDATE_ITEM_BINDING', 'Item binding updated'
+        CREATE_ORDER = 'CREATE_ORDER', 'Order created'
+        DELETE_ORDER = 'DELETE_ORDER', 'Order deleted'
+        UPDATE_ORDER = 'UPDATE_ORDER', 'Order updated'
 
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     timestamp = models.DateTimeField(
