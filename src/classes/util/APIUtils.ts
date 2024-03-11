@@ -60,15 +60,26 @@ export class APIUtils {
      * @param itemsPerPage Number of items per page.
      * @param sortBy Field to sort by.
      * @param search Search string to filter by.
+     * @param additionalParams Additional GET parameters to append.
      */
-    public static async fetchPage(apipath: string, page: number, itemsPerPage: number, sortBy: any[], search: string) {
+    public static async fetchPage(
+        apipath: string,
+        page: number,
+        itemsPerPage: number,
+        sortBy: any[],
+        search: string,
+        additionalParams: string[] = []
+    ) {
         // Determine the offset and limit for the API call (itemsPerPage of -1 means all items)
         const limit = (itemsPerPage === -1) ? 100 : itemsPerPage;
         const ordering = APIUtils.vuetifyTableOrderingToQueryParameter(sortBy);
         let offset = (itemsPerPage === -1) ? 0 : (page - 1) * itemsPerPage;
 
+        // Build query string from additional params
+        const params = additionalParams.reduce((res, param) => `${res}&${param}`, '');
+
         // Prepare the return data structure
-        let ret = {
+        const ret = {
             items: [],
             total: 0,
         };
@@ -77,7 +88,7 @@ export class APIUtils {
         let hasMore = true;
         do {
             await axios.get(
-                `${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}?limit=${limit}&offset=${offset}&ordering=${ordering}&search=${search}`
+                `${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}?limit=${limit}&offset=${offset}&ordering=${ordering}&search=${search}${params}`
             ).then((response) => {
                 ret.items = ret.items.concat(response.data.results);
                 ret.total = response.data.count;
