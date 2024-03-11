@@ -12,6 +12,7 @@
                     <v-list-item v-bind="props" prepend-icon="mdi-basket-fill" title="Bindings"></v-list-item>
                 </template>
                 <v-list-item prepend-icon="mdi-basket-outline" title="Overview" value="bindings-overview" to="/bindings/overview"></v-list-item>
+                <v-list-item prepend-icon="mdi-basket-fill" title="Pre-Orders" value="bindings-preorders" to="/bindings/preorders"></v-list-item>
                 <v-list-item prepend-icon="mdi-basket-plus-outline" title="Hand out" value="bindings-issue" to="/bindings/issue"></v-list-item>
                 <v-list-item prepend-icon="mdi-basket-minus-outline" title="Return" value="bindings-return" to="/bindings/return"></v-list-item>
             </v-list-group>

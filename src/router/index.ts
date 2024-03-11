@@ -50,6 +50,12 @@ const routes = [
                 meta: { requiresAuth: true },
             },
             {
+                path: 'bindings/preorders',
+                name: 'Pre-Orders',
+                component: () => import('@/views/bindings/BindingsPreorders.vue'),
+                meta: { requiresAuth: true },
+            },
+            {
                 path: 'bindings/issue',
                 name: 'Create Binding',
                 component: () => import('@/views/bindings/BindingsIssue.vue'),

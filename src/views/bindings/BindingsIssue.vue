@@ -82,6 +82,10 @@
                                     @update:basket="basketIsEmpty = $refs.basket.isEmpty(); itemIdsToExclude = $refs.basket.getItemIds();"
                                     :read-only="false"
                                 ></ItemBasket>
+
+                                <p>
+                                    TODO: Implement binding templates!
+                                </p>
                             </v-card-text>
                         </v-card>
                     </template>

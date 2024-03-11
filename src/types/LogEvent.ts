@@ -157,6 +157,36 @@ export class LogEventType {
         }
     }
 
+    static readonly CREATE_ORDER: LogEventTypeDeclaration = {
+        key: 'CREATE_ORDER',
+        label: 'Order created',
+        color: 'green-lighten-1',
+        icon: 'mdi-help',
+        description(data: any): string {
+            return `${data.title} for ${data.user.pretty_name}`;
+        }
+    }
+
+    static readonly DELETE_ORDER: LogEventTypeDeclaration = {
+        key: 'DELETE_ORDER',
+        label: 'Order deleted',
+        color: 'red-lighten-1',
+        icon: 'mdi-help',
+        description(data: any): string {
+            return `${data.title} for ${data.user.pretty_name}`;
+        }
+    }
+
+    static readonly UPDATE_ORDER: LogEventTypeDeclaration = {
+        key: 'UPDATE_ORDER',
+        label: 'Order updated',
+        color: 'orange-darken-1',
+        icon: 'mdi-help',
+        description(data: any): string {
+            return `${data.title} for ${data.user.pretty_name}`;
+        }
+    }
+
     static readonly UNKNOWN: LogEventTypeDeclaration = {
         key: 'UNKNOWN',
         label: 'Unknown',
