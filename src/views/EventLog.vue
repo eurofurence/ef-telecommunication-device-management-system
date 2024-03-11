@@ -6,19 +6,36 @@
             </v-col>
         </v-row>
         <v-row>
-            <v-col>
+            <v-col cols="12" md="6" class="py-0">
                 <v-select
                     v-model="filterEventTypes"
                     :items="LogEventType.getAll()"
                     item-title="label"
                     item-value="key"
-                    label="Select"
-                    chips
+                    label="Event Type"
                     multiple
+                    clearable
+                    prepend-inner-icon="mdi-filter-outline"
                     @update:model-value="searchUpdated"
-                ></v-select>
+                >
+                    <template v-slot:selection="{ item, index }">
+                        <v-chip v-if="index < 2">
+                            <span>{{ item.title }}</span>
+                        </v-chip>
+                        <span
+                            v-if="index === 2"
+                            class="text-grey text-caption align-self-center"
+                        >
+                        (+{{ filterEventTypes.length - 2 }} others)
+                      </span>
+                    </template>
+                </v-select>
+            </v-col>
+            <v-col cols="12" md="6" class="py-0">
                 <v-text-field
                     v-model="filterSearchText"
+                    label="Search"
+                    prepend-inner-icon="mdi-magnify"
                     @update:model-value="searchUpdated"
                 ></v-text-field>
             </v-col>
@@ -26,9 +43,19 @@
         <v-row>
             <v-col>
                 <EventTimeline
-                    :events="logEvents"
+                    :events="Object.values(logEvents)"
                     :loading="!logEventsLoaded"
+                    :loader-height="pageSize"
                 ></EventTimeline>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <v-pagination
+                    v-model="currentPage"
+                    :length="maxPages"
+                    @update:model-value="refreshData"
+                ></v-pagination>
             </v-col>
         </v-row>
     </v-container>
@@ -56,6 +83,10 @@ export default defineComponent({
             logEventsLoaded: false,
             logEvents: [],
 
+            currentPage: 1,
+            maxPages: 1,
+            pageSize: 25,
+
             searchDebounceTimeout: null as number,
             filterSearchText: "",
             filterEventTypes: [],
@@ -64,11 +95,13 @@ export default defineComponent({
 
     methods: {
         searchUpdated() {
+            this.logEvents = [];
+            this.currentPage = 1;
             this.refreshData();
         },
 
-        async refreshData() {
-            // Indicate loading in UI
+        refreshData() {
+            // Indicate loading in UI and reset internal data state
             this.logEventsLoaded = false;
 
             // Debounce API call
@@ -76,19 +109,14 @@ export default defineComponent({
                 clearTimeout(this.searchDebounceTimeout);
             }
 
-            this.searchDebounceTimeout = setTimeout(async () => {
-                // Filter for event types
-                if (this.filterEventTypes.length > 0) {
-                    console.log("TODO");
-                }
-
-                // Execute API call
-                eventLogStore.fetchEventLogsPage(1, 25, ['timestamp'], this.filterSearchText).then((response) => {
+            this.searchDebounceTimeout = setTimeout(() => {
+                eventLogStore.fetchEventLogsPage(this.currentPage, this.pageSize, ['timestamp'], this.filterSearchText, this.filterEventTypes).then((response) => {
                     this.logEvents = response.items;
+                    this.maxPages = Math.ceil(response.total/this.pageSize);
                     this.logEventsLoaded = true;
                 })
             }, 500);
-        }
+        },
     },
 
     mounted() {

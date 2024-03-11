@@ -12,9 +12,17 @@ export const useEventLogStore = defineStore("eventlog", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param actions List of actions to filter for.
          */
-        async fetchEventLogsPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
-            return APIUtils.fetchPage('/eventlog/', page, itemsPerPage, sortBy, search);
+        async fetchEventLogsPage(page: number, itemsPerPage: number, sortBy: any[], search: string, actions: string[] = []) {
+            return APIUtils.fetchPage(
+                '/eventlog/',
+                page,
+                itemsPerPage,
+                sortBy,
+                search,
+                actions.map(val => `action=${val}`)
+            );
         },
     },
 })

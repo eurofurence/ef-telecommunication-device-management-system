@@ -22,8 +22,18 @@ class EventLogEntryViewSet(
     ordering_fields = '__all__'
     ordering = ['-id']
     search_fields = [
-        'user__name',
-        'user__shortname',
+        'user__username',
+        'data__user__pretty_name',
+        'data__item__pretty_name',
+        'data__pretty_name',
         'timestamp',
-        'action',
+        'action'
     ]
+
+    def get_queryset(self):
+        queryset = EventLogEntry.objects.all()
+        actions = self.request.query_params.getlist('action')
+        if actions is not None and len(actions) > 0:
+            queryset = queryset.filter(action__in=actions)
+
+        return queryset
