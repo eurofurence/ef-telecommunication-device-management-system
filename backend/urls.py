@@ -29,7 +29,7 @@ from backend.views.phone import PhoneTemplateViewSet, PhoneViewSet
 from backend.views.radio import RadioDeviceViewSet, RadioDeviceTemplateViewSet, RadioAccessoryViewSet, \
     RadioAccessoryTemplateViewSet, PagerTemplateViewSet, PagerViewSet
 from backend.views.statistics import StatisticsView
-from views.eventlog import EventLogEntryViewSet
+from backend.views.eventlog import EventLogEntryViewSet
 
 router = routers.DefaultRouter()
 router.register(r'callbox_templates', CallboxTemplateViewSet)
