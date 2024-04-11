@@ -25,6 +25,7 @@ from backend.views import UserViewSet, ItemOwnerViewSet
 from backend.views.binding import ItemBindingViewSet
 from backend.views.callbox import CallboxTemplateViewSet, CallboxViewSet
 from backend.views.item import QuickAddItemTemplatesViewSet
+from backend.views.order import OrderViewSet
 from backend.views.phone import PhoneTemplateViewSet, PhoneViewSet
 from backend.views.radio import RadioDeviceViewSet, RadioDeviceTemplateViewSet, RadioAccessoryViewSet, \
     RadioAccessoryTemplateViewSet, PagerTemplateViewSet, PagerViewSet, RadioCodingViewSet
@@ -37,6 +38,7 @@ router.register(r'callboxes', CallboxViewSet)
 router.register(r'eventlog', EventLogEntryViewSet)
 router.register(r'item_bindings', ItemBindingViewSet, basename='item_bindings')
 router.register(r'item_owners', ItemOwnerViewSet)
+router.register(r'orders', OrderViewSet)
 router.register(r'pager_templates', PagerTemplateViewSet)
 router.register(r'pagers', PagerViewSet)
 router.register(r'phone_templates', PhoneTemplateViewSet)
