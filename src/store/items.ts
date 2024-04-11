@@ -144,6 +144,18 @@ export const useItemsStore = defineStore("item", {
          */
         async fetchQuickAddTemplates() {
             return APIUtils.fetchPage('/quickadd_templates/', 1, 9999, [], '');
-        }
+        },
+
+        /**
+         * Fetches a page of radio codings from the API.
+         *
+         * @param page Number of the page to fetch.
+         * @param itemsPerPage Number of items per page.
+         * @param sortBy Field to sort by.
+         * @param search Search string to filter by.
+         */
+        async fetchRadioCodingsPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
+            return APIUtils.fetchPage('/radio_codings/', page, itemsPerPage, sortBy, search);
+        },
     },
 })

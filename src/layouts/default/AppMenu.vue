@@ -30,6 +30,7 @@
                 <v-list-item prepend-icon="mdi-cellphone-basic" title="Devices" value="radio-radios" to="/radio/devices"></v-list-item>
                 <v-list-item prepend-icon="mdi-headset" title="Accessories" value="radio-accessories" to="/radio/accessories"></v-list-item>
                 <v-list-item prepend-icon="mdi-bell-ring-outline" title="Pagers" value="radio-pagers" to="/radio/pagers"></v-list-item>
+                <v-list-item prepend-icon="mdi-sim" title="Codings" value="radio-codings" to="/radio/codings"></v-list-item>
             </v-list-group>
             <v-list-group value="VoIP">
                 <template v-slot:activator="{ props }">

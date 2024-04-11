@@ -92,6 +92,12 @@ const routes = [
                 meta: {requiresAuth: true},
             },
             {
+                path: 'radio/codings',
+                name: 'Codings',
+                component: () => import('@/views/radio/RadioCodings.vue'),
+                meta: {requiresAuth: true},
+            },
+            {
                 path: 'radio/pagers',
                 name: 'Pagers',
                 component: () => import('@/views/radio/RadioPagers.vue'),

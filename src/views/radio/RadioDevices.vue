@@ -24,6 +24,7 @@ export default {
             headers: [
                 {key: 'id', title: 'ID', align: 'start', sortable: true},
                 {key: 'template.name', title: 'Type', align: 'start', sortable: true},
+                {key: 'template.coding', title: 'Coding', align: 'start', sortable: true},
                 {key: 'template.owner.shortname', title: 'Owner', align: 'start', sortable: true},
                 {key: 'callsign', title: 'Callsign', align: 'start', sortable: true},
                 {key: 'serialnumber', title: 'S/N', align: 'start', sortable: true},
@@ -41,6 +42,7 @@ export default {
             headers: [
                 {key: 'id', title: 'ID', align: 'start', sortable: true},
                 {key: 'name', title: 'Template Name', align: 'start', sortable: true},
+                {key: 'coding', title: 'Coding', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
             ],

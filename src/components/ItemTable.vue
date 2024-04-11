@@ -93,6 +93,30 @@
             </v-chip>
         </template>
 
+        <template v-slot:item.color="{item}">
+            <v-chip
+                :color="item.color"
+            >
+                {{ item.color }}
+            </v-chip>
+        </template>
+
+        <template v-slot:item.coding="{item}">
+            <v-chip
+                :color="item.coding.color"
+            >
+                {{ item.coding.name }}
+            </v-chip>
+        </template>
+
+        <template v-slot:item.template.coding="{item}">
+            <v-chip
+                :color="item.template.coding.color"
+            >
+                {{ item.template.coding.name }}
+            </v-chip>
+        </template>
+
         <template v-slot:expanded-row="{ columns, item }">
             <tr>
                 <td :colspan="columns.length">
