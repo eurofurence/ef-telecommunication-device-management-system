@@ -117,6 +117,14 @@
             </v-chip>
         </template>
 
+        <template v-slot:item.notes="{item}">
+            <v-tooltip v-if="item.notes" :text="item.notes">
+                <template v-slot:activator="{ props }">
+                    <v-icon v-bind="props">mdi-information-outline</v-icon>
+                </template>
+            </v-tooltip>
+        </template>
+
         <template v-slot:expanded-row="{ columns, item }">
             <tr>
                 <td :colspan="columns.length">
