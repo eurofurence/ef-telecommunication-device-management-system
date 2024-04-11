@@ -5,6 +5,7 @@ from backend.models import *
 
 admin.site.register(binding.ItemBinding)  # TODO
 admin.site.register(eventlog.EventLogEntry)  # TODO
+admin.site.register(order.Order)  # TODO
 
 
 @admin.register(item.ItemOwner)
