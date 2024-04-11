@@ -72,6 +72,27 @@ export const useBindingsStore = defineStore("bindings", {
          */
         async deleteBindings(bindingIds: number[]) {
             return APIUtils.delete('/item_bindings/bulk/', bindingIds.join(',') + '/');
-        }
+        },
+
+        /**
+         * Fetches a page of orders from the API.
+         *
+         * @param page Number of the page to fetch.
+         * @param itemsPerPage Number of items per page.
+         * @param sortBy Field to sort by.
+         * @param search Search string to filter by.
+         */
+        async fetchOrdersPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
+            return APIUtils.fetchPage('/orders/', page, itemsPerPage, sortBy, search);
+        },
+
+        /**
+         * Fetches all orders for a given user from the API.
+         *
+         * @param userid ID of the user to fetch the orders for.
+         */
+        async fetchOrdersForUser(userid: number) {
+            return APIUtils.get('/orders/' + userid + '/');
+        },
     },
 })
