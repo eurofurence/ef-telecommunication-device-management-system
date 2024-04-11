@@ -27,7 +27,7 @@ from backend.views.callbox import CallboxTemplateViewSet, CallboxViewSet
 from backend.views.item import QuickAddItemTemplatesViewSet
 from backend.views.phone import PhoneTemplateViewSet, PhoneViewSet
 from backend.views.radio import RadioDeviceViewSet, RadioDeviceTemplateViewSet, RadioAccessoryViewSet, \
-    RadioAccessoryTemplateViewSet, PagerTemplateViewSet, PagerViewSet
+    RadioAccessoryTemplateViewSet, PagerTemplateViewSet, PagerViewSet, RadioCodingViewSet
 from backend.views.statistics import StatisticsView
 from backend.views.eventlog import EventLogEntryViewSet
 
@@ -44,6 +44,7 @@ router.register(r'phones', PhoneViewSet)
 router.register(r'quickadd_templates', QuickAddItemTemplatesViewSet, basename='quickadd_templates')
 router.register(r'radio_accessories', RadioAccessoryViewSet)
 router.register(r'radio_accessory_templates', RadioAccessoryTemplateViewSet, basename='radio_accessory_templates')
+router.register(r'radio_codings', RadioCodingViewSet)
 router.register(r'radio_templates', RadioDeviceTemplateViewSet)
 router.register(r'radios', RadioDeviceViewSet)
 router.register(r'users', UserViewSet)

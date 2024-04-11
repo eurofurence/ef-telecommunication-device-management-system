@@ -14,7 +14,7 @@ class ItemOwnerAdmin(admin.ModelAdmin):
     ordering = ['name']
 
 
-@admin.register(item.ItemTemplate, callbox.CallboxTemplate, phone.PhoneTemplate, radio.PagerTemplate, radio.RadioAccessoryTemplate, radio.RadioDeviceTemplate)
+@admin.register(item.ItemTemplate, callbox.CallboxTemplate, phone.PhoneTemplate, radio.PagerTemplate, radio.RadioAccessoryTemplate)
 class ItemTemplateAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'owner']
     search_fields = ['name', 'description', 'owner']
@@ -55,10 +55,17 @@ class PhoneAdmin(admin.ModelAdmin):
         return obj.template.name
 
 
+@admin.register(radio.RadioCoding)
+class RadioCodingAdmin(admin.ModelAdmin):
+    list_display = ['name', 'color', 'description']
+    search_fields = ['name', 'description']
+    ordering = ['name']
+
+
 @admin.register(radio.RadioDevice)
 class RadioDeviceAdmin(admin.ModelAdmin):
-    list_display = ['get_name', 'get_owner', 'callsign', 'serialnumber', 'notes', 'handed_out']
-    search_fields = ['get_name', 'get_owner', 'callsign', 'serialnumber', 'notes']
+    list_display = ['get_name', 'get_coding', 'get_owner', 'callsign', 'serialnumber', 'notes', 'handed_out']
+    search_fields = ['get_name', 'get_coding', 'get_owner', 'callsign', 'serialnumber', 'notes']
 
     @admin.display(description="Name", ordering='template__name')
     def get_name(self, obj):
@@ -67,6 +74,21 @@ class RadioDeviceAdmin(admin.ModelAdmin):
     @admin.display(description="Owner", ordering='template__owner__name')
     def get_owner(self, obj):
         return obj.template.owner.name
+
+    @admin.display(description="Coding", ordering='template__coding__name')
+    def get_coding(self, obj):
+        return obj.template.coding.name
+
+
+@admin.register(radio.RadioDeviceTemplate)
+class RadioDeviceTemplateAdmin(admin.ModelAdmin):
+    list_display = ['name', 'get_coding', 'description', 'owner']
+    search_fields = ['name', 'get_coding', 'description', 'owner']
+    ordering = ['name', 'coding__name', 'owner']
+
+    @admin.display(description="Coding", ordering='coding__name')
+    def get_coding(self, obj):
+        return obj.coding.name
 
 
 @admin.register(user.User)

@@ -1,8 +1,22 @@
 from backend.models import RadioDevice, RadioDeviceTemplate, RadioAccessoryTemplate, RadioAccessory, PagerTemplate, \
-    Pager
+    Pager, RadioCoding
 from backend.serializers.radio import RadioDeviceTemplateSerializer, RadioDeviceSerializer, \
-    RadioAccessoryTemplateSerializer, RadioAccessorySerializer, PagerTemplateSerializer, PagerSerializer
+    RadioAccessoryTemplateSerializer, RadioAccessorySerializer, PagerTemplateSerializer, PagerSerializer, \
+    RadioCodingSerializer
 from backend.views.item import AbstractItemTemplateViewSet, AbstractItemViewSet
+
+
+class RadioCodingViewSet(AbstractItemViewSet):
+    """
+    API endpoint that allows RadioCodings to be viewed or edited.
+    """
+    queryset = RadioCoding.objects.all()
+    serializer_class = RadioCodingSerializer
+    search_fields = [
+        'name',
+        'description',
+        'color'
+    ]
 
 
 class RadioDeviceTemplateViewSet(AbstractItemTemplateViewSet):

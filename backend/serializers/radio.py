@@ -1,15 +1,28 @@
 from rest_framework import serializers
 
-from backend.models import RadioDeviceTemplate, RadioDevice, RadioAccessoryTemplate, RadioAccessory, Pager
+from backend.models import RadioDeviceTemplate, RadioDevice, RadioAccessoryTemplate, RadioAccessory, Pager, RadioCoding
 from backend.serializers import ItemOwnerSerializer
+
+
+class RadioCodingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RadioCoding
+        fields = ['id', 'name', 'color', 'description']
+
+
+class RadioCodingSerializerReduced(serializers.ModelSerializer):
+    class Meta:
+        model = RadioCoding
+        fields = ['id', 'name', 'color']
 
 
 class RadioDeviceTemplateSerializer(serializers.ModelSerializer):
     owner = ItemOwnerSerializer()
+    coding = RadioCodingSerializerReduced()
 
     class Meta:
         model = RadioDeviceTemplate
-        fields = ['id', 'name', 'description', 'owner']
+        fields = ['id', 'name', 'description', 'owner', 'coding']
 
 
 class RadioDeviceSerializer(serializers.ModelSerializer):
