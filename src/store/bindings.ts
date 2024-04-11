@@ -92,7 +92,7 @@ export const useBindingsStore = defineStore("bindings", {
          * @param userid ID of the user to fetch the orders for.
          */
         async fetchOrdersForUser(userid: number) {
-            return APIUtils.get('/orders/' + userid + '/');
+            return APIUtils.get('/orders/user/' + userid + '/');
         },
     },
 })

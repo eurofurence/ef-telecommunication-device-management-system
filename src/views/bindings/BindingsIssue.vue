@@ -264,6 +264,8 @@ export default defineComponent({
                 itemsStore.fetchQuickAddTemplates().then((resp) => {
                     this.quickAddTemplates = resp.items;
                 });
+
+                bindingsStore.fetchOrdersForUser(this.selectedUser.id); // TODO
             }
 
             // Enter into binding creation step
