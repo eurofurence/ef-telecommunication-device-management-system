@@ -15,6 +15,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'user',
+            'type',
             'title',
             'item',
             'item_template',

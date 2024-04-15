@@ -14,12 +14,27 @@ class Order(models.Model):
     (Pre-)Order of a user.
     """
 
+    class OrderTypes(models.TextChoices):
+        RadioDevice = 'RadioDevice', 'Radio Device'
+        RadioAccessory = 'RadioAccessory', 'Radio Accessory'
+        Pager = 'Pager', 'Pager'
+        Phone = 'Phone', 'Phone'
+        Callbox = 'Callbox', 'Callbox'
+        Other = 'Other', 'Other'
+
     user = models.ForeignKey(
         User,
         blank=False,
         null=False,
         on_delete=models.CASCADE,
         help_text="User that should receive the item"
+    )
+    type = models.CharField(
+        max_length=16,
+        blank=False,
+        null=False,
+        choices=OrderTypes.choices,
+        help_text="Type of the order"
     )
     title = models.CharField(
         max_length=128,
