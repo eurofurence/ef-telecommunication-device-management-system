@@ -27,8 +27,9 @@ export default {
             headers: [
                 {key: 'id', title: 'ID', align: 'start', sortable: true},
                 {key: 'user.pretty_name', title: 'User', align: 'start', sortable: true},
+                {key: 'type', title: 'Type', align: 'start', sortable: true},
                 {key: 'title', title: 'Title', align: 'start', sortable: true},
-                {key: 'item_template.name', title: 'Type', align: 'start', sortable: true},
+                {key: 'item_template.name', title: 'Template', align: 'start', sortable: true},
                 {key: 'item.pretty_name', title: 'Item', align: 'start', sortable: true},
             ],
             fetchFunction: bindingsStore.fetchOrdersPage,

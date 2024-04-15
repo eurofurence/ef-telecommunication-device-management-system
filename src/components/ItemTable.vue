@@ -117,6 +117,18 @@
             </v-chip>
         </template>
 
+        <template v-slot:item.type="{item}">
+            <v-tooltip :text="item.type">
+                <template v-slot:activator="{ props }">
+                    <v-icon
+                        v-bind="props"
+                        :icon="ItemType[item.type] ? ItemType[item.type].icon : 'mdi-shape-outline'"
+                    ></v-icon>
+                </template>
+
+            </v-tooltip>
+        </template>
+
         <template v-slot:item.notes="{item}">
             <v-tooltip v-if="item.notes" :text="item.notes">
                 <template v-slot:activator="{ props }">
@@ -153,6 +165,10 @@
         </template>
     </v-data-table-server>
 </template>
+
+<script lang="ts" setup>
+import {ItemType} from "@/types/ItemType";
+</script>
 
 <script lang="ts">
 import { defineComponent } from "vue";
