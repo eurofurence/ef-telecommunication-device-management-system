@@ -75,17 +75,24 @@
 
                                 <v-divider class="mt-5 mb-3"></v-divider>
 
-                                <ItemBasket
-                                    ref="basket"
-                                    :basket-items="itemsToBind"
-                                    :basket-item-templates="itemTemplatesToBind"
-                                    @update:basket="basketIsEmpty = $refs.basket.isEmpty(); itemIdsToExclude = $refs.basket.getItemIds();"
-                                    :read-only="false"
-                                ></ItemBasket>
-
-                                <p>
-                                    TODO: Implement binding templates!
-                                </p>
+                                <v-container>
+                                    <v-row>
+                                        <v-col>
+                                            <ItemBasket
+                                                ref="basket"
+                                                :basket-items="itemsToBind"
+                                                :basket-item-templates="itemTemplatesToBind"
+                                                @update:basket="basketIsEmpty = $refs.basket.isEmpty(); itemIdsToExclude = $refs.basket.getItemIds();"
+                                                :read-only="false"
+                                            ></ItemBasket>
+                                        </v-col>
+                                        <v-col cols="4">
+                                            <OrderList
+                                                :orders="orders"
+                                            ></OrderList>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
                             </v-card-text>
                         </v-card>
                     </template>
@@ -181,14 +188,15 @@
 <script setup lang="ts">
 import ServerItemSelector from "@/components/ServerItemSelector.vue";
 import ItemBasket from "@/components/ItemBasket.vue";
+import OrderList from "@/components/OrderList.vue";
 </script>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import {useUsersStore} from "@/store/users";
 import {useItemsStore} from "@/store/items";
 import {ItemTemplateType, ItemType} from "@/types/ItemType";
-import { emptyItemsBasket, emptyItemTemplatesBasket } from "@/components/ItemBasket.vue";
+import {emptyItemsBasket, emptyItemTemplatesBasket} from "@/components/ItemBasket.vue";
 import {useBindingsStore} from "@/store/bindings";
 
 const usersStore = useUsersStore();
@@ -211,6 +219,7 @@ export default defineComponent({
             quickAddTemplates: [],
             basketIsEmpty: true,
             itemIdsToExclude: [],
+            orders: [],
 
             // Step 3 (Review)
             itemsToBind: emptyItemsBasket(),
@@ -265,7 +274,9 @@ export default defineComponent({
                     this.quickAddTemplates = resp.items;
                 });
 
-                bindingsStore.fetchOrdersForUser(this.selectedUser.id); // TODO
+                bindingsStore.fetchOrdersForUser(this.selectedUser.id).then((resp) => {
+                    this.orders = resp.data;
+                });
             }
 
             // Enter into binding creation step
@@ -305,6 +316,7 @@ export default defineComponent({
             this.$refs.userSelector.clear();
             this.itemsToBind = emptyItemsBasket();
             this.itemTemplatesToBind = emptyItemTemplatesBasket();
+            this.orders = [];
             this.bindingInProgress = false;
             this.bindingError = "";
             this.createdBindings = [];
