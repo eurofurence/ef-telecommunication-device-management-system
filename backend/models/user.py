@@ -65,6 +65,7 @@ class ItemOwner(models.Model):
         max_length=16,
         blank=False,
         null=False,
+        unique=True,
         help_text="Short name of the owner"
     )
 
