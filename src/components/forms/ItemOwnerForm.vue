@@ -16,6 +16,7 @@
                     label="ID"
                     type="number"
                     variant="outlined"
+                    prepend-inner-icon="mdi-identifier"
                     disabled
                 ></v-text-field>
                 <v-text-field
@@ -23,12 +24,14 @@
                     label="Name"
                     :rules="rules.name"
                     variant="outlined"
+                    prepend-inner-icon="mdi-account"
                 ></v-text-field>
                 <v-text-field
                     v-model="data.shortname"
                     label="Shortname"
                     :rules="rules.shortname"
                     variant="outlined"
+                    prepend-inner-icon="mdi-label"
                 ></v-text-field>
 
                 <v-card-actions>
