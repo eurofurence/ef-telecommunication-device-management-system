@@ -6,6 +6,7 @@
 
 // Plugins
 import vuetify from './vuetify'
+import toast, { options as toastOptions } from './toast'
 import pinia from '../store'
 import router from '../router'
 
@@ -17,4 +18,5 @@ export function registerPlugins(app: App) {
         .use(vuetify)
         .use(router)
         .use(pinia)
+        .use(toast, toastOptions)
 }
