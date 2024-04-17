@@ -1,7 +1,9 @@
+from django.db import transaction
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters
 from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from backend.models import User, ItemOwner, ItemBinding, RadioDevice
@@ -51,3 +53,23 @@ class ItemOwnerViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
     ordering = ['id']
     search_fields = ['name', 'shortname']
+
+    @action(detail=False, methods=['delete'], url_path="bulk/(?P<ids>[0-9,]+)")
+    def bulk_delete(self, request, ids):
+        """
+        Deletes multiple item owners at once. This operation is atomic.
+
+        :param request:
+        :param ids:
+        :return:
+        """
+        itemowner_ids_to_delete = [int(pk) for pk in ids.split(',')]
+
+        @transaction.atomic
+        def delete_itemowners():
+            for id in itemowner_ids_to_delete:
+                get_object_or_404(ItemOwner, pk=id).delete()
+
+        delete_itemowners()
+
+        return Response(status=204)
