@@ -33,6 +33,7 @@
                     <v-btn
                         v-if="selected.length > 0"
                         color="error"
+                        :disabled="preventDelete"
                         @click="$emit('click:deleteItems', selected)"
                         class="my-3 mx-1"
                     >
@@ -45,6 +46,7 @@
                     <v-btn
                         v-if="selected.length === 0"
                         color="success"
+                        :disabled="preventCreate"
                         @click="$emit('click:createItem')"
                         class="my-3 mx-1"
                     >
@@ -155,6 +157,7 @@
                     <v-btn
                         class="mx-4 mb-4"
                         color="error"
+                        :disabled="preventDelete"
                         @click="$emit('click:deleteItems', [item.id])"
                     >
                         <v-icon left>mdi-trash-can-outline</v-icon>
@@ -198,6 +201,9 @@ export default defineComponent({
         expandedRowProps: {type: Array as PropType<ExpandedRowProp[]>, required: false, default: null},
         initialSearch: {type: String, required: false, default: ''},
         itemsPerPage: {type: Number, required: false, default: 25},
+        preventCreate: {type: Boolean, required: false, default: false},
+        preventEdit: {type: Boolean, required: false, default: false},
+        preventDelete: {type: Boolean, required: false, default: false},
     },
 
     data: () => ({

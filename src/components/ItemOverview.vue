@@ -30,6 +30,9 @@
                         :fetch-function="itemsTable.fetchFunction"
                         :initial-search="itemsTable.search ?? ''"
                         :items-per-page="itemsTable.itemsPerPage ?? 25"
+                        :prevent-create="itemsTable.preventCreate ?? false"
+                        :prevent-edit="itemsTable.preventEdit ?? false"
+                        :prevent-delete="itemsTable.preventDelete ?? false"
                         @click:createItem="$emit('click:createItem', $event)"
                         @click:deleteItems="$emit('click:deleteItems', $event)"
                     ></ItemTable>
@@ -43,6 +46,9 @@
                         :fetch-function="templatesTable.fetchFunction"
                         :initial-search="templatesTable.search ?? ''"
                         :items-per-page="templatesTable.itemsPerPage ?? 25"
+                        :prevent-create="templatesTable.preventCreate ?? false"
+                        :prevent-edit="templatesTable.preventEdit ?? false"
+                        :prevent-delete="templatesTable.preventDelete ?? false"
                         @click:createItem="$emit('click:createItemTemplate', $event)"
                         @click:deleteItems="$emit('click:deleteItemTemplates', $event)"
                     ></ItemTable>
@@ -57,7 +63,6 @@ import { defineComponent } from "vue";
 import type { PropType } from "vue";
 
 import type { ServerTableMetadata } from "@/types/ServerTableMetadata";
-import {PropUtils} from "@/classes/util/PropUtils";
 import ItemTable from "@/components/ItemTable.vue";
 
 export default defineComponent({

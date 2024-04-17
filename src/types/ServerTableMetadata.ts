@@ -11,4 +11,7 @@ export type ServerTableMetadata = {
     expandedRowProps?: ExpandedRowProp[];   /** Properties to display in an expanded row. */
     search?: string;                        /** Search string to filter by. */
     itemsPerPage?: number;                  /** Number of items per page. */
+    preventCreate?: boolean;                /** Prevent creating new items. */
+    preventEdit?: boolean;                  /** Prevent editing items. */
+    preventDelete?: boolean;                /** Prevent deleting items. */
 }

@@ -14,7 +14,6 @@ import ItemOverview from "@/components/ItemOverview.vue";
 const usersStore = useUsersStore();
 
 export default {
-    // TODO: Remove user creation button. This should only be done via the backend. Need to adjust this in ItemTable component
     name: "Users",
 
     components: {
@@ -32,6 +31,9 @@ export default {
                 {key: 'last_seen', title: 'Last seen', align: 'start', sortable: false},
             ],
             fetchFunction: usersStore.fetchUsersPage,
+            preventCreate: true,
+            preventEdit: true,
+            preventDelete: true,
         }
     }),
 }
