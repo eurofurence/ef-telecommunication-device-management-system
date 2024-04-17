@@ -184,6 +184,11 @@ import {TableHeader} from "@/types/TableHeader";
 export default defineComponent({
     name: "ItemTable",
 
+    expose: [
+        'reload',
+        'deselectItemsByKey',
+    ],
+
     emits: [
         'click:createItem',
         'click:deleteItems',
