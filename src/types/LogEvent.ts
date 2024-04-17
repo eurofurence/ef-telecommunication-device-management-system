@@ -161,7 +161,7 @@ export class LogEventType {
         key: 'CREATE_ORDER',
         label: 'Order created',
         color: 'green-lighten-1',
-        icon: 'mdi-help',
+        icon: 'mdi-receipt-text-plus',
         description(data: any): string {
             return `${data.title} for ${data.user.pretty_name}`;
         }
@@ -171,7 +171,7 @@ export class LogEventType {
         key: 'DELETE_ORDER',
         label: 'Order deleted',
         color: 'red-lighten-1',
-        icon: 'mdi-help',
+        icon: 'mdi-receipt-text-minus',
         description(data: any): string {
             return `${data.title} for ${data.user.pretty_name}`;
         }
@@ -181,7 +181,7 @@ export class LogEventType {
         key: 'UPDATE_ORDER',
         label: 'Order updated',
         color: 'orange-darken-1',
-        icon: 'mdi-help',
+        icon: 'mdi-receipt-text-edit',
         description(data: any): string {
             return `${data.title} for ${data.user.pretty_name}`;
         }

@@ -1,12 +1,12 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>
+            <v-col cols="12" xxl="8" offset-xxl="2">
                 <h1>Hand Out Items</h1>
             </v-col>
         </v-row>
         <v-row>
-            <v-col>
+            <v-col cols="12" xxl="8" offset-xxl="2">
                 <v-stepper
                     v-model="currentStep"
                     :items="['User', 'Items', 'Review', 'Binding']"
@@ -77,7 +77,7 @@
 
                                 <v-container>
                                     <v-row>
-                                        <v-col>
+                                        <v-col cols="12" md="8">
                                             <ItemBasket
                                                 ref="basket"
                                                 :basket-items="itemsToBind"
@@ -86,7 +86,7 @@
                                                 :read-only="false"
                                             ></ItemBasket>
                                         </v-col>
-                                        <v-col cols="4">
+                                        <v-col cols="12" md="4">
                                             <OrderList
                                                 :orders="orders"
                                             ></OrderList>
