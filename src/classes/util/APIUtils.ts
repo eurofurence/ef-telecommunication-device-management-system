@@ -1,4 +1,5 @@
 import axios from "@/plugins/axios";
+import { AxiosError } from "axios";
 
 interface VuetifyTableSortByEntry {
     key: string;
@@ -107,6 +108,25 @@ export class APIUtils {
         }
 
         return ret;
+    }
+
+    /**
+     * Transforms an AxiosError produced during a create operation into a human
+     * readable string.
+     *
+     * @param error The AxiosError to transform.
+     * @return string The human readable error string.
+     */
+    public static createErrorToString(error: AxiosError): string {
+        if (error.response) {
+            return Object.keys(error.response.data).reduce((res: string, prop: string) =>
+                res + prop + ': ' + error.response.data[prop].join(' ') + '\n'
+            , '');
+        } else if (error.request) {
+            return 'No response received from server.';
+        } else {
+            return error.message;
+        }
     }
 
 }
