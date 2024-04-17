@@ -10,6 +10,7 @@
         :loading="loading"
         :prepend-inner-icon="icon"
         :autofocus="autofocus"
+        :no-filter="noFilter"
         clearable
         persistent-clear
         return-object
@@ -51,6 +52,7 @@ export default defineComponent({
         minimumSearchLength: {type: Number, required: false, default: 1},
         searchPageSize: {type: Number, required: false, default: 10},
         itemIdsToExclude: {type: Array, required: false, default: []},
+        noFilter: {type: Boolean, required: false, default: false},
     },
 
     emits: [

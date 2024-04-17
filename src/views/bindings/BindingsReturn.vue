@@ -18,14 +18,24 @@
                                 <ServerItemSelector
                                     ref="userSelector"
                                     :fetch-function="usersStore.fetchUsersPage"
-                                    label="User"
+                                    label="Username or Reg-ID"
                                     icon="mdi-account"
                                     item-title-key="pretty_name"
                                     item-value-key="id"
                                     :autofocus="true"
                                     @update:selection="onUserSelected"
                                 ></ServerItemSelector>
-                                TODO: Add Callsign lookup field to select user
+                                <ServerItemSelector
+                                    ref="callsignSelector"
+                                    :fetch-function="usersStore.fetchUsersPageByCallsign"
+                                    label="Callsign"
+                                    icon="mdi-cellphone-basic"
+                                    item-title-key="pretty_name"
+                                    item-value-key="id"
+                                    :autofocus="false"
+                                    :no-filter="true"
+                                    @update:selection="onUserSelected"
+                                ></ServerItemSelector>
                             </v-card-text>
                         </v-card>
                     </template>
@@ -319,6 +329,7 @@ export default defineComponent({
     methods: {
         reset() {
             this.$refs.userSelector.clear();
+            this.$refs.callsignSelector.clear();
             this.selectedUser = {username: 'unknown'};
             this.userBindings = [];
             this.userBindingsLoading = true;
