@@ -12,10 +12,11 @@ from backend.serializers.radio import RadioDeviceSerializer, RadioAccessorySeria
 
 class ItemTemplateSerializer(serializers.ModelSerializer):
     owner = ItemOwnerSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = ItemTemplate
-        fields = ['id', 'name', 'description', 'owner']
+        fields = ['id', 'name', 'description', 'owner', 'pretty_name']
 
 
 class PolymorphicItemTemplateSerializer(PolymorphicSerializer):

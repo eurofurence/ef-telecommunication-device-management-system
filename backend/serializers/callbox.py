@@ -6,14 +6,16 @@ from backend.serializers import ItemOwnerSerializer
 
 class CallboxTemplateSerializer(serializers.ModelSerializer):
     owner = ItemOwnerSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = CallboxTemplate
-        fields = ['id', 'name', 'description', 'owner']
+        fields = ['id', 'name', 'description', 'owner', 'pretty_name']
 
 
 class CallboxSerializer(serializers.ModelSerializer):
     template = CallboxTemplateSerializer()
+    template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=CallboxTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
@@ -22,6 +24,7 @@ class CallboxSerializer(serializers.ModelSerializer):
             'id',
             'pretty_name',
             'template',
+            'template_id',
             'notes',
             'serialnumber',
             'handed_out',

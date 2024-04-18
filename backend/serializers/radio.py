@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from backend.models import RadioDeviceTemplate, RadioDevice, RadioAccessoryTemplate, RadioAccessory, Pager, RadioCoding
+from backend.models import RadioDeviceTemplate, RadioDevice, RadioAccessoryTemplate, RadioAccessory, Pager, RadioCoding, \
+    PagerTemplate
 from backend.serializers import ItemOwnerSerializer
 
 
@@ -19,14 +20,16 @@ class RadioCodingSerializerReduced(serializers.ModelSerializer):
 class RadioDeviceTemplateSerializer(serializers.ModelSerializer):
     owner = ItemOwnerSerializer()
     coding = RadioCodingSerializerReduced()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = RadioDeviceTemplate
-        fields = ['id', 'name', 'description', 'owner', 'coding']
+        fields = ['id', 'name', 'description', 'owner', 'coding', 'pretty_name']
 
 
 class RadioDeviceSerializer(serializers.ModelSerializer):
-    template = RadioDeviceTemplateSerializer()
+    template = RadioDeviceTemplateSerializer(read_only=True)
+    template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=RadioDeviceTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
@@ -35,6 +38,7 @@ class RadioDeviceSerializer(serializers.ModelSerializer):
             'id',
             'pretty_name',
             'template',
+            'template_id',
             'notes',
             'serialnumber',
             'handed_out',
@@ -46,10 +50,11 @@ class RadioDeviceSerializer(serializers.ModelSerializer):
 
 class RadioAccessoryTemplateSerializer(serializers.ModelSerializer):
     owner = ItemOwnerSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = RadioAccessoryTemplate
-        fields = ['id', 'name', 'description', 'owner', 'allow_quickadd']
+        fields = ['id', 'name', 'description', 'owner', 'allow_quickadd', 'pretty_name']
 
 
 class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
@@ -74,6 +79,7 @@ class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
 
 class RadioAccessorySerializer(serializers.ModelSerializer):
     template = RadioAccessoryTemplateSerializer()
+    template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=RadioAccessoryTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
@@ -82,6 +88,7 @@ class RadioAccessorySerializer(serializers.ModelSerializer):
             'id',
             'pretty_name',
             'template',
+            'template_id',
             'notes',
             'serialnumber',
             'handed_out',
@@ -92,14 +99,16 @@ class RadioAccessorySerializer(serializers.ModelSerializer):
 
 class PagerTemplateSerializer(serializers.ModelSerializer):
     owner = ItemOwnerSerializer()
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
-        model = RadioAccessoryTemplate
-        fields = ['id', 'name', 'description', 'owner']
+        model = PagerTemplate
+        fields = ['id', 'name', 'description', 'owner', 'pretty_name']
 
 
 class PagerSerializer(serializers.ModelSerializer):
     template = PagerTemplateSerializer()
+    template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=PagerTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
@@ -108,6 +117,7 @@ class PagerSerializer(serializers.ModelSerializer):
             'id',
             'pretty_name',
             'template',
+            'template_id',
             'notes',
             'serialnumber',
             'handed_out',
