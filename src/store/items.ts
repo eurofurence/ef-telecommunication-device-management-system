@@ -20,6 +20,44 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Creates a new radio device via the API.
+         *
+         * @param templateId ID of the radio template to create the radio from.
+         * @param callsign Callsign of the radio device.
+         * @param serialnumber Serial number of the radio device.
+         * @param notes Notes for the radio device.
+         * @return API response. Created structure on success.
+         */
+        async createRadio(templateId: number, callsign: string = '', serialnumber: string = '', notes: string = '') {
+            return APIUtils.post('/radios/', {
+                template_id: templateId,
+                callsign: callsign,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
+         * Deletes a single radio device via the API.
+         *
+         * @param radioId ID of the radio device to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadio(radioId: number) {
+            return APIUtils.delete('/radio/', radioId.toString());
+        },
+
+        /**
+         * Deletes multiple radio devices via the API.
+         *
+         * @param radioIds IDs of the radio devices to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadios(radioIds: number[]) {
+            return APIUtils.delete('/radios/bulk/', radioIds.join(',') + '/');
+        },
+
+        /**
          * Fetches a page of radio device templates from the API.
          *
          * @param page Number of the page to fetch.

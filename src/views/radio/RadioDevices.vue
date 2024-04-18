@@ -5,19 +5,32 @@
         icon="mdi-cellphone-basic"
         :items-table="itemsTable"
         :templates-table="templatesTable"
+        @click:create-item="showEditForm = true"
+        @click:delete-items="deleteRadios"
     />
+
+    <v-dialog v-model="showEditForm" max-width="560">
+        <RadioDeviceForm
+            @abort="showEditForm = false"
+            @submit="createRadio($event)"
+        />
+    </v-dialog>
 </template>
 
 <script lang="ts">
+import {useToast} from "vue-toastification";
 import {useItemsStore} from "@/store/items";
 import ItemOverview from "@/components/ItemOverview.vue";
+import RadioDeviceForm from "@/components/forms/RadioDeviceForm.vue";
+import {APIUtils} from "@/classes/util/APIUtils";
 
 const itemsStore = useItemsStore();
+const toast = useToast();
 
 export default {
     name: "RadioDevices",
 
-    components: {ItemOverview},
+    components: {RadioDeviceForm, ItemOverview},
 
     data: () => ({
         itemsTable: {
@@ -48,6 +61,55 @@ export default {
             ],
             fetchFunction: itemsStore.fetchRadioTemplatesPage,
         },
+        showEditForm: false,
     }),
+
+    methods: {
+        deleteRadios(radioDeviceIds: number[]) {
+            // TODO: Replace with proper dialog
+            if (confirm("Are you sure you want to delete the selected radio devices?")) {
+                itemsStore.deleteRadios(radioDeviceIds)
+                    .then((resp) => {
+                        toast.success("Deleted " + radioDeviceIds.length + " radio device(s)");
+                    })
+                    .catch((error) => {
+                        toast.error("Failed to delete radio device(s).\r\n" + APIUtils.createErrorToString(error));
+                        console.error("Failed to delete radio device(s):", error);
+                    });
+
+                // Deselect deleted items and force re-render of table
+                this.$refs.itemOverview.deselectItemsByKey(radioDeviceIds);
+                this.$refs.itemOverview.reloadItems();
+            }
+        },
+
+        createRadio(data: any) {
+            console.log(data);
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from RadioDeviceForm.");
+                toast.error("Failed to create radio device.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.template) {
+                console.error("Received incomplete data from RadioDeviceForm:", data);
+                toast.error("Failed to create radio device.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Create radio coding
+            itemsStore.createRadio(data.template, data.callsign, data.serialnumber, data.notes)
+                .then((resp) => {
+                    toast.success("Created radio device with ID " + resp.data.id);
+                    this.showEditForm = false;
+                    this.$refs.itemOverview.reloadItems();
+                })
+                .catch((error) => {
+                    console.error("Failed to create radio device:", error);
+                    toast.error("Failed to create radio device.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+    },
 }
 </script>
