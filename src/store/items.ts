@@ -158,5 +158,40 @@ export const useItemsStore = defineStore("item", {
         async fetchRadioCodingsPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/radio_codings/', page, itemsPerPage, sortBy, search);
         },
+
+        /**
+         * Creates a new radio coding via the API.
+         *
+         * @param name Name of the radio coding
+         * @param color Color of the radio coding in hex format
+         * @param description Description of the radio coding
+         */
+        async createRadioCoding(name: string, color: string, description: string = '') {
+            return APIUtils.post('/radio_codings/', {
+                name: name,
+                color: color,
+                description: description,
+            });
+        },
+
+        /**
+         * Deletes a single radio coding via the API.
+         *
+         * @param radioCodingId ID of the radio coding to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadioCoding(radioCodingId: number) {
+            return APIUtils.delete('/radio_codings/', radioCodingId.toString());
+        },
+
+        /**
+         * Deletes multiple radio codings via the API.
+         *
+         * @param radioCodingIds IDs of the radio codings to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadioCodings(radioCodingIds: number[]) {
+            return APIUtils.delete('/radio_codings/bulk/', radioCodingIds.join(',') + '/');
+        },
     },
 })

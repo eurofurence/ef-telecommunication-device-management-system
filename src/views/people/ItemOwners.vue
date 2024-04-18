@@ -65,16 +65,18 @@ export default {
             }
         },
 
-        async createItemOwner(data: any) {
+        createItemOwner(data: any) {
                 // Check received data
                 if (data === null) {
                     console.error("Received null data from ItemOwnerForm");
                     toast.error("Failed to create item owner.\r\nReceived no data.");
+                    return;
                 }
 
                 if (!data.name || !data.shortname) {
                     console.error("Received incomplete data from ItemOwnerForm:", data);
                     toast.error("Failed to create item owner.\r\nReceived incomplete data.");
+                    return;
                 }
 
                 // Create new item owner

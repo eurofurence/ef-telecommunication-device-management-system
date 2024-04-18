@@ -119,6 +119,10 @@ export class APIUtils {
      */
     public static createErrorToString(error: AxiosError): string {
         if (error.response) {
+            if (error.response.status == 404) {
+                return 'The requested resource could not be found.';
+            }
+
             return Object.keys(error.response.data).reduce((res: string, prop: string) =>
                 res + prop + ': ' + error.response.data[prop].join(' ') + '\n'
             , '');
