@@ -1,5 +1,9 @@
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django_currentuser.middleware import get_current_user
 
+from . import EventLogEntry
 from .item import Item, ItemTemplate
 
 
@@ -28,6 +32,42 @@ class RadioCoding(models.Model):
 
     def __str__(self):
         return self.name
+
+
+@receiver(post_save, sender=RadioCoding, dispatch_uid="radio_coding_post_save")
+def radio_coding_post_save(instance, created, **kwargs):
+    """
+    Logs creation and update of radio codings.
+
+    :param instance: Saved model instance
+    :param created: True if instance was created. False if updated
+    :param kwargs: Additional arguments
+    :return: None
+    """
+    if created:
+        action = EventLogEntry.Action.CREATE_RADIO_CODING
+    else:
+        action = EventLogEntry.Action.UPDATE_RADIO_CODING
+
+    EventLogEntry.log(get_current_user(), action, {
+        'id': instance.id,
+        'name': instance.name,
+    })
+
+
+@receiver(post_delete, sender=RadioCoding, dispatch_uid="radio_coding_post_delete")
+def radio_coding_post_delete(instance, **kwargs):
+    """
+    Logs deletion of radio codings.
+
+    :param instance: Saved model instance
+    :param kwargs: Additional arguments
+    :return: None
+    """
+    EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_RADIO_CODING, {
+        'id': instance.id,
+        'name': instance.name,
+    })
 
 
 class RadioDeviceTemplate(ItemTemplate):

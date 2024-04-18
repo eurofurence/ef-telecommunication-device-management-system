@@ -25,6 +25,9 @@ class EventLogEntry(models.Model):
         CREATE_ORDER = 'CREATE_ORDER', 'Order created'
         DELETE_ORDER = 'DELETE_ORDER', 'Order deleted'
         UPDATE_ORDER = 'UPDATE_ORDER', 'Order updated'
+        CREATE_RADIO_CODING = 'CREATE_RADIO_CODING', 'Radio coding created'
+        DELETE_RADIO_CODING = 'DELETE_RADIO_CODING', 'Radio coding deleted'
+        UPDATE_RADIO_CODING = 'UPDATE_RADIO_CODING', 'Radio coding updated'
 
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     timestamp = models.DateTimeField(

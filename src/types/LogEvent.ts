@@ -187,6 +187,36 @@ export class LogEventType {
         }
     }
 
+    static readonly CREATE_RADIO_CODING: LogEventTypeDeclaration = {
+        key: 'CREATE_RADIO_CODING',
+        label: 'Radio coding created',
+        color: 'green-lighten-1',
+        icon: 'mdi-plus',
+        description(data: any): string {
+            return `Name: ${data.name}`;
+        }
+    }
+
+    static readonly DELETE_RADIO_CODING: LogEventTypeDeclaration = {
+        key: 'DELETE_RADIO_CODING',
+        label: 'Radio coding deleted',
+        color: 'red-lighten-1',
+        icon: 'mdi-minus',
+        description(data: any): string {
+            return `Name: ${data.name}`;
+        }
+    }
+
+    static readonly UPDATE_RADIO_CODING: LogEventTypeDeclaration = {
+        key: 'UPDATE_RADIO_CODING',
+        label: 'Radio coding updated',
+        color: 'orange-darken-1',
+        icon: 'mdi-pencil',
+        description(data: any): string {
+            return `Name: ${data.name}`;
+        }
+    }
+
     static readonly UNKNOWN: LogEventTypeDeclaration = {
         key: 'UNKNOWN',
         label: 'Unknown',
