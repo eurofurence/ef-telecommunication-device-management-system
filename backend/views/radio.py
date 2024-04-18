@@ -1,12 +1,15 @@
+from rest_framework import viewsets
+
 from backend.models import RadioDevice, RadioDeviceTemplate, RadioAccessoryTemplate, RadioAccessory, PagerTemplate, \
     Pager, RadioCoding
 from backend.serializers.radio import RadioDeviceTemplateSerializer, RadioDeviceSerializer, \
     RadioAccessoryTemplateSerializer, RadioAccessorySerializer, PagerTemplateSerializer, PagerSerializer, \
     RadioCodingSerializer
 from backend.views.item import AbstractItemTemplateViewSet, AbstractItemViewSet
+from backend.views.mixins import BulkDeleteMixin
 
 
-class RadioCodingViewSet(AbstractItemViewSet):
+class RadioCodingViewSet(BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows RadioCodings to be viewed or edited.
     """

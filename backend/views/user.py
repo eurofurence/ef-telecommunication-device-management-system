@@ -1,16 +1,15 @@
-from django.db import transaction
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters
 from rest_framework.decorators import action
-from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from backend.models import User, ItemOwner, ItemBinding, RadioDevice
 from backend.serializers import UserSerializer, ItemOwnerSerializer
+from backend.views.mixins import BulkDeleteMixin
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
@@ -42,7 +41,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
 
 
-class ItemOwnerViewSet(viewsets.ModelViewSet):
+class ItemOwnerViewSet(BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows item owners to be viewed or edited.
     """
@@ -53,23 +52,3 @@ class ItemOwnerViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
     ordering = ['id']
     search_fields = ['name', 'shortname']
-
-    @action(detail=False, methods=['delete'], url_path="bulk/(?P<ids>[0-9,]+)")
-    def bulk_delete(self, request, ids):
-        """
-        Deletes multiple item owners at once. This operation is atomic.
-
-        :param request:
-        :param ids:
-        :return:
-        """
-        itemowner_ids_to_delete = [int(pk) for pk in ids.split(',')]
-
-        @transaction.atomic
-        def delete_itemowners():
-            for id in itemowner_ids_to_delete:
-                get_object_or_404(ItemOwner, pk=id).delete()
-
-        delete_itemowners()
-
-        return Response(status=204)
