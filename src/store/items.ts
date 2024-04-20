@@ -121,12 +121,39 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
-         * Deletes a radio accessory item via the API.
+         * Creates a new radio accessory templates via the API.
          *
-         * @param id ID of the radio accessory to delete.
+         * @param templateId ID of the radio accessory template to create the radio accessory from.
+         * @param serialnumber Serial number of the radio accessory.
+         * @param notes Notes for the radio accessory.
+         * @param amount Number of radio accessories to create.
          */
-        async deleteRadioAccessory(id: number) {
-            return APIUtils.delete('/radio_accessories/', id.toString());
+        async createRadioAccessories(templateId: number, serialnumber: string = '', notes: string = '', amount: number = 1) {
+            return APIUtils.post('/radio_accessories/bulk/'+amount+'/', {
+                template_id: templateId,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
+         * Deletes a single radio accessory via the API.
+         *
+         * @param radioAccessoryId ID of the radio accessory to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadioAccessory(radioAccessoryId: number) {
+            return APIUtils.delete('/radio_accessories/', radioAccessoryId.toString());
+        },
+
+        /**
+         * Deletes multiple radio accessories via the API.
+         *
+         * @param radioAccessoryIds IDs of the radio accessories to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadioAccessories(radioAccessoryIds: number[]) {
+            return APIUtils.delete('/radio_accessories/bulk/', radioAccessoryIds.join(',') + '/');
         },
 
         /**
@@ -139,6 +166,44 @@ export const useItemsStore = defineStore("item", {
          */
         async fetchRadioAccessoryTemplatesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/radio_accessory_templates/', page, itemsPerPage, sortBy, search);
+        },
+
+        /**
+         * Creates a new radio accessory template via the API.
+         *
+         * @param name Name of the radio accessory template.
+         * @param ownerId ID of the owner of the radio accessory template.
+         * @param description Description of the radio accessory template.
+         * @param allow_quickadd Whether to allow quick adding of radio accessories.
+         * @return API response. Created structure on success.
+         */
+        async createRadioAccessoryTemplate(name: string, ownerId: number, description: string = '', allow_quickadd: boolean = false) {
+            return APIUtils.post('/radio_accessory_templates/', {
+                name: name,
+                owner_id: ownerId,
+                description: description,
+                allow_quickadd: allow_quickadd,
+            });
+        },
+
+        /**
+         * Deletes a single radio accessory template via the API.
+         *
+         * @param radioAccessoryTemplateId ID of the radio accessory template to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadioAccessoryTemplate(radioAccessoryTemplateId: number) {
+            return APIUtils.delete('/radio_accessory_templates/', radioAccessoryTemplateId.toString());
+        },
+
+        /**
+         * Deletes multiple radio accessory templates via the API.
+         *
+         * @param radioAccessoryTemplateIds IDs of the radio accessory templates to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadioAccessoryTemplates(radioAccessoryTemplateIds: number[]) {
+            return APIUtils.delete('/radio_accessory_templates/bulk/', radioAccessoryTemplateIds.join(',') + '/');
         },
 
         /**

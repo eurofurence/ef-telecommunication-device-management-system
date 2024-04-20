@@ -89,7 +89,8 @@ const itemsStore = useItemsStore();
 const usersStore = useUsersStore();
 
 export default defineComponent({
-    name: "RadioCodingForm",
+    name: "RadioDeviceTemplateForm",
+
     components: {ServerItemSelector},
 
     props: {

@@ -1,7 +1,7 @@
 <template>
     <v-card>
-        <v-card-title v-if="!isEdit">New Radio Device</v-card-title>
-        <v-card-title v-if="isEdit">Edit Radio Device</v-card-title>
+        <v-card-title v-if="!isEdit">New Radio Accessory Template</v-card-title>
+        <v-card-title v-if="isEdit">Edit Radio Accessory Template</v-card-title>
         <v-divider></v-divider>
 
         <v-card-text>
@@ -19,38 +19,42 @@
                     prepend-inner-icon="mdi-identifier"
                     disabled
                 ></v-text-field>
+                <v-text-field
+                    v-model="data.name"
+                    label="Template Name"
+                    :rules="rules.name"
+                    variant="outlined"
+                    prepend-inner-icon="mdi-format-title"
+                ></v-text-field>
                 <ServerItemSelector
-                    ref="templateSelector"
-                    :fetch-function="itemsStore.fetchRadioTemplatesPage"
-                    label="Radio Device Template"
-                    icon="mdi-cellphone-basic"
+                    ref="ownerSelector"
+                    :fetch-function="usersStore.fetchItemOwnersPage"
+                    label="Item Owner"
+                    icon="mdi-account-arrow-right"
                     item-title-key="pretty_name"
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
-                    @update:selection="data.template = $event.id"
+                    @update:selection="data.owner = $event.id"
                 ></ServerItemSelector>
                 <v-text-field
-                    v-model="data.callsign"
-                    label="Callsign"
-                    :rules="rules.callsign"
-                    variant="outlined"
-                    prepend-inner-icon="mdi-numeric"
-                ></v-text-field>
-                <v-text-field
-                    v-model="data.serialnumber"
-                    label="Serialnumber"
-                    :rules="rules.serialnumber"
-                    variant="outlined"
-                    prepend-inner-icon="mdi-tag"
-                ></v-text-field>
-                <v-text-field
-                    v-model="data.notes"
+                    v-model="data.description"
                     label="Notes"
-                    :rules="rules.notes"
+                    :rules="rules.description"
                     variant="outlined"
                     prepend-inner-icon="mdi-pencil"
                 ></v-text-field>
+                <v-switch
+                    v-model="data.allow_quickadd"
+                    :rules="rules.allow_quickadd"
+                    color="primary"
+                >
+                    <template v-slot:label>
+                        <v-icon>mdi-timer-plus-outline</v-icon>
+                        &nbsp;
+                        Allow Quickadd
+                    </template>
+                </v-switch>
 
                 <v-card-actions>
                     <v-btn
@@ -79,11 +83,12 @@ import ServerItemSelector from "@/components/ServerItemSelector.vue";
 <script lang="ts">
 import {defineComponent} from 'vue'
 import {useItemsStore} from "@/store/items";
+import {useUsersStore} from "@/store/users";
 
-const itemsStore = useItemsStore();
+const usersStore = useUsersStore();
 
 export default defineComponent({
-    name: "RadioDeviceForm",
+    name: "RadioDeviceTemplateForm",
 
     components: {ServerItemSelector},
 
@@ -96,25 +101,25 @@ export default defineComponent({
             isValid: false,
             data: {
                 id: null,
-                template: null,
-                callsign: '',
-                serialnumber: '',
-                notes: '',
+                name: '',
+                owner: null,
+                description: '',
+                allow_quickadd: false,
             },
             rules: {
-                template: [
-                    (v: any) => !!v || 'Template is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'Template is invalid',
+                name: [
+                    (v: string) => !!v || 'Name is required',
+                    (v: string) => (v.length <= 128) || 'Name must be less than 128 characters',
                 ],
-                callsign: [
-                    (v: string) => (/^[0-9]*$/.test(v)) || 'Callsign must be numeric',
-                    (v: string) => (v.length <= 32) || 'Callsign must be less than 32 characters',
+                owner: [
+                    (v: any) => !!v || 'Owner is required',
+                    (v: string) => (/^[0-9]+/.test(v)) || 'Owner is invalid',
                 ],
-                serialnumber: [
-                    (v: string) => (v.length <= 128) || 'Serialnumber must be less than 128 characters',
+                description: [
+                    (v: string) => (v.length <= 256) || 'Description must be less than 256 characters',
                 ],
-                notes: [
-                    (v: string) => (v.length <= 256) || 'Notes must be less than 256 characters',
+                allow_quickadd: [
+                    (v: any) => v !== null || 'Quickadd is required',
                 ],
             },
         }
@@ -127,7 +132,3 @@ export default defineComponent({
     },
 });
 </script>
-
-<style scoped>
-
-</style>

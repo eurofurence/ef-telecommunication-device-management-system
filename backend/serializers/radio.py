@@ -60,12 +60,13 @@ class RadioDeviceSerializer(serializers.ModelSerializer):
 
 
 class RadioAccessoryTemplateSerializer(serializers.ModelSerializer):
-    owner = ItemOwnerSerializer()
+    owner = ItemOwnerSerializer(read_only=True)
+    owner_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=ItemOwnerSerializer.Meta.model.objects.all(), source='owner')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = RadioAccessoryTemplate
-        fields = ['id', 'name', 'description', 'owner', 'allow_quickadd', 'pretty_name']
+        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'allow_quickadd', 'pretty_name']
 
 
 class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
@@ -89,7 +90,7 @@ class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
 
 
 class RadioAccessorySerializer(serializers.ModelSerializer):
-    template = RadioAccessoryTemplateSerializer()
+    template = RadioAccessoryTemplateSerializer(read_only=True)
     template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=RadioAccessoryTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
@@ -109,16 +110,17 @@ class RadioAccessorySerializer(serializers.ModelSerializer):
 
 
 class PagerTemplateSerializer(serializers.ModelSerializer):
-    owner = ItemOwnerSerializer()
+    owner = ItemOwnerSerializer(read_only=True)
+    owner_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=ItemOwnerSerializer.Meta.model.objects.all(), source='owner')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = PagerTemplate
-        fields = ['id', 'name', 'description', 'owner', 'pretty_name']
+        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'pretty_name']
 
 
 class PagerSerializer(serializers.ModelSerializer):
-    template = PagerTemplateSerializer()
+    template = PagerTemplateSerializer(read_only=True)
     template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=PagerTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
