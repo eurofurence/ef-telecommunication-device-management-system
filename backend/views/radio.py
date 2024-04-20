@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework import permissions
+from rest_framework import filters
 
 from backend.models import RadioDevice, RadioDeviceTemplate, RadioAccessoryTemplate, RadioAccessory, PagerTemplate, \
     Pager, RadioCoding
@@ -13,8 +15,12 @@ class RadioCodingViewSet(BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows RadioCodings to be viewed or edited.
     """
+    permission_classes = [permissions.IsAuthenticated]
     queryset = RadioCoding.objects.all()
     serializer_class = RadioCodingSerializer
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = '__all__'
+    ordering = ['id']
     search_fields = [
         'name',
         'description',
