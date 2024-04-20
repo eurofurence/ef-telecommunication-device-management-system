@@ -39,7 +39,7 @@
                 ></ServerItemSelector>
                 <v-text-field
                     v-model="data.description"
-                    label="Notes"
+                    label="Description"
                     :rules="rules.description"
                     variant="outlined"
                     prepend-inner-icon="mdi-pencil"

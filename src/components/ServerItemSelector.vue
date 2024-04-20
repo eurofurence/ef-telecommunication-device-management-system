@@ -39,6 +39,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+    // TODO: Implement a pre-fetch to show results of an empty search right away, if desired/enabled
     name: "ServerItemSelector",
 
     props: {

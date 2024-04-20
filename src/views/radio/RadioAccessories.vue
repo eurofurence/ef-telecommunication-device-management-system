@@ -97,7 +97,6 @@ export default {
         },
 
         createRadioAccessories(data: any) {
-            console.log(data);
             // Check received data
             if (data === null) {
                 console.error("Received null data from RadioAccessoriesForm.");
@@ -111,7 +110,7 @@ export default {
                 return;
             }
 
-            // Create radio coding
+            // Create radio accessories
             itemsStore.createRadioAccessories(data.template, data.serialnumber, data.notes, data.amount)
                 .then((resp) => {
                     toast.success(`Created ${resp.data.length} radio accessories`);
@@ -143,7 +142,6 @@ export default {
         },
 
         createRadioAccessoryTemplate(data: any) {
-            console.log(data);
             // Check received data
             if (data === null) {
                 console.error("Received null data from RadioAccessoryTemplateForm.");
@@ -157,7 +155,7 @@ export default {
                 return;
             }
 
-            // Create radio coding
+            // Create radio accessory template
             itemsStore.createRadioAccessoryTemplate(data.name, data.owner, data.description, data.allow_quickadd)
                 .then((resp) => {
                     toast.success("Created radio accessory template with ID " + resp.data.id);

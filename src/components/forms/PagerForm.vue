@@ -1,7 +1,7 @@
 <template>
     <v-card>
-        <v-card-title v-if="!isEdit">New Radio Device Template</v-card-title>
-        <v-card-title v-if="isEdit">Edit Radio Device Template</v-card-title>
+        <v-card-title v-if="!isEdit">New Pager</v-card-title>
+        <v-card-title v-if="isEdit">Edit Pager</v-card-title>
         <v-divider></v-divider>
 
         <v-card-text>
@@ -19,39 +19,28 @@
                     prepend-inner-icon="mdi-identifier"
                     disabled
                 ></v-text-field>
-                <v-text-field
-                    v-model="data.name"
-                    label="Template Name"
-                    :rules="rules.name"
-                    variant="outlined"
-                    prepend-inner-icon="mdi-format-title"
-                ></v-text-field>
                 <ServerItemSelector
-                    ref="ownerSelector"
-                    :fetch-function="usersStore.fetchItemOwnersPage"
-                    label="Item Owner"
-                    icon="mdi-account-arrow-right"
+                    ref="templateSelector"
+                    :fetch-function="itemsStore.fetchPagerTemplatesPage"
+                    label="Pager Template"
+                    icon="mdi-bell-ring-outline"
                     item-title-key="pretty_name"
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
-                    @update:selection="data.owner = $event.id"
-                ></ServerItemSelector>
-                <ServerItemSelector
-                    ref="codingSelector"
-                    :fetch-function="itemsStore.fetchRadioCodingsPage"
-                    label="Radio Coding"
-                    icon="mdi-sim"
-                    item-title-key="name"
-                    item-value-key="id"
-                    :autofocus="false"
-                    :no-filter="true"
-                    @update:selection="data.coding = $event.id"
+                    @update:selection="data.template = $event.id"
                 ></ServerItemSelector>
                 <v-text-field
-                    v-model="data.description"
-                    label="Description"
-                    :rules="rules.description"
+                    v-model="data.serialnumber"
+                    label="Serialnumber"
+                    :rules="rules.serialnumber"
+                    variant="outlined"
+                    prepend-inner-icon="mdi-tag"
+                ></v-text-field>
+                <v-text-field
+                    v-model="data.notes"
+                    label="Notes"
+                    :rules="rules.notes"
                     variant="outlined"
                     prepend-inner-icon="mdi-pencil"
                 ></v-text-field>
@@ -83,13 +72,11 @@ import ServerItemSelector from "@/components/ServerItemSelector.vue";
 <script lang="ts">
 import {defineComponent} from 'vue'
 import {useItemsStore} from "@/store/items";
-import {useUsersStore} from "@/store/users";
 
 const itemsStore = useItemsStore();
-const usersStore = useUsersStore();
 
 export default defineComponent({
-    name: "RadioDeviceTemplateForm",
+    name: "PagerForm",
 
     components: {ServerItemSelector},
 
@@ -102,26 +89,20 @@ export default defineComponent({
             isValid: false,
             data: {
                 id: null,
-                name: '',
-                owner: null,
-                coding: null,
-                description: '',
+                template: null,
+                serialnumber: '',
+                notes: '',
             },
             rules: {
-                name: [
-                    (v: string) => !!v || 'Name is required',
-                    (v: string) => (v.length <= 128) || 'Name must be less than 128 characters',
+                template: [
+                    (v: any) => !!v || 'Template is required',
+                    (v: string) => (/^[0-9]+/.test(v)) || 'Template is invalid',
                 ],
-                owner: [
-                    (v: any) => !!v || 'Owner is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'Owner is invalid',
+                serialnumber: [
+                    (v: string) => (v.length <= 128) || 'Serialnumber must be less than 128 characters',
                 ],
-                coding: [
-                    (v: any) => !!v || 'Coding is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'Coding is invalid',
-                ],
-                description: [
-                    (v: string) => (v.length <= 256) || 'Description must be less than 256 characters',
+                notes: [
+                    (v: string) => (v.length <= 256) || 'Notes must be less than 256 characters',
                 ],
             },
         }

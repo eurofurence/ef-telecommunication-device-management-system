@@ -1,7 +1,7 @@
 <template>
     <v-card>
-        <v-card-title v-if="!isEdit">New Radio Device Template</v-card-title>
-        <v-card-title v-if="isEdit">Edit Radio Device Template</v-card-title>
+        <v-card-title v-if="!isEdit">New Pager Template</v-card-title>
+        <v-card-title v-if="isEdit">Edit Pager Template</v-card-title>
         <v-divider></v-divider>
 
         <v-card-text>
@@ -36,17 +36,6 @@
                     :autofocus="false"
                     :no-filter="true"
                     @update:selection="data.owner = $event.id"
-                ></ServerItemSelector>
-                <ServerItemSelector
-                    ref="codingSelector"
-                    :fetch-function="itemsStore.fetchRadioCodingsPage"
-                    label="Radio Coding"
-                    icon="mdi-sim"
-                    item-title-key="name"
-                    item-value-key="id"
-                    :autofocus="false"
-                    :no-filter="true"
-                    @update:selection="data.coding = $event.id"
                 ></ServerItemSelector>
                 <v-text-field
                     v-model="data.description"
@@ -85,11 +74,10 @@ import {defineComponent} from 'vue'
 import {useItemsStore} from "@/store/items";
 import {useUsersStore} from "@/store/users";
 
-const itemsStore = useItemsStore();
 const usersStore = useUsersStore();
 
 export default defineComponent({
-    name: "RadioDeviceTemplateForm",
+    name: "PagerTemplateForm",
 
     components: {ServerItemSelector},
 
@@ -104,7 +92,6 @@ export default defineComponent({
                 id: null,
                 name: '',
                 owner: null,
-                coding: null,
                 description: '',
             },
             rules: {
@@ -115,10 +102,6 @@ export default defineComponent({
                 owner: [
                     (v: any) => !!v || 'Owner is required',
                     (v: string) => (/^[0-9]+/.test(v)) || 'Owner is invalid',
-                ],
-                coding: [
-                    (v: any) => !!v || 'Coding is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'Coding is invalid',
                 ],
                 description: [
                     (v: string) => (v.length <= 256) || 'Description must be less than 256 characters',

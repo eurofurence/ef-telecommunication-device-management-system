@@ -220,6 +220,42 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Creates a new pager via the API.
+         *
+         * @param templateId ID of the pager template to create the pager from.
+         * @param serialnumber Serial number of the pager.
+         * @param notes Notes for the pager.
+         * @return API response. Created structure on success.
+         */
+        async createPager(templateId: number, serialnumber: string = '', notes: string = '') {
+            return APIUtils.post('/pagers/', {
+                template_id: templateId,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
+         * Deletes a single pager via the API.
+         *
+         * @param pagerId ID of the pager to delete.
+         * @return API response. Empty on success.
+         */
+        async deletePager(pagerId: number) {
+            return APIUtils.delete('/pagers/', pagerId.toString());
+        },
+
+        /**
+         * Deletes multiple pagers via the API.
+         *
+         * @param pagerIds IDs of the pagers to delete.
+         * @return API response. Empty on success.
+         */
+        async deletePagers(pagerIds: number[]) {
+            return APIUtils.delete('/pagers/bulk/', pagerIds.join(',') + '/');
+        },
+
+        /**
          * Fetches a page of pager templates from the API.
          *
          * @param page Number of the page to fetch.
@@ -229,6 +265,42 @@ export const useItemsStore = defineStore("item", {
          */
         async fetchPagerTemplatesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/pager_templates/', page, itemsPerPage, sortBy, search);
+        },
+
+        /**
+         * Creates a new pager template via the API.
+         *
+         * @param name Name of the pager template.
+         * @param ownerId ID of the owner of the pager template.
+         * @param description Description of the pager template.
+         * @return API response. Created structure on success.
+         */
+        async createPagerTemplate(name: string, ownerId: number, description: string = '') {
+            return APIUtils.post('/pager_templates/', {
+                name: name,
+                owner_id: ownerId,
+                description: description,
+            });
+        },
+
+        /**
+         * Deletes a single pager template via the API.
+         *
+         * @param pagerTemplateId ID of the pager template to delete.
+         * @return API response. Empty on success.
+         */
+        async deletePagerTemplate(pagerTemplateId: number) {
+            return APIUtils.delete('/pager_templates/', pagerTemplateId.toString());
+        },
+
+        /**
+         * Deletes multiple pager templates via the API.
+         *
+         * @param pagerTemplateIds IDs of the pager templates to delete.
+         * @return API response. Empty on success.
+         */
+        async deletePagerTemplates(pagerTemplateIds: number[]) {
+            return APIUtils.delete('/pager_templates/bulk/', pagerTemplateIds.join(',') + '/');
         },
 
         /**

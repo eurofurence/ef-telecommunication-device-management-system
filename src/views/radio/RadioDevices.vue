@@ -99,7 +99,6 @@ export default {
         },
 
         createRadio(data: any) {
-            console.log(data);
             // Check received data
             if (data === null) {
                 console.error("Received null data from RadioDeviceForm.");
@@ -113,7 +112,7 @@ export default {
                 return;
             }
 
-            // Create radio coding
+            // Create radio
             itemsStore.createRadio(data.template, data.callsign, data.serialnumber, data.notes)
                 .then((resp) => {
                     toast.success("Created radio device with ID " + resp.data.id);
@@ -145,7 +144,6 @@ export default {
         },
 
         createRadioTemplate(data: any) {
-            console.log(data);
             // Check received data
             if (data === null) {
                 console.error("Received null data from RadioDeviceTemplateForm.");
@@ -159,7 +157,7 @@ export default {
                 return;
             }
 
-            // Create radio coding
+            // Create radio template
             itemsStore.createRadioTemplate(data.name, data.owner, data.coding, data.description)
                 .then((resp) => {
                     toast.success("Created radio device template with ID " + resp.data.id);
