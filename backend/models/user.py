@@ -69,6 +69,9 @@ class ItemOwner(models.Model):
         help_text="Short name of the owner"
     )
 
+    def get_pretty_name(self):
+        return f"{self.name} ({self.shortname})"
+
     def __str__(self):
         return self.name
 

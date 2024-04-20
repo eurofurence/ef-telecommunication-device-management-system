@@ -12,6 +12,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ItemOwnerSerializer(serializers.ModelSerializer):
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
+
     class Meta:
         model = ItemOwner
-        fields = ['id', 'name', 'shortname']
+        fields = ['id', 'name', 'shortname', 'pretty_name']
