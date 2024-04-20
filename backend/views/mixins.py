@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import ProtectedError
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -25,6 +26,9 @@ class BulkDeleteMixin:
             for id in ids_to_delete:
                 get_object_or_404(self.get_queryset(), pk=id).delete()
 
-        delete_objects()
+        try:
+            delete_objects()
+        except ProtectedError as e:
+            return Response(status=409, data=str(e))
 
         return Response(status=204)
