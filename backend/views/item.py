@@ -12,7 +12,7 @@ from backend.serializers.radio import RadioAccessoryTemplateQuickAddSerializer
 from backend.views.mixins import BulkDeleteMixin
 
 
-class AbstractItemTemplateViewSet(ABC, viewsets.ModelViewSet):
+class AbstractItemTemplateViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows item templates to be viewed or edited.
     """

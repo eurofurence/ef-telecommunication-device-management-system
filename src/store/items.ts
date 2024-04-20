@@ -44,7 +44,7 @@ export const useItemsStore = defineStore("item", {
          * @return API response. Empty on success.
          */
         async deleteRadio(radioId: number) {
-            return APIUtils.delete('/radio/', radioId.toString());
+            return APIUtils.delete('/radios/', radioId.toString());
         },
 
         /**
@@ -67,6 +67,44 @@ export const useItemsStore = defineStore("item", {
          */
         async fetchRadioTemplatesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/radio_templates/', page, itemsPerPage, sortBy, search);
+        },
+
+        /**
+         * Creates a new radio device template via the API.
+         *
+         * @param name Name of the radio template.
+         * @param ownerId ID of the owner of the radio template.
+         * @param codingId ID of the coding of the radio template.
+         * @param description Description of the radio template.
+         * @return API response. Created structure on success.
+         */
+        async createRadioTemplate(name: string, ownerId: number, codingId: number, description: string = '') {
+            return APIUtils.post('/radio_templates/', {
+                name: name,
+                owner_id: ownerId,
+                coding_id: codingId,
+                description: description,
+            });
+        },
+
+        /**
+         * Deletes a single radio device template via the API.
+         *
+         * @param radioId ID of the radio device template to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadioTemplate(radioId: number) {
+            return APIUtils.delete('/radio_templates/', radioId.toString());
+        },
+
+        /**
+         * Deletes multiple radio device templates via the API.
+         *
+         * @param radioTemplateIds IDs of the radio device templates to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteRadioTemplates(radioTemplateIds: number[]) {
+            return APIUtils.delete('/radio_templates/bulk/', radioTemplateIds.join(',') + '/');
         },
 
         /**

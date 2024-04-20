@@ -18,13 +18,24 @@ class RadioCodingSerializerReduced(serializers.ModelSerializer):
 
 
 class RadioDeviceTemplateSerializer(serializers.ModelSerializer):
-    owner = ItemOwnerSerializer()
-    coding = RadioCodingSerializerReduced()
+    owner = ItemOwnerSerializer(read_only=True)
+    owner_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=ItemOwnerSerializer.Meta.model.objects.all(), source='owner')
+    coding = RadioCodingSerializerReduced(read_only=True)
+    coding_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=RadioCoding.objects.all(), source='coding')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = RadioDeviceTemplate
-        fields = ['id', 'name', 'description', 'owner', 'coding', 'pretty_name']
+        fields = [
+            'id',
+            'name',
+            'description',
+            'owner',
+            'owner_id',
+            'coding',
+            'coding_id',
+            'pretty_name'
+        ]
 
 
 class RadioDeviceSerializer(serializers.ModelSerializer):

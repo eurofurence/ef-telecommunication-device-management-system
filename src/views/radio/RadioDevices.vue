@@ -5,14 +5,23 @@
         icon="mdi-cellphone-basic"
         :items-table="itemsTable"
         :templates-table="templatesTable"
-        @click:create-item="showEditForm = true"
+        @click:create-item="showItemEditForm = true"
         @click:delete-items="deleteRadios"
+        @click:create-item-template="showTemplateEditForm = true"
+        @click:delete-item-templates="deleteRadioTemplates"
     />
 
-    <v-dialog v-model="showEditForm" max-width="560">
+    <v-dialog v-model="showItemEditForm" max-width="560">
         <RadioDeviceForm
-            @abort="showEditForm = false"
+            @abort="showItemEditForm = false"
             @submit="createRadio($event)"
+        />
+    </v-dialog>
+
+    <v-dialog v-model="showTemplateEditForm" max-width="560">
+        <RadioDeviceTemplateForm
+            @abort="showTemplateEditForm = false"
+            @submit="createRadioTemplate($event)"
         />
     </v-dialog>
 </template>
@@ -22,6 +31,7 @@ import {useToast} from "vue-toastification";
 import {useItemsStore} from "@/store/items";
 import ItemOverview from "@/components/ItemOverview.vue";
 import RadioDeviceForm from "@/components/forms/RadioDeviceForm.vue";
+import RadioDeviceTemplateForm from "@/components/forms/RadioDeviceTemplateForm.vue";
 import {APIUtils} from "@/classes/util/APIUtils";
 
 const itemsStore = useItemsStore();
@@ -30,7 +40,11 @@ const toast = useToast();
 export default {
     name: "RadioDevices",
 
-    components: {RadioDeviceForm, ItemOverview},
+    components: {
+        RadioDeviceForm,
+        RadioDeviceTemplateForm,
+        ItemOverview
+    },
 
     data: () => ({
         itemsTable: {
@@ -61,7 +75,8 @@ export default {
             ],
             fetchFunction: itemsStore.fetchRadioTemplatesPage,
         },
-        showEditForm: false,
+        showItemEditForm: false,
+        showTemplateEditForm: false,
     }),
 
     methods: {
@@ -102,12 +117,58 @@ export default {
             itemsStore.createRadio(data.template, data.callsign, data.serialnumber, data.notes)
                 .then((resp) => {
                     toast.success("Created radio device with ID " + resp.data.id);
-                    this.showEditForm = false;
+                    this.showItemEditForm = false;
                     this.$refs.itemOverview.reloadItems();
                 })
                 .catch((error) => {
                     console.error("Failed to create radio device:", error);
                     toast.error("Failed to create radio device.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        deleteRadioTemplates(radioDeviceTemplateIds: number[]) {
+            // TODO: Replace with proper dialog
+            if (confirm("Are you sure you want to delete the selected radio device template(s)?")) {
+                itemsStore.deleteRadioTemplates(radioDeviceTemplateIds)
+                    .then((resp) => {
+                        toast.success("Deleted " + radioDeviceTemplateIds.length + " radio device template(s)");
+                    })
+                    .catch((error) => {
+                        toast.error("Failed to delete radio device template(s).\r\n" + APIUtils.createErrorToString(error));
+                        console.error("Failed to delete radio device template(s):", error);
+                    });
+
+                // Deselect deleted items and force re-render of table
+                this.$refs.itemOverview.deselectTemplatesByKey(radioDeviceTemplateIds);
+                this.$refs.itemOverview.reloadTemplates();
+            }
+        },
+
+        createRadioTemplate(data: any) {
+            console.log(data);
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from RadioDeviceTemplateForm.");
+                toast.error("Failed to create radio device template.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.name || data.name.length < 1 || !data.owner || !data.coding) {
+                console.error("Received incomplete data from RadioDeviceTemplateForm:", data);
+                toast.error("Failed to create radio device template.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Create radio coding
+            itemsStore.createRadioTemplate(data.name, data.owner, data.coding, data.description)
+                .then((resp) => {
+                    toast.success("Created radio device template with ID " + resp.data.id);
+                    this.showTemplateEditForm = false;
+                    this.$refs.itemOverview.reloadTemplates();
+                })
+                .catch((error) => {
+                    console.error("Failed to create radio device template:", error);
+                    toast.error("Failed to create radio device template.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
     },
