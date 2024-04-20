@@ -317,6 +317,64 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Creates a new phone via the API.
+         *
+         * @param templateId ID of the phone template to create the phone from.
+         * @param extension Extension of the phone.
+         * @param network Network the phone is on.
+         * @param dhcp Whether the phone uses DHCP.
+         * @param ip_address IP address of the phone.
+         * @param mac_address MAC address of the phone.
+         * @param location Location of the phone.
+         * @param serialnumber Serial number of the phone.
+         * @param notes Notes for the phone.
+         * @return API response. Created structure on success.
+         */
+        async createPhone(
+            templateId: number,
+            extension: string = '',
+            network: string = '',
+            dhcp: boolean|null = null,
+            ip_address: string = '',
+            mac_address: string = '',
+            location: string = '',
+            serialnumber: string = '',
+            notes: string = ''
+        ) {
+            return APIUtils.post('/phones/', {
+                template_id: templateId,
+                extension: extension,
+                network: network,
+                dhcp: dhcp,
+                ip_address: ip_address,
+                mac_address: mac_address,
+                location: location,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
+         * Deletes a single phone via the API.
+         *
+         * @param phoneId ID of the phone to delete.
+         * @return API response. Empty on success.
+         */
+        async deletePhone(phoneId: number) {
+            return APIUtils.delete('/phones/', phoneId.toString());
+        },
+
+        /**
+         * Deletes multiple phones via the API.
+         *
+         * @param phoneIds IDs of the phones to delete.
+         * @return API response. Empty on success.
+         */
+        async deletePhones(phoneIds: number[]) {
+            return APIUtils.delete('/phones/bulk/', phoneIds.join(',') + '/');
+        },
+
+        /**
          * Fetches a page of phone templates from the API.
          *
          * @param page Number of the page to fetch.
@@ -326,6 +384,42 @@ export const useItemsStore = defineStore("item", {
          */
         async fetchPhoneTemplatesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/phone_templates/', page, itemsPerPage, sortBy, search);
+        },
+
+        /**
+         * Creates a new phone template via the API.
+         *
+         * @param name Name of the phone template.
+         * @param ownerId ID of the owner of the phone template.
+         * @param description Description of the phone template.
+         * @return API response. Created structure on success.
+         */
+        async createPhoneTemplate(name: string, ownerId: number, description: string = '') {
+            return APIUtils.post('/phone_templates/', {
+                name: name,
+                owner_id: ownerId,
+                description: description,
+            });
+        },
+
+        /**
+         * Deletes a single phone template via the API.
+         *
+         * @param phoneTemplateId ID of the phone template to delete.
+         * @return API response. Empty on success.
+         */
+        async deletePhoneTemplate(phoneTemplateId: number) {
+            return APIUtils.delete('/phone_templates/', phoneTemplateId.toString());
+        },
+
+        /**
+         * Deletes multiple phone templates via the API.
+         *
+         * @param phoneTemplateIds IDs of the phone templates to delete.
+         * @return API response. Empty on success.
+         */
+        async deletePhoneTemplates(phoneTemplateIds: number[]) {
+            return APIUtils.delete('/phone_templates/bulk/', phoneTemplateIds.join(',') + '/');
         },
 
         /**
