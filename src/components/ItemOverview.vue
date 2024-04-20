@@ -33,8 +33,8 @@
                         :prevent-create="itemsTable.preventCreate ?? false"
                         :prevent-edit="itemsTable.preventEdit ?? false"
                         :prevent-delete="itemsTable.preventDelete ?? false"
-                        @click:createItem="$emit('click:createItem', $event)"
-                        @click:deleteItems="$emit('click:deleteItems', $event)"
+                        @click:create-item="$emit('click:createItem', $event)"
+                        @click:delete-items="$emit('click:deleteItems', $event)"
                     ></ItemTable>
                 </v-window-item>
 
@@ -49,8 +49,8 @@
                         :prevent-create="templatesTable.preventCreate ?? false"
                         :prevent-edit="templatesTable.preventEdit ?? false"
                         :prevent-delete="templatesTable.preventDelete ?? false"
-                        @click:createItem="$emit('click:createItemTemplate', $event)"
-                        @click:deleteItems="$emit('click:deleteItemTemplates', $event)"
+                        @click:create-item="$emit('click:createItemTemplate', $event)"
+                        @click:delete-items="$emit('click:deleteItemTemplates', $event)"
                     ></ItemTable>
                 </v-window-item>
             </v-window>

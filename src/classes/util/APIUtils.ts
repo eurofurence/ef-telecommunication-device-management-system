@@ -119,6 +119,10 @@ export class APIUtils {
      */
     public static createErrorToString(error: AxiosError): string {
         if (error.response) {
+            if (error.response.status == 409) {
+                return error.response.data;
+            }
+
             if (error.response.status != 400) {
                 return error.message;
             }
