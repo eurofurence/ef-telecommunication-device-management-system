@@ -8,7 +8,7 @@ from backend.serializers.radio import RadioDeviceTemplateSerializer, RadioDevice
     RadioAccessoryTemplateSerializer, RadioAccessorySerializer, PagerTemplateSerializer, PagerSerializer, \
     RadioCodingSerializer
 from backend.views.item import AbstractItemTemplateViewSet, AbstractItemViewSet
-from backend.views.mixins import BulkDeleteMixin
+from backend.views.mixins import BulkDeleteMixin, BulkCreateMixin
 
 
 class RadioCodingViewSet(BulkDeleteMixin, viewsets.ModelViewSet):
@@ -76,7 +76,7 @@ class RadioAccessoryTemplateViewSet(AbstractItemTemplateViewSet):
     ]
 
 
-class RadioAccessoryViewSet(AbstractItemViewSet):
+class RadioAccessoryViewSet(BulkCreateMixin, AbstractItemViewSet):
     """
     API endpoint that allows RadioAccessories to be viewed or edited.
     """
