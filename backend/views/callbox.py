@@ -38,6 +38,7 @@ class CallboxViewSet(AbstractItemViewSet):
         'mac_address',
         'location',
         'has_camera',
+        'camera_network',
         'camera_ip_address',
         'camera_mac_address'
     ]

@@ -60,6 +60,18 @@ class Callbox(Item):
         default=True,
         help_text="Whether the callbox has a camera"
     )
+    camera_network = models.CharField(
+        max_length=8,
+        blank=True,
+        null=True,
+        choices=Network.choices,
+        help_text="Network the camera is on"
+    )
+    camera_dhcp = models.BooleanField(
+        blank=True,
+        null=True,
+        help_text="Whether the camera uses DHCP"
+    )
     camera_ip_address = models.GenericIPAddressField(
         blank=True,
         null=True,
