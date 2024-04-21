@@ -22,6 +22,7 @@
                 <ServerItemSelector
                     ref="templateSelector"
                     :fetch-function="itemsStore.fetchPhoneTemplatesPage"
+                    :prefetch="true"
                     label="Phone Template"
                     icon="mdi-phone"
                     item-title-key="pretty_name"

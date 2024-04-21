@@ -39,7 +39,6 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-    // TODO: Implement a pre-fetch to show results of an empty search right away, if desired/enabled
     name: "ServerItemSelector",
 
     props: {
@@ -54,6 +53,7 @@ export default defineComponent({
         searchPageSize: {type: Number, required: false, default: 10},
         itemIdsToExclude: {type: Array, required: false, default: []},
         noFilter: {type: Boolean, required: false, default: false},
+        prefetch: {type: Boolean, required: false, default: false},
     },
 
     emits: [
@@ -68,6 +68,12 @@ export default defineComponent({
         selection: null,
         items: [],
     }),
+
+    created() {
+        if (this.prefetch) {
+            this.searchItems('');
+        }
+    },
 
     computed: {
         /**

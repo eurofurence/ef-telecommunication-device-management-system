@@ -22,6 +22,7 @@
                 <ServerItemSelector
                     ref="templateSelector"
                     :fetch-function="itemsStore.fetchPagerTemplatesPage"
+                    :prefetch="true"
                     label="Pager Template"
                     icon="mdi-bell-ring-outline"
                     item-title-key="pretty_name"

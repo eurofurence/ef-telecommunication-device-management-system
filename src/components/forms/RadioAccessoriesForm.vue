@@ -22,6 +22,7 @@
                 <ServerItemSelector
                     ref="templateSelector"
                     :fetch-function="itemsStore.fetchRadioAccessoryTemplatesPage"
+                    :prefetch="true"
                     label="Radio Accessory Template"
                     icon="mdi-headset"
                     item-title-key="pretty_name"

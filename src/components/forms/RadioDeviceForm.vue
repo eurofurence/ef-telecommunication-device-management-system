@@ -22,6 +22,7 @@
                 <ServerItemSelector
                     ref="templateSelector"
                     :fetch-function="itemsStore.fetchRadioTemplatesPage"
+                    :prefetch="true"
                     label="Radio Device Template"
                     icon="mdi-cellphone-basic"
                     item-title-key="pretty_name"

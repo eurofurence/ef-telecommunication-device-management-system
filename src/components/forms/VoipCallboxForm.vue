@@ -22,6 +22,7 @@
                 <ServerItemSelector
                     ref="templateSelector"
                     :fetch-function="itemsStore.fetchCallboxTemplatesPage"
+                    :prefetch="true"
                     label="Callbox Template"
                     icon="mdi-webcam"
                     item-title-key="pretty_name"

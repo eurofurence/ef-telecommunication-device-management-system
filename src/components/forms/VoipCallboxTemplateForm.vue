@@ -29,6 +29,7 @@
                 <ServerItemSelector
                     ref="ownerSelector"
                     :fetch-function="usersStore.fetchItemOwnersPage"
+                    :prefetch="true"
                     label="Item Owner"
                     icon="mdi-account-arrow-right"
                     item-title-key="pretty_name"

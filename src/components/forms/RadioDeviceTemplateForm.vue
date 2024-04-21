@@ -29,6 +29,7 @@
                 <ServerItemSelector
                     ref="ownerSelector"
                     :fetch-function="usersStore.fetchItemOwnersPage"
+                    :prefetch="true"
                     label="Item Owner"
                     icon="mdi-account-arrow-right"
                     item-title-key="pretty_name"
@@ -40,6 +41,7 @@
                 <ServerItemSelector
                     ref="codingSelector"
                     :fetch-function="itemsStore.fetchRadioCodingsPage"
+                    :prefetch="true"
                     label="Radio Coding"
                     icon="mdi-sim"
                     item-title-key="name"
