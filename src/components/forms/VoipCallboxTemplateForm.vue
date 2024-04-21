@@ -1,7 +1,7 @@
 <template>
     <v-card>
-        <v-card-title v-if="!isEdit">New VoIP Phone Template</v-card-title>
-        <v-card-title v-if="isEdit">Edit VoIP Phone Template</v-card-title>
+        <v-card-title v-if="!isEdit">New Callbox Template</v-card-title>
+        <v-card-title v-if="isEdit">Edit Callbox Template</v-card-title>
         <v-divider></v-divider>
 
         <v-card-text>
@@ -77,7 +77,7 @@ import {useUsersStore} from "@/store/users";
 const usersStore = useUsersStore();
 
 export default defineComponent({
-    name: "VoipPhoneTemplateForm",
+    name: "VoipCallboxTemplateForm",
 
     components: {ServerItemSelector},
 

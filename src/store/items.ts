@@ -436,6 +436,79 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Creates a new callbox via the API.
+         *
+         * @param templateId ID of the callbox template to create the callbox from.
+         * @param extension Extension of the phone.
+         * @param network Network the callbox is on.
+         * @param dhcp Whether the phone uses DHCP.
+         * @param ip_address IP address of the phone.
+         * @param mac_address MAC address of the phone.
+         * @param location Location of the phone.
+         * @param has_camera Whether the phone has a camera.
+         * @param camera_network Network the camera is on.
+         * @param camera_dhcp Whether the camera uses DHCP.
+         * @param camera_ip_address IP address of the camera.
+         * @param camera_mac_address MAC address of the camera.
+         * @param serialnumber Serial number of the phone.
+         * @param notes Notes for the phone.
+         * @return API response. Created structure on success.
+         */
+        async createCallbox(
+            templateId: number,
+            extension: string = '',
+            network: string = '',
+            dhcp: boolean|null = null,
+            ip_address: string|null = null,
+            mac_address: string|null = null,
+            location: string|null = null,
+            has_camera: boolean|null = null,
+            camera_network: string|null = null,
+            camera_dhcp: boolean|null = null,
+            camera_ip_address: string|null = null,
+            camera_mac_address: string|null = null,
+            serialnumber: string|null = null,
+            notes: string|null = null
+        ) {
+            return APIUtils.post('/callboxes/', {
+                template_id: templateId,
+                extension: extension,
+                network: network,
+                dhcp: dhcp,
+                ip_address: ip_address || null,
+                mac_address: mac_address || null,
+                location: location,
+                has_camera: has_camera,
+                camera_network: camera_network,
+                camera_dhcp: camera_dhcp,
+                camera_ip_address: camera_ip_address || null,
+                camera_mac_address: camera_mac_address || null,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
+         * Deletes a single callbox via the API.
+         *
+         * @param callboxId ID of the callbox to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteCallbox(callboxId: number) {
+            return APIUtils.delete('/callboxes/', callboxId.toString());
+        },
+
+        /**
+         * Deletes multiple callboxes via the API.
+         *
+         * @param callboxIds IDs of the callboxes to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteCallboxes(callboxIds: number[]) {
+            return APIUtils.delete('/callboxes/bulk/', callboxIds.join(',') + '/');
+        },
+
+        /**
          * Fetches a page of callbox templates from the API.
          *
          * @param page Number of the page to fetch.
@@ -445,6 +518,42 @@ export const useItemsStore = defineStore("item", {
          */
         async fetchCallboxTemplatesPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
             return APIUtils.fetchPage('/callbox_templates/', page, itemsPerPage, sortBy, search);
+        },
+
+        /**
+         * Creates a new callbox template via the API.
+         *
+         * @param name Name of the callbox template.
+         * @param ownerId ID of the owner of the callbox template.
+         * @param description Description of the callbox template.
+         * @return API response. Created structure on success.
+         */
+        async createCallboxTemplate(name: string, ownerId: number, description: string = '') {
+            return APIUtils.post('/callbox_templates/', {
+                name: name,
+                owner_id: ownerId,
+                description: description,
+            });
+        },
+
+        /**
+         * Deletes a single callbox template via the API.
+         *
+         * @param callboxTemplateId ID of the callbox template to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteCallboxTemplate(callboxTemplateId: number) {
+            return APIUtils.delete('/callbox_templates/', callboxTemplateId.toString());
+        },
+
+        /**
+         * Deletes multiple callbox templates via the API.
+         *
+         * @param callboxTemplateIds IDs of the callbox templates to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteCallboxTemplates(callboxTemplateIds: number[]) {
+            return APIUtils.delete('/callbox_templates/bulk/', callboxTemplateIds.join(',') + '/');
         },
 
         /**
