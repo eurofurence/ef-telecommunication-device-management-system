@@ -29,7 +29,10 @@ export default defineConfig({
       },
     }),
   ],
-  define: { 'process.env': {} },
+  define: {
+    'process.env': {},
+    'import.meta.env.APP_VERSION': JSON.stringify(process.env.npm_package_version),
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

@@ -1,9 +1,9 @@
 <template>
-    <v-app-bar >
+    <v-app-bar color="#006357" class="pr-2">
         <v-app-bar-title>
-            <router-link to="/" class="text-decoration-none font-weight-medium text-black">
-                <v-icon icon="mdi-radio-tower"/>
-                Eurofurence Radio Management System
+            <router-link to="/" class="d-flex align-center text-decoration-none font-weight-medium text-white">
+                <v-img src="@/assets/logo-white.png" width="50" class="mr-3" inline/>
+                <div>Eurofurence Telecommunication Device Management System</div>
             </router-link>
         </v-app-bar-title>
 

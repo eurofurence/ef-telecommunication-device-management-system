@@ -43,6 +43,9 @@
         </v-list>
 
         <template v-slot:append>
+            <p class="text-center text-caption font-weight-light">
+                EF-TDMS&nbsp;v{{ app_version }}
+            </p>
             <v-divider></v-divider>
             <v-list density="compact" small>
                 <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout" to="/logout"></v-list-item>
@@ -50,3 +53,7 @@
         </template>
     </v-navigation-drawer>
 </template>
+
+<script lang="ts" setup>
+const app_version = import.meta.env.APP_VERSION;
+</script>

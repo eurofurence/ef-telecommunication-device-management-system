@@ -1,5 +1,5 @@
 """
-Custom EFRMS settings
+Custom EFTDMS settings
 """
 
 import environ

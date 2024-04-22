@@ -131,7 +131,7 @@ export const useAuthStore = defineStore({
          * @param password
          */
         async login(username: string, password: string) {
-            await axios.post(`${import.meta.env.VITE_EFRMS_API_BASE_URL}/token/obtain/`, {
+            await axios.post(`${import.meta.env.VITE_EFTDMS_API_BASE_URL}/token/obtain/`, {
                 username: username,
                 password: password,
             }).then((response) => {
@@ -152,7 +152,7 @@ export const useAuthStore = defineStore({
          * Refreshes the current access token.
          */
         async refresh() {
-             await axios.post(`${import.meta.env.VITE_EFRMS_API_BASE_URL}/token/refresh/`, {
+             await axios.post(`${import.meta.env.VITE_EFTDMS_API_BASE_URL}/token/refresh/`, {
                 refresh: this._refreshToken
              }).then((response) => {
                  this.setAuthTokens(response.data.access, response.data.refresh, this.username);

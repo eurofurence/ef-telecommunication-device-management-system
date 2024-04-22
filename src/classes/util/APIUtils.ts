@@ -31,7 +31,7 @@ export class APIUtils {
      * @param apipath API path to query (e.g. '/users/').
      */
     public static async get(apipath: string) {
-        return axios.get(`${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}`);
+        return axios.get(`${import.meta.env.VITE_EFTDMS_API_BASE_URL}${apipath}`);
     }
 
     /**
@@ -41,7 +41,7 @@ export class APIUtils {
      * @param data Data to post.
      */
     public static async post(apipath: string, data: any) {
-        return axios.post(`${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}`, data);
+        return axios.post(`${import.meta.env.VITE_EFTDMS_API_BASE_URL}${apipath}`, data);
     }
 
     /**
@@ -50,7 +50,7 @@ export class APIUtils {
      * @param args Arguments to append to the API path (e.g. '1' for '/users/1').
      */
     public static async delete(apipath: string, args: string) {
-        return axios.delete(`${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}${args}`);
+        return axios.delete(`${import.meta.env.VITE_EFTDMS_API_BASE_URL}${apipath}${args}`);
     }
 
     /**
@@ -89,7 +89,7 @@ export class APIUtils {
         let hasMore = true;
         do {
             await axios.get(
-                `${import.meta.env.VITE_EFRMS_API_BASE_URL}${apipath}?limit=${limit}&offset=${offset}&ordering=${ordering}&search=${search}${params}`
+                `${import.meta.env.VITE_EFTDMS_API_BASE_URL}${apipath}?limit=${limit}&offset=${offset}&ordering=${ordering}&search=${search}${params}`
             ).then((response) => {
                 ret.items = ret.items.concat(response.data.results);
                 ret.total = response.data.count;
