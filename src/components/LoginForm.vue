@@ -27,27 +27,33 @@
                         </v-card-title>
 
                         <v-card-text>
-                            <v-form fast-fail @submit.prevent="login">
+                            <v-form v-model="loginFormIsValid" fast-fail @submit.prevent="login">
                                 <v-text-field
                                     v-model="username"
+                                    :rules="[v => !!v || 'Username is required']"
                                     name="username"
                                     label="Username"
                                     placeholder="Username"
                                     type="text"
+                                    class="my-2"
                                     required
                                 ></v-text-field>
 
                                 <v-text-field
                                     v-model="password"
+                                    :rules="[v => !!v || 'Password is required']"
                                     name="password"
                                     label="Password"
                                     placeholder="Password"
                                     type="password"
+                                    class="my-2"
                                     required
                                 ></v-text-field>
 
-                                <div class="text-error">{{loginFormErrorMessage}}</div>
-                                <v-btn type="submit" class="mt-4" color="primary">Login</v-btn>
+                                <div class="d-flex mt-4">
+                                    <v-btn type="submit" color="primary" :disabled="!loginFormIsValid">Login</v-btn>
+                                    <div class="text-error align-content-center ml-4">{{loginFormErrorMessage}}</div>
+                                </div>
                             </v-form>
                         </v-card-text>
                     </v-card>
@@ -75,6 +81,7 @@ export default {
             authStore: authStore,
             username: '',
             password: '',
+            loginFormIsValid: false,
             loginFormErrorMessage: '',
         }
     },
@@ -86,7 +93,7 @@ export default {
                 this.loginFormErrorMessage = '';
                 router.push('/overview');
             } catch (e) {
-                this.loginFormErrorMessage = e.message;
+                this.loginFormErrorMessage = 'Login failed';
             } finally {
                 this.username = '';
                 this.password = '';
