@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import {APIUtils} from "@/classes/util/APIUtils";
 
-// TODO: Implement creation and deletion of items
 export const useItemsStore = defineStore("item", {
     state: () => ({}),
 

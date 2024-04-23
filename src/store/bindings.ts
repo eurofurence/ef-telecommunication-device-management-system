@@ -94,5 +94,45 @@ export const useBindingsStore = defineStore("bindings", {
         async fetchOrdersForUser(userid: number) {
             return APIUtils.get('/orders/user/' + userid + '/');
         },
+
+        /**
+         * Creates a new order via the API.
+         *
+         * @param userId ID of the user to create this order for.
+         * @param type Type of the ordered item.
+         * @param title Title of the order.
+         * @param itemId Optional ID of an exact item to order.
+         * @param itemTemplateId Optional ID of an item template the ordered
+         * item should belong to.
+         */
+        async createOrder(userId: number, type: string, title: string, itemId: number|null = null, itemTemplateId: number|null = null) {
+            return APIUtils.post('/orders/', {
+                user_id: userId,
+                type: type,
+                title: title,
+                item_id: itemId,
+                item_template_id: itemTemplateId,
+            });
+        },
+
+        /**
+         * Deletes a single order via the API.
+         *
+         * @param orderId ID of the order to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteOrder(orderId: number) {
+            return APIUtils.delete('/orders/', orderId.toString());
+        },
+
+        /**
+         * Bulk deletes orders via the API.
+         *
+         * @param orderIds List of order IDs to delete.
+         * @return API response. Empty on success.
+         */
+        async deleteOrders(orderIds: number[]) {
+            return APIUtils.delete('/orders/bulk/', orderIds.join(',') + '/');
+        },
     },
 })
