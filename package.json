@@ -1,6 +1,6 @@
 {
-  "name": "efrms",
-  "version": "0.1.0",
+  "name": "ef-tdms-frontend",
+  "version": "1.0.0",
   "description": "Eurofurence Telecommunication Device Management System",
   "repository": "TODO",
   "author": "Niels Gandraß <niels@gandrass.de>",
