@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="main-container-boxed">
         <v-row>
             <v-col>
                 <h1>Event Log</h1>

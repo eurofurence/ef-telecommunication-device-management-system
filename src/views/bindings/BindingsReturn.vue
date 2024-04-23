@@ -1,12 +1,12 @@
 <template>
-    <v-container>
+    <v-container class="main-container-boxed">
         <v-row>
-            <v-col cols="12" xxl="8" offset-xxl="2">
+            <v-col>
                 <h1>Return Items</h1>
             </v-col>
         </v-row>
         <v-row>
-            <v-col cols="12" xxl="8" offset-xxl="2">
+            <v-col>
                 <v-stepper
                     v-model="currentStep"
                     :items="['User', 'Items', 'Review', 'Unbinding']"
