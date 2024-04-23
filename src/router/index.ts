@@ -12,6 +12,15 @@ const routes = [
                 name: 'Home',
                 component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
                 meta: { requiresAuth: false },
+                beforeEnter: (to: any, from: any, next: any) => {
+                    // Redirect authorized users to the overview page
+                    const authStore = useAuthStore()
+                    if (authStore.isLoggedIn) {
+                        next('/overview')
+                    } else {
+                        next()
+                    }
+                }
             },
             {
                 path: 'login',

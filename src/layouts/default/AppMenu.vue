@@ -46,10 +46,6 @@
             <p class="text-center text-caption font-weight-light">
                 EF-TDMS&nbsp;v{{ app_version }}
             </p>
-            <v-divider></v-divider>
-            <v-list density="compact" small>
-                <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout" to="/logout"></v-list-item>
-            </v-list>
         </template>
     </v-navigation-drawer>
 </template>

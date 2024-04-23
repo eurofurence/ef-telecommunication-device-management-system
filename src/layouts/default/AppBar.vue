@@ -8,11 +8,23 @@
         </v-app-bar-title>
 
         <v-btn v-if="!authStore.isLoggedIn" to="/login" text>Login</v-btn>
-        <router-link v-if="authStore.isLoggedIn" to="/profile">
-            <v-avatar color="grey" size="36" class="mx-2">
-                <span class="white--text headline">{{authStore.username.slice(0, 2).toUpperCase()}}</span>
-            </v-avatar>
-        </router-link>
+        <v-menu v-if="authStore.isLoggedIn">
+            <template v-slot:activator="{ props }">
+                <v-btn
+                    v-bind="props"
+                    icon
+                >
+                    <v-avatar color="grey" size="36" class="mx-2">
+                        <span class="white--text headline">{{authStore.username.slice(0, 2).toUpperCase()}}</span>
+                    </v-avatar>
+                </v-btn>
+            </template>
+
+            <v-list density="compact" slim>
+                <v-list-item prepend-icon="mdi-account" title="My Account" value="account" to="/profile"></v-list-item>
+                <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout" to="/logout"></v-list-item>
+            </v-list>
+        </v-menu>
     </v-app-bar>
 </template>
 
