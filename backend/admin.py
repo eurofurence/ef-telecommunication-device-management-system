@@ -22,10 +22,16 @@ class ItemTemplateAdmin(admin.ModelAdmin):
     ordering = ['name', 'owner']
 
 
+class ItemCoordinatesAdminInline(admin.StackedInline):
+    model = item.ItemCoordinates
+    extra = 0
+
+
 @admin.register(item.Item, radio.Pager, radio.RadioAccessory)
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'get_owner', 'serialnumber', 'notes', 'handed_out']
     search_fields = ['get_name', 'get_owner', 'serialnumber', 'notes']
+    inlines = [ItemCoordinatesAdminInline]
 
     @admin.display(description="Name", ordering='template__name')
     def get_name(self, obj):
@@ -40,6 +46,7 @@ class ItemAdmin(admin.ModelAdmin):
 class CallboxAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'notes', 'location', 'extension', 'network', 'has_camera']
     search_fields = ['get_name', 'notes', 'location', 'extension']
+    inlines = [ItemCoordinatesAdminInline]
 
     @admin.display(description="Name", ordering='template__name')
     def get_name(self, obj):
@@ -50,6 +57,7 @@ class CallboxAdmin(admin.ModelAdmin):
 class PhoneAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'notes', 'location', 'extension', 'network', 'dhcp']
     search_fields = ['get_name', 'notes', 'location', 'extension']
+    inlines = [ItemCoordinatesAdminInline]
 
     @admin.display(description="Name", ordering='template__name')
     def get_name(self, obj):
@@ -67,6 +75,7 @@ class RadioCodingAdmin(admin.ModelAdmin):
 class RadioDeviceAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'get_coding', 'get_owner', 'callsign', 'serialnumber', 'notes', 'handed_out']
     search_fields = ['get_name', 'get_coding', 'get_owner', 'callsign', 'serialnumber', 'notes']
+    inlines = [ItemCoordinatesAdminInline]
 
     @admin.display(description="Name", ordering='template__name')
     def get_name(self, obj):

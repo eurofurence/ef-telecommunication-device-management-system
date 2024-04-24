@@ -95,6 +95,35 @@ def item_template_post_delete(instance, **kwargs):
     })
 
 
+class ItemCoordinates(models.Model):
+    """
+    Model for item coordinates on the deployment map
+    """
+
+    item = models.OneToOneField(
+        'Item',
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+        help_text="Item this location is for"
+    )
+    floor = models.IntegerField(
+        blank=False,
+        null=False,
+        help_text="Floor number of the item location"
+    )
+    latitude = models.FloatField(
+        blank=False,
+        null=False,
+        help_text="Latitude of the item location"
+    )
+    longitude = models.FloatField(
+        blank=False,
+        null=False,
+        help_text="Longitude of the item location"
+    )
+
+
 class Item(PolymorphicModel):
     """
     Model for all items (e.g., radios, accessories, telephones, ...)

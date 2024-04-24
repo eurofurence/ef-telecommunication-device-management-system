@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_polymorphic.serializers import PolymorphicSerializer
 
 from backend.models import RadioDevice, RadioAccessory, Pager, Phone, Callbox, RadioDeviceTemplate, \
-    RadioAccessoryTemplate, PagerTemplate, PhoneTemplate, CallboxTemplate, ItemTemplate
+    RadioAccessoryTemplate, PagerTemplate, PhoneTemplate, CallboxTemplate, ItemTemplate, ItemCoordinates
 from backend.serializers import ItemOwnerSerializer
 from backend.serializers.callbox import CallboxSerializer, CallboxTemplateSerializer
 from backend.serializers.phone import PhoneSerializer, PhoneTemplateSerializer
@@ -38,3 +38,11 @@ class PolymorphicItemSerializer(PolymorphicSerializer):
         Phone: PhoneSerializer,
         Callbox: CallboxSerializer,
     }
+
+
+class ItemCoordinatesSerializer(serializers.ModelSerializer):
+    item = PolymorphicItemSerializer(read_only=True)
+
+    class Meta:
+        model = ItemCoordinates
+        fields = ['floor', 'latitude', 'longitude', 'item']

@@ -24,7 +24,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from backend.views import UserViewSet, ItemOwnerViewSet
 from backend.views.binding import ItemBindingViewSet
 from backend.views.callbox import CallboxTemplateViewSet, CallboxViewSet
-from backend.views.item import QuickAddItemTemplatesViewSet
+from backend.views.item import QuickAddItemTemplatesViewSet, ItemCoordinatesViewSet
 from backend.views.order import OrderViewSet
 from backend.views.phone import PhoneTemplateViewSet, PhoneViewSet
 from backend.views.radio import RadioDeviceViewSet, RadioDeviceTemplateViewSet, RadioAccessoryViewSet, \
@@ -37,6 +37,7 @@ router.register(r'callbox_templates', CallboxTemplateViewSet)
 router.register(r'callboxes', CallboxViewSet)
 router.register(r'eventlog', EventLogEntryViewSet)
 router.register(r'item_bindings', ItemBindingViewSet, basename='item_bindings')
+router.register(r'item_coordinates', ItemCoordinatesViewSet)
 router.register(r'item_owners', ItemOwnerViewSet)
 router.register(r'orders', OrderViewSet)
 router.register(r'pager_templates', PagerTemplateViewSet)
