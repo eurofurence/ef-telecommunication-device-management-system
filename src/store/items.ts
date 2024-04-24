@@ -608,5 +608,19 @@ export const useItemsStore = defineStore("item", {
         async deleteRadioCodings(radioCodingIds: number[]) {
             return APIUtils.delete('/radio_codings/bulk/', radioCodingIds.join(',') + '/');
         },
+
+        /**
+         * Fetches item coordinates for a given floor.
+         *
+         * @param floor Floor to fetch item coordinates for.
+         * @return Items with their coordinates for the given floor.
+         */
+        async fetchItemCoordinatesForFloor(floor: number) {
+            if (isNaN(floor) || floor < 0 || floor > 99) {
+                return [];
+            }
+
+            return APIUtils.fetchPage(`/item_coordinates/floor/${floor}`, 1, 9999, [], '');
+        }
     },
 })
