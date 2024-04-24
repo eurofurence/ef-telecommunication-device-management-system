@@ -6,7 +6,16 @@
         <v-list density="compact" nav open-strategy="multiple" slim>
             <v-list-item prepend-icon="mdi-home-city" title="Overview" value="overview" to="/overview"></v-list-item>
             <v-list-item prepend-icon="mdi-account" title="My Account" value="account" to="/profile"></v-list-item>
-            <v-list-item prepend-icon="mdi-map" title="Deployment Map" value="deployment-map" to="/deployment-map"></v-list-item>
+            <v-list-group value="Deployment Map">
+                <template v-slot:activator="{ props }">
+                    <v-list-item v-bind="props" prepend-icon="mdi-map" title="Deployment Map"></v-list-item>
+                </template>
+                <v-list-item prepend-icon="mdi-numeric-0" title="Ground Floor" value="deployment-map-0" to="/deployment-map/0"></v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-1" title="First Floor" value="deployment-map-1" to="/deployment-map/1"></v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-2" title="Second Floor" value="deployment-map-2" to="/deployment-map/2"></v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-3" title="Third Floor" value="deployment-map-3" to="/deployment-map/3"></v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-4" title="Fourth Floor" value="deployment-map-4" to="/deployment-map/4"></v-list-item>
+            </v-list-group>
             <v-list-group value="Bindings">
                 <template v-slot:activator="{ props }">
                     <v-list-item v-bind="props" prepend-icon="mdi-basket-fill" title="Bindings"></v-list-item>
