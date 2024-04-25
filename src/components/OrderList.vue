@@ -10,7 +10,7 @@
                     No orders found
                 </v-list-subheader>
 
-                <v-list-item v-for="order in orders" :key="order.id" :value="order.id" active-color="grey-lighten-2">
+                <v-list-item v-for="order in orders" :key="order.id" :value="order.id" color="grey-lighten-2">
                     <template v-slot:prepend="{ isActive }">
                         <v-list-item-action start>
                             <v-icon
