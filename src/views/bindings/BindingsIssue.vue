@@ -15,6 +15,19 @@
                     <template v-slot:item.1>
                         <v-card title="Select User" flat>
                             <v-card-text>
+                                <v-alert
+                                    v-if="$route.query.itemid"
+                                    type="info"
+                                    class="mb-5"
+                                >
+                                    <p>
+                                        You have been redirected here to hand out a predefined item. Please select a user to continue.
+                                    </p>
+                                    <p v-if="$route.query.skipbasket">
+                                        After selecting a user, you will be taken to the review step immediately.
+                                    </p>
+                                </v-alert>
+
                                 <ServerItemSelector
                                     ref="userSelector"
                                     :fetch-function="usersStore.fetchUsersPage"
@@ -25,17 +38,6 @@
                                     :autofocus="true"
                                     @update:selection="onUserSelected"
                                 ></ServerItemSelector>
-                                <v-alert
-                                    v-if="$route.query.itemid"
-                                    type="info"
-                                >
-                                    <p>
-                                        You have been redirected here to hand out a predefined item. Please select a user to continue.
-                                    </p>
-                                    <p v-if="$route.query.skipbasket">
-                                        After selecting a user, you will be taken to the review step immediately.
-                                    </p>
-                                </v-alert>
                             </v-card-text>
                         </v-card>
                     </template>
