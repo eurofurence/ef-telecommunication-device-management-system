@@ -13,8 +13,11 @@
         ></l-image-overlay>
 
         <l-control
+            v-if="clickedCoordinates"
             position="bottomleft"
-        >Lat: {{ clickedCoordinatesRounded.lat }}, Lng:{{ clickedCoordinatesRounded.lng }}</l-control>
+        >
+            Lat: {{ clickedCoordinatesRounded.lat }}, Lng:{{ clickedCoordinatesRounded.lng }}
+        </l-control>
 
         <l-marker
             v-for="item in items"
@@ -22,7 +25,7 @@
             :lat-lng="[item.latitude, item.longitude]"
         >
             <l-icon
-                :icon-url="IconUtils.MapMarker(item.item.handed_out ? '#cd0529' : '#3dd145')"
+                :icon-url="IconUtils.MapMarkerWithItemType(item.item.resourcetype, item.item.handed_out ? '#cd0505' : '#2db135')"
                 :icon-size="mapMarkerDimensions.iconSize"
                 :icon-anchor="mapMarkerDimensions.iconAnchor"
                 :popup-anchor="mapMarkerDimensions.popupAnchor"
@@ -65,7 +68,7 @@ export default {
                 zoomDelta: 0.5,
                 zoomSnap: 0.5,
             },
-            clickedCoordinates: {lat: 0, lng: 0},
+            clickedCoordinates: null,
             items: [],
         };
     },
