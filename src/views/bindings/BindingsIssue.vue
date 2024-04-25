@@ -25,6 +25,17 @@
                                     :autofocus="true"
                                     @update:selection="onUserSelected"
                                 ></ServerItemSelector>
+                                <v-alert
+                                    v-if="$route.query.itemid"
+                                    type="info"
+                                >
+                                    <p>
+                                        You have been redirected here to hand out a predefined item. Please select a user to continue.
+                                    </p>
+                                    <p v-if="$route.query.skipbasket">
+                                        After selecting a user, you will be taken to the review step immediately.
+                                    </p>
+                                </v-alert>
                             </v-card-text>
                         </v-card>
                     </template>
@@ -162,21 +173,32 @@
                     </template>
 
                     <template v-slot:next>
-                        <v-btn
-                            v-if="currentStep < 4"
-                            :disabled="!stepperCanAdvance"
-                            @click="currentStep++"
-                        >
-                            <span v-if="currentStep != 3">Next</span>
-                            <span v-if="currentStep == 3">Confirm</span>
-                        </v-btn>
-                        <v-btn
-                            v-if="currentStep == 4"
-                            :disabled="false"
-                            @click="reset()"
-                        >
-                            Restart
-                        </v-btn>
+                        <v-sheet>
+                            <v-btn
+                                v-if="currentStep < 4"
+                                :disabled="!stepperCanAdvance"
+                                @click="currentStep++"
+                            >
+                                <span v-if="currentStep != 3">Next</span>
+                                <span v-if="currentStep == 3">Confirm</span>
+                            </v-btn>
+                            <v-btn
+                                v-if="currentStep == 4"
+                                :disabled="false"
+                                @click="reset()"
+                            >
+                                Restart
+                            </v-btn>
+                            <v-btn
+                                v-if="currentStep == 4 && $route.query.returnpath"
+                                :to="$route.query.returnpath"
+                                :disabled="false"
+                                color="primary"
+                                class="ml-4"
+                            >
+                                Return to previous page
+                            </v-btn>
+                        </v-sheet>
                     </template>
                 </v-stepper>
 
@@ -198,7 +220,9 @@ import {useItemsStore} from "@/store/items";
 import {ItemTemplateType, ItemType} from "@/types/ItemType";
 import {emptyItemsBasket, emptyItemTemplatesBasket} from "@/components/ItemBasket.vue";
 import {useBindingsStore} from "@/store/bindings";
+import {useToast} from "vue-toastification";
 
+const toast = useToast();
 const usersStore = useUsersStore();
 const itemsStore = useItemsStore();
 const bindingsStore = useBindingsStore();
@@ -270,6 +294,19 @@ export default defineComponent({
         currentStep(newStep, oldStep) {
             // Enter into item selection step
             if (newStep == 2) {
+                if (this.$route.query.itemid) {
+                    this.addItemToBasketById(
+                        parseInt(this.$route.query.itemid.toString()),
+                        (this.$route.query.skipbasket.toString() === "true") ?? false
+                    );
+
+                    this.$router.replace({query: {
+                        ...this.$route.query,
+                        itemid: undefined,
+                        skipbasket: undefined,
+                    }});
+                }
+
                 itemsStore.fetchQuickAddTemplates().then((resp) => {
                     this.quickAddTemplates = resp.items;
                 });
@@ -336,6 +373,36 @@ export default defineComponent({
                 this.$refs.itemSelector.clear();
             }
         },
+
+        addItemToBasketById(itemId: number, advanceOnSuccess: boolean = false) {
+            if (isNaN(itemId) || itemId <= 0) {
+                toast.error("Failed to autoadd item with ID " + itemId + ": Invalid ID.");
+                return;
+            }
+
+            itemsStore.fetchItemMetadata(itemId)
+                .then((resp) => {
+                    if (!resp.data || !resp.data.id || resp.data.id != itemId) {
+                        toast.error("Failed to autoadd item with ID " + itemId + ": Item not found.");
+                        return;
+                    }
+
+                    if (resp.data.handed_out) {
+                        toast.error("Failed to autoadd item with ID " + itemId + ": Item is already handed out.");
+                        return;
+                    }
+
+                    this.$refs.basket.addItem(resp.data, ItemType[resp.data.resourcetype]);
+
+                    if (advanceOnSuccess) {
+                        this.currentStep++;
+                    }
+                })
+                .catch((error) => {
+                    toast.error("Failed to autoadd item with ID " + itemId + ": Remote API request failed.");
+                });
+
+        }
     }
 
 })

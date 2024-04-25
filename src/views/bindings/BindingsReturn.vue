@@ -25,6 +25,7 @@
                                     :autofocus="true"
                                     @update:selection="onUserSelected"
                                 ></ServerItemSelector>
+
                                 <ServerItemSelector
                                     ref="callsignSelector"
                                     :fetch-function="usersStore.fetchUsersPageByCallsign"
@@ -36,6 +37,18 @@
                                     :no-filter="true"
                                     @update:selection="onUserSelected"
                                 ></ServerItemSelector>
+
+                                <v-alert
+                                    v-if="$route.query.itemid"
+                                    type="info"
+                                >
+                                    <p>
+                                        You have been redirected here to return a predefined item. Please select a user to continue.
+                                    </p>
+                                    <p v-if="$route.query.skipbasket">
+                                        After selecting a user, you will be taken to the review step immediately.
+                                    </p>
+                                </v-alert>
                             </v-card-text>
                         </v-card>
                     </template>
@@ -211,6 +224,15 @@
                             >
                                 Restart
                             </v-btn>
+                            <v-btn
+                                v-if="currentStep == 4 && $route.query.returnpath"
+                                :to="$route.query.returnpath"
+                                :disabled="false"
+                                color="primary"
+                                class="ml-4"
+                            >
+                                Return to previous page
+                            </v-btn>
                         </v-sheet>
                     </template>
                 </v-stepper>
@@ -230,7 +252,9 @@ import {useUsersStore} from "@/store/users";
 import {ItemType} from "@/types/ItemType";
 import {useBindingsStore} from "@/store/bindings";
 import {emptyItemsBasket} from "@/components/ItemBasket.vue";
+import {useToast} from "vue-toastification";
 
+const toast = useToast();
 const usersStore = useUsersStore();
 const bindingsStore = useBindingsStore();
 
@@ -256,6 +280,32 @@ export default defineComponent({
             // Step 4 (Binding)
             unbindingInProgress: true,
             unbindingError: "",
+        }
+    },
+
+    mounted() {
+        if (this.$route.query.itemid) {
+            const itemId = parseInt(this.$route.query.itemid.toString());
+            bindingsStore.fetchBindingByItemId(itemId)
+                .then((resp) => {
+                    if (!resp.data || !resp.data.item || !resp.data.user || resp.data.item.id != itemId) {
+                        toast.error("Failed to select predefined item: Item not found or not handed out.");
+                    }
+
+                    this.selectedUser = resp.data.user;
+                    this.bindingsToRemove = [resp.data];
+                    this.currentStep = this.$route.query.skipbasket ? 3 : 2;
+                })
+                .catch((error) => {
+                    toast.error("Failed to select predefined item: Request to backend API failed.");
+                })
+                .finally(() => {
+                    this.$router.replace({query: {
+                        ...this.$route.query,
+                        itemid: undefined,
+                        skipbasket: undefined,
+                    }});
+                });
         }
     },
 
@@ -291,7 +341,7 @@ export default defineComponent({
             }
 
             // Put review items into review basket
-            if (oldStep == 2 && newStep == 3) {
+            if (oldStep <= 2 && newStep == 3) {
                 this.itemsToUnbind.clear();
                 this.bindingsToRemove.forEach((binding) => {
                     this.itemsToUnbind.set(binding.item.id, { type: ItemType[binding.item.resourcetype], item: binding.item });

@@ -6,6 +6,28 @@ export const useItemsStore = defineStore("item", {
 
     actions: {
         /**
+         * Fetches a page of item metadata from the API.
+         *
+         * @param page Number of the page to fetch.
+         * @param itemsPerPage Number of items per page.
+         * @param sortBy Field to sort by.
+         * @param search Search string to filter by.
+         */
+        async fetchItemMetadataPage(page: number, itemsPerPage: number, sortBy: any[], search: string) {
+            return APIUtils.fetchPage('/item_metadata/', page, itemsPerPage, sortBy, search);
+        },
+
+        /**
+         * Fetches a single item metadata from the API.
+         *
+         * @param itemId ID of the item metadata to fetch.
+         * @return API response. Item metadata structure on success.
+         */
+        async fetchItemMetadata(itemId: number) {
+            return APIUtils.get('/item_metadata/' + itemId.toString() + '/');
+        },
+
+        /**
          * Fetches a page of radio devices from the API.
          *
          * @param page Number of the page to fetch.

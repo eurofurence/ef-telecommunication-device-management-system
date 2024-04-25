@@ -30,7 +30,29 @@
                 :icon-anchor="mapMarkerDimensions.iconAnchor"
                 :popup-anchor="mapMarkerDimensions.popupAnchor"
             ></l-icon>
-            <l-popup>{{ item.item.pretty_name }}</l-popup>
+            <l-popup>
+                <p>
+                    {{ item.item.pretty_name }}
+                </p>
+                <div class="text-center">
+                    <v-btn
+                        v-if="!item.item.handed_out"
+                        :to="`/bindings/issue?itemid=${item.item.id}&skipbasket=true&returnpath=${returnPathEncoded}`"
+                        color="success"
+                        size="small"
+                    >
+                        Hand Out
+                    </v-btn>
+                    <v-btn
+                        v-if="item.item.handed_out"
+                        :to="`/bindings/return?itemid=${item.item.id}&skipbasket=true&returnpath=${returnPathEncoded}`"
+                        color="error"
+                        size="small"
+                    >
+                        Return
+                    </v-btn>
+                </div>
+            </l-popup>
         </l-marker>
     </l-map>
 </template>
@@ -115,7 +137,11 @@ export default {
                     popupAnchor: [0, -24],
                 }
             }
-        }
+        },
+
+        returnPathEncoded() {
+            return encodeURIComponent(this.$router.currentRoute.value.path);
+        },
     },
 
     methods: {

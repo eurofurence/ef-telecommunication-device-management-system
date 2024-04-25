@@ -29,6 +29,17 @@ export const useBindingsStore = defineStore("bindings", {
         },
 
         /**
+         * Fetches a bindings metadata by the given item id.
+         *
+         * @param itemId ID of the item to fetch the binding for.
+         * @return Binding metadata (HTTP 200) for the given item or empty object
+         * (HTTP 404) if no binding exists.
+         */
+        async fetchBindingByItemId(itemId: number) {
+            return APIUtils.get('/item_bindings/item/' + itemId + '/');
+        },
+
+        /**
          * Fetches statistical information from the API.
          *
          * @return Object containing statistical information.
