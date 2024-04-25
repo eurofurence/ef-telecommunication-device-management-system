@@ -7,8 +7,8 @@ from rest_framework import filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from backend.models import RadioAccessoryTemplate, ItemCoordinates
-from backend.serializers.item import ItemCoordinatesSerializer
+from backend.models import RadioAccessoryTemplate, ItemCoordinates, Item
+from backend.serializers.item import ItemCoordinatesSerializer, ItemMetadataSerializer
 from backend.serializers.radio import RadioAccessoryTemplateQuickAddSerializer
 from backend.views.mixins import BulkDeleteMixin
 
@@ -43,6 +43,19 @@ class AbstractItemViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
 
         serializer = self.get_serializer(available_items, many=True)
         return Response(serializer.data)
+
+
+class ItemMetadataViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemMetadataSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = '__all__'
+    ordering = ['id']
+    search_fields = [
+        'id',
+        'resourcetype'
+    ]
 
 
 class QuickAddItemTemplatesViewSet(viewsets.ReadOnlyModelViewSet):

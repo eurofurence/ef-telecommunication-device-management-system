@@ -9,6 +9,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from backend.models import ItemBinding, Item
+from backend.serializers import UserSerializer
 from backend.serializers.binding import ItemBindingSerializer
 from backend.models import RadioAccessory
 from backend.models import User
@@ -64,6 +65,22 @@ class ItemBindingViewSet(
         """
         bindings = ItemBinding.objects.filter(user__id=userid)
         serializer = self.get_serializer(bindings, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path="item/(?P<itemid>\\d+)")
+    def get_item_binding(self, request, itemid):
+        """
+        Returns the binding for the given item ID, if any.
+
+        :param request:
+        :param itemid:
+        :return:
+        """
+        binding = ItemBinding.objects.filter(item__id=itemid).first()
+        if binding is None:
+            return Response({}, status=404)
+
+        serializer = self.serializer_class(binding)
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
