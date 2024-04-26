@@ -6,7 +6,7 @@
         :items="items"
         :item-title="itemTitleKey"
         @update:search="updateSearch($event)"
-        @update:model-value="this.$emit('update:selection', $event)"
+        @update:model-value="$emit('update:selection', $event)"
         :loading="loading"
         :prepend-inner-icon="icon"
         :autofocus="autofocus"
@@ -110,7 +110,7 @@ export default defineComponent({
          *
          * @param query The search query
          */
-        async searchItems(query: string): void {
+        searchItems(query: string): void {
             // Debounce search
             this.loading = true;
             if (this.searchDebounceTimeout) {

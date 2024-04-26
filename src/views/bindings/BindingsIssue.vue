@@ -50,7 +50,7 @@
                                     variant="outlined"
                                     color="primary"
                                     divided
-                                    @update:model-value="$refs.itemSelector.clear(); onItemSelect(null);"
+                                    @update:model-value="($refs.itemSelector as InstanceType<typeof ServerItemSelector>).clear(); onItemSelect(null);"
                                 >
                                     <v-btn v-for="type in ItemType.getAll()" :value="type">
                                         <v-icon start>{{ type.icon }}</v-icon>
@@ -78,7 +78,7 @@
                                     variant="outlined"
                                     color="green"
                                     class="mx-2 my-1"
-                                    @click="$refs.basket.addItemTemplate(template, ItemTemplateType[template.type])"
+                                    @click="($refs.basket as InstanceType<typeof ItemBasket>).addItemTemplate(template, ItemTemplateType.get(template.type))"
                                 >
                                     {{ template.name }} ({{ template.owner.shortname }})
                                     <template v-slot:append>
@@ -95,7 +95,7 @@
                                                 ref="basket"
                                                 :basket-items="itemsToBind"
                                                 :basket-item-templates="itemTemplatesToBind"
-                                                @update:basket="basketIsEmpty = $refs.basket.isEmpty(); itemIdsToExclude = $refs.basket.getItemIds();"
+                                                @update:basket="basketIsEmpty = ($refs.basket as InstanceType<typeof ItemBasket>).isEmpty(); itemIdsToExclude = ($refs.basket as InstanceType<typeof ItemBasket>).getItemIds();"
                                                 :read-only="false"
                                             ></ItemBasket>
                                         </v-col>
@@ -113,13 +113,13 @@
                     <template v-slot:item.3>
                         <v-card title="Review Binding" flat>
                             <v-card-text>
-                                Please review your binding before creating it. You are about to bind {{ $refs.basket.size() }} items to {{ selectedUser.username }}.
+                                Please review your binding before creating it. You are about to bind {{ ($refs.basket as any).size() }} items to {{ (selectedUser as any).username }}.
                             </v-card-text>
                         </v-card>
 
                         <v-card title="User" flat>
                             <v-card-text>
-                                {{ selectedUser.pretty_name }}
+                                {{ (selectedUser as any).pretty_name }}
                             </v-card-text>
                         </v-card>
 
@@ -158,7 +158,7 @@
                                     <v-alert
                                         type="success"
                                         title="Binding created"
-                                        :text="'Successfully bound ' + createdBindings.length + ' items to ' + selectedUser.pretty_name + '.'"
+                                        :text="'Successfully bound ' + createdBindings.length + ' items to ' + (selectedUser as any).pretty_name + '.'"
                                     ></v-alert>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@
                             </v-btn>
                             <v-btn
                                 v-if="currentStep == 4 && $route.query.returnpath"
-                                :to="$route.query.returnpath"
+                                :to="String($route.query.returnpath)"
                                 :disabled="false"
                                 color="primary"
                                 class="ml-4"
@@ -229,6 +229,11 @@ const usersStore = useUsersStore();
 const itemsStore = useItemsStore();
 const bindingsStore = useBindingsStore();
 
+const emptyItemSearchFunction = async () => ({
+    items: [],
+    total: 0
+});
+
 export default defineComponent({
     name: "BindingsIssue",
 
@@ -242,10 +247,10 @@ export default defineComponent({
 
             // Step 2 (Items)
             itemSearchType: ItemType.RadioDevice,
-            quickAddTemplates: [],
+            quickAddTemplates: [] as any[],
             basketIsEmpty: true,
-            itemIdsToExclude: [],
-            orders: [],
+            itemIdsToExclude: [] as number[],
+            orders: [] as any[],
 
             // Step 3 (Review)
             itemsToBind: emptyItemsBasket(),
@@ -254,14 +259,14 @@ export default defineComponent({
             // Step 4 (Binding)
             bindingInProgress: false,
             bindingError: "",
-            createdBindings: [],
+            createdBindings: [] as any[],
         }
     },
 
     computed: {
         itemSearchFetchFunction() {
             if (!this.itemSearchType) {
-                return () => [];
+                return emptyItemSearchFunction;
             }
 
             switch (this.itemSearchType.key) {
@@ -275,6 +280,8 @@ export default defineComponent({
                     return itemsStore.fetchPhonesPage;
                 case ItemType.Callbox.key:
                     return itemsStore.fetchCallboxesPage;
+                default:
+                    return emptyItemSearchFunction;
             }
         },
 
@@ -298,8 +305,8 @@ export default defineComponent({
             if (newStep == 2) {
                 if (this.$route.query.itemid) {
                     this.addItemToBasketById(
-                        parseInt(this.$route.query.itemid.toString()),
-                        (this.$route.query.skipbasket.toString() === "true") ?? false
+                        parseInt(String(this.$route.query.itemid)),
+                        (String(this.$route.query.skipbasket) === "true") ?? false
                     );
 
                     this.$router.replace({query: {
@@ -313,6 +320,7 @@ export default defineComponent({
                     this.quickAddTemplates = resp.items;
                 });
 
+                // @ts-ignore
                 bindingsStore.fetchOrdersForUser(this.selectedUser.id).then((resp) => {
                     this.orders = resp.data;
                 });
@@ -322,6 +330,7 @@ export default defineComponent({
             if (newStep == 4) {
                 this.bindingInProgress = true;
                 bindingsStore.createBindings(
+                    // @ts-ignore
                     this.selectedUser.id,
                     [...this.itemsToBind.keys()],
                     this.itemTemplatesToBind.map((template) => template.template.id)
@@ -351,8 +360,8 @@ export default defineComponent({
 
     methods: {
         reset() {
-            this.$refs.itemSelector.clear();
-            this.$refs.userSelector.clear();
+            (this.$refs.itemSelector as InstanceType<typeof ServerItemSelector>).clear();
+            (this.$refs.userSelector as InstanceType<typeof ServerItemSelector>).clear();
             this.itemsToBind = emptyItemsBasket();
             this.itemTemplatesToBind = emptyItemTemplatesBasket();
             this.orders = [];
@@ -371,8 +380,8 @@ export default defineComponent({
 
         onItemSelect(item: any) {
             if (item) {
-                this.$refs.basket.addItem(item, this.itemSearchType)
-                this.$refs.itemSelector.clear();
+                (this.$refs.basket as InstanceType<typeof ItemBasket>).addItem(item, this.itemSearchType);
+                (this.$refs.itemSelector as InstanceType<typeof ServerItemSelector>).clear();
             }
         },
 
@@ -394,7 +403,7 @@ export default defineComponent({
                         return;
                     }
 
-                    this.$refs.basket.addItem(resp.data, ItemType[resp.data.resourcetype]);
+                    (this.$refs.basket as InstanceType<typeof ItemBasket>).addItem(resp.data, ItemType.get(resp.data.resourcetype));
 
                     if (advanceOnSuccess) {
                         this.currentStep++;

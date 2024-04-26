@@ -74,12 +74,12 @@
                                         <v-alert
                                             type="success"
                                             title="No Bindings"
-                                            :text="'The user ' + selectedUser.pretty_name + ' currently has no active bindings.'"
+                                            :text="'The user ' + (selectedUser as any).pretty_name + ' currently has no active bindings.'"
                                         ></v-alert>
                                     </div>
                                     <div v-if="userBindings.length > 0">
                                         <p>
-                                            Please select the items you would like to unbind from {{ selectedUser.pretty_name }}.
+                                            Please select the items you would like to unbind from {{ (selectedUser as any).pretty_name }}.
                                         </p>
                                         <v-card flat>
                                             <v-card-text>
@@ -104,7 +104,7 @@
                                                                         rounded
                                                                     >
                                                                         <template v-slot:prepend>
-                                                                            <v-icon>{{ ItemType[binding.item.resourcetype].icon }}</v-icon>
+                                                                            <v-icon>{{ ItemType.get(binding.item.resourcetype).icon }}</v-icon>
                                                                         </template>
 
                                                                         <v-list-item-title>
@@ -143,7 +143,7 @@
 
                         <v-card title="User" flat>
                             <v-card-text>
-                                {{ selectedUser.pretty_name }}
+                                {{ (selectedUser as any).pretty_name }}
                             </v-card-text>
                         </v-card>
 
@@ -183,7 +183,7 @@
                                     <v-alert
                                         type="success"
                                         title="Items unbound"
-                                        :text="'Successfully unbound ' + bindingsToRemove.length + ' items from ' + selectedUser.pretty_name + '.'"
+                                        :text="'Successfully unbound ' + bindingsToRemove.length + ' items from ' + (selectedUser as any).pretty_name + '.'"
                                     ></v-alert>
                                 </div>
                             </div>
@@ -226,7 +226,7 @@
                             </v-btn>
                             <v-btn
                                 v-if="currentStep == 4 && $route.query.returnpath"
-                                :to="$route.query.returnpath"
+                                :to="String($route.query.returnpath)"
                                 :disabled="false"
                                 color="primary"
                                 class="ml-4"
@@ -270,11 +270,11 @@ export default defineComponent({
             selectedUser: {username: 'unknown'},
 
             // Step 2 (Items)
-            userBindings: [],
+            userBindings: [] as any[],
             userBindingsLoading: true,
 
             // Step 3 (Review)
-            bindingsToRemove: [],
+            bindingsToRemove: [] as any[],
             itemsToUnbind: emptyItemsBasket(),
 
             // Step 4 (Binding)
@@ -334,6 +334,7 @@ export default defineComponent({
             // Enter into item selection step
             if (newStep == 2) {
                 this.userBindingsLoading = true;
+                // @ts-ignore
                 bindingsStore.fetchBindingsForUser(this.selectedUser.id).then((resp) => {
                     this.userBindings = resp.data;
                     this.userBindingsLoading = false;
@@ -344,7 +345,7 @@ export default defineComponent({
             if (oldStep <= 2 && newStep == 3) {
                 this.itemsToUnbind.clear();
                 this.bindingsToRemove.forEach((binding) => {
-                    this.itemsToUnbind.set(binding.item.id, { type: ItemType[binding.item.resourcetype], item: binding.item });
+                    this.itemsToUnbind.set(binding.item.id, { type: ItemType.get(binding.item.resourcetype), item: binding.item });
                 });
             }
 
@@ -378,8 +379,8 @@ export default defineComponent({
 
     methods: {
         reset() {
-            this.$refs.userSelector.clear();
-            this.$refs.callsignSelector.clear();
+            (this.$refs.userSelector as InstanceType<typeof ServerItemSelector>).clear();
+            (this.$refs.callsignSelector as InstanceType<typeof ServerItemSelector>).clear();
             this.selectedUser = {username: 'unknown'};
             this.userBindings = [];
             this.userBindingsLoading = true;

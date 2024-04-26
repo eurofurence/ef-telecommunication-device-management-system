@@ -48,6 +48,23 @@ export class ItemType {
         icon: 'mdi-webcam'
     };
 
+    public static Unknown: ItemTypeMetadata = {
+        key: 'Unknown',
+        label: 'Unknown',
+        shortLabel: 'Unknown',
+        icon: 'mdi-help-circle'
+    }
+
+    /**
+     * Returns the ItemTypeMetadata for the given key or UNKNOWN
+     *
+     * @param key of the LogEventType
+     * @return LogEventTypeDeclaration for the given key
+     */
+    static get(key: string): ItemTypeMetadata {
+        return <ItemTypeMetadata>ItemType[key as keyof typeof ItemType] ?? ItemType.Unknown;
+    }
+
     /**
      * Retrieves all available item types
      */
@@ -101,6 +118,24 @@ export class ItemTemplateType {
         itemType: ItemType.Callbox
     };
 
+    public static UnknownTemplate: ItemTemplateTypeMetadata = {
+        key: 'UnknownTemplate',
+        itemType: ItemType.Unknown
+    }
+
+    /**
+     * Returns the ItemTypeMetadata for the given key or UNKNOWN
+     *
+     * @param key of the LogEventType
+     * @return LogEventTypeDeclaration for the given key
+     */
+    static get(key: string): ItemTemplateTypeMetadata {
+        return <ItemTemplateTypeMetadata>ItemTemplateType[key as keyof typeof ItemTemplateType] ?? ItemTemplateType.UnknownTemplate;
+    }
+
+    /**
+     * Retrieves all available item template types
+     */
     public static getAll(): ItemTemplateTypeMetadata[] {
         return [
             ItemTemplateType.RadioDeviceTemplate,

@@ -93,8 +93,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectItemsByKey(radioDeviceIds);
-                this.$refs.itemOverview.reloadItems();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectItemsByKey(radioDeviceIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
             }
         },
 
@@ -117,7 +117,7 @@ export default {
                 .then((resp) => {
                     toast.success("Created radio device with ID " + resp.data.id);
                     this.showItemEditForm = false;
-                    this.$refs.itemOverview.reloadItems();
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
                 .catch((error) => {
                     console.error("Failed to create radio device:", error);
@@ -138,8 +138,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectTemplatesByKey(radioDeviceTemplateIds);
-                this.$refs.itemOverview.reloadTemplates();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectTemplatesByKey(radioDeviceTemplateIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
             }
         },
 
@@ -162,7 +162,7 @@ export default {
                 .then((resp) => {
                     toast.success("Created radio device template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;
-                    this.$refs.itemOverview.reloadTemplates();
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })
                 .catch((error) => {
                     console.error("Failed to create radio device template:", error);

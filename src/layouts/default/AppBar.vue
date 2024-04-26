@@ -7,7 +7,7 @@
             </router-link>
         </v-app-bar-title>
 
-        <v-btn v-if="!authStore.isLoggedIn" to="/login" text>Login</v-btn>
+        <v-btn v-if="!authStore.isLoggedIn" to="/login">Login</v-btn>
         <v-menu v-if="authStore.isLoggedIn">
             <template v-slot:activator="{ props }">
                 <v-btn
@@ -15,7 +15,7 @@
                     icon
                 >
                     <v-avatar color="grey" size="36" class="mx-2">
-                        <span class="white--text headline">{{authStore.username.slice(0, 2).toUpperCase()}}</span>
+                        <span class="white--text headline">{{ (authStore.username ?? '??').slice(0, 2).toUpperCase() }}</span>
                     </v-avatar>
                 </v-btn>
             </template>

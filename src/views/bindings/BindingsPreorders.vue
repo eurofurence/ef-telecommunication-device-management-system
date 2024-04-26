@@ -65,8 +65,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectItemsByKey(orderIds);
-                this.$refs.itemOverview.reloadItems();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectItemsByKey(orderIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
             }
         },
 
@@ -89,7 +89,7 @@ export default {
                 .then((resp) => {
                     toast.success("Created pre-order with ID " + resp.data.id);
                     this.showItemEditForm = false;
-                    this.$refs.itemOverview.reloadItems();
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
                 .catch((error) => {
                     console.error("Failed to create pre-order:", error);

@@ -169,7 +169,7 @@ export default defineComponent({
                 zoomDelta: 0.5,
                 zoomSnap: 0.5,
             },
-            clickedCoordinates: null,
+            clickedCoordinates: null as { lat: number, lng: number } | null,
             items: [],
             itemsLoading: true,
             selectedItemTypes: ItemType.getAll().map((itemType) => itemType.key),
@@ -195,15 +195,17 @@ export default defineComponent({
             return IconUtils
         },
 
-        itemsFiltered() {
-            return this.items.filter((item) => {
+        itemsFiltered(): any[] {
+            return this.items.filter((item: any) => {
                 return this.selectedItemTypes.includes(item.item.resourcetype);
             });
         },
 
         clickedCoordinatesRounded() {
             return {
+                // @ts-ignore
                 lat: (Math.round(this.clickedCoordinates.lat * 100) / 100).toFixed(2),
+                // @ts-ignore
                 lng: (Math.round(this.clickedCoordinates.lng * 100) / 100).toFixed(2),
             };
         },
@@ -238,7 +240,7 @@ export default defineComponent({
     methods: {
         async updateItems(forceRerender: boolean = false) {
             this.itemsLoading = true;
-            itemsStore.fetchItemCoordinatesForFloor(this.floor).then((resp) => {
+            itemsStore.fetchItemCoordinatesForFloor(this.floor as number).then((resp: any) => {
                 this.items = resp.items;
                 this.itemsLoading = false;
 

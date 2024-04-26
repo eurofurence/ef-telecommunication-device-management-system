@@ -96,8 +96,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectItemsByKey(pagerIds);
-                this.$refs.itemOverview.reloadItems();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectItemsByKey(pagerIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
             }
         },
 
@@ -120,7 +120,7 @@ export default {
                 .then((resp) => {
                     toast.success("Created pager with ID " + resp.data.id);
                     this.showItemEditForm = false;
-                    this.$refs.itemOverview.reloadItems();
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
                 .catch((error) => {
                     console.error("Failed to create pager:", error);
@@ -141,8 +141,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectTemplatesByKey(pagerTemplateIds);
-                this.$refs.itemOverview.reloadTemplates();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectTemplatesByKey(pagerTemplateIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
             }
         },
 
@@ -165,7 +165,7 @@ export default {
                 .then((resp) => {
                     toast.success("Created pager template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;
-                    this.$refs.itemOverview.reloadTemplates();
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })
                 .catch((error) => {
                     console.error("Failed to create pager template:", error);

@@ -91,8 +91,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectItemsByKey(radioAccessoryIds);
-                this.$refs.itemOverview.reloadItems();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectItemsByKey(radioAccessoryIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
             }
         },
 
@@ -115,7 +115,7 @@ export default {
                 .then((resp) => {
                     toast.success(`Created ${resp.data.length} radio accessories`);
                     this.showItemEditForm = false;
-                    this.$refs.itemOverview.reloadItems();
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
                 .catch((error) => {
                     console.error("Failed to create radio accessories:", error);
@@ -136,8 +136,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectTemplatesByKey(radioAccessoryTemplateIds);
-                this.$refs.itemOverview.reloadTemplates();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectTemplatesByKey(radioAccessoryTemplateIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
             }
         },
 
@@ -160,7 +160,7 @@ export default {
                 .then((resp) => {
                     toast.success("Created radio accessory template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;
-                    this.$refs.itemOverview.reloadTemplates();
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })
                 .catch((error) => {
                     console.error("Failed to create radio accessory template:", error);

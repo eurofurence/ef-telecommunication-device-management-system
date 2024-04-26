@@ -120,15 +120,15 @@ export class APIUtils {
     public static createErrorToString(error: AxiosError): string {
         if (error.response) {
             if (error.response.status == 409) {
-                return error.response.data;
+                return String(error.response.data);
             }
 
             if (error.response.status != 400) {
                 return error.message;
             }
 
-            return Object.keys(error.response.data).reduce((res: string, prop: string) =>
-                res + prop + ': ' + error.response.data[prop].join(' ') + '\n'
+            return Object.keys((error.response as any).data).reduce((res: string, prop: string) =>
+                res + prop + ': ' + (error.response as any).data[prop].join(' ') + '\n'
             , '');
         } else if (error.request) {
             return 'No response received from server.';

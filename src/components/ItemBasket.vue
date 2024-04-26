@@ -73,18 +73,18 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {ItemTemplateType, ItemType} from "@/types/ItemType";
+import {ItemTemplateTypeMetadata, ItemTypeMetadata} from "@/types/ItemType";
 
-export const emptyItemsBasket = () => new Map<number, { type: ItemType, item: any }>();
-export const emptyItemTemplatesBasket = () => []<{ type: ItemTemplateType, template: any }>;
+export const emptyItemsBasket = () => new Map<number, { type: ItemTypeMetadata, item: any }>();
+export const emptyItemTemplatesBasket = () => new Array<{ type: ItemTemplateTypeMetadata, template: any }>;
 
 export default defineComponent({
     name: "ItemBasket",
 
     props: {
-        title: {type: [String, null], required: false, default: "Basket"},
-        basketItems: {type: Map, required: false, default: emptyItemsBasket},
-        basketItemTemplates: {type: Array, required: false, default: emptyItemTemplatesBasket},
+        title: {type: String, required: false, default: "Basket"},
+        basketItems: {type: Map<number, {type: ItemTypeMetadata, item: any}>, required: false, default: emptyItemsBasket},
+        basketItemTemplates: {type: Array<{type: ItemTemplateTypeMetadata, template: any}>, required: false, default: emptyItemTemplatesBasket},
         readOnly: {type: Boolean, required: false, default: false},
     },
 
@@ -93,7 +93,7 @@ export default defineComponent({
     ],
 
     methods: {
-        addItem(item: any, type: ItemType) {
+        addItem(item: any, type: ItemTypeMetadata) {
             if (this.readOnly) {
                 return;
             }
@@ -105,7 +105,7 @@ export default defineComponent({
             this.$emit('update:basket');
         },
 
-        addItemTemplate(template: any, type: ItemTemplateType) {
+        addItemTemplate(template: any, type: ItemTemplateTypeMetadata) {
             if (this.readOnly) {
                 return;
             }
@@ -141,7 +141,7 @@ export default defineComponent({
             }
 
             this.basketItems.clear();
-            this.basketItemTemplates = [];
+            this.basketItemTemplates.length = 0;
             this.$emit('update:basket')
         },
 

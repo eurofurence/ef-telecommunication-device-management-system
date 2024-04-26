@@ -60,8 +60,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectItemsByKey(itemOwnerIds);
-                this.$refs.itemOverview.reloadItems();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectItemsByKey(itemOwnerIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
             }
         },
 
@@ -84,7 +84,7 @@ export default {
                     .then((resp) => {
                         toast.success("Created item owner with ID " + resp.data.id);
                         this.showEditForm = false;
-                        this.$refs.itemOverview.reloadItems();
+                        (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                     })
                     .catch((error) => {
                         console.error("Failed to create item owner:", error);

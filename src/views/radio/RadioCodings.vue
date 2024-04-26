@@ -61,8 +61,8 @@ export default {
                     });
 
                 // Deselect deleted items and force re-render of table
-                this.$refs.itemOverview.deselectItemsByKey(radioCodingIds);
-                this.$refs.itemOverview.reloadItems();
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).deselectItemsByKey(radioCodingIds);
+                (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
             }
         },
 
@@ -85,7 +85,7 @@ export default {
                 .then((resp) => {
                     toast.success("Created radio coding with ID " + resp.data.id);
                     this.showEditForm = false;
-                    this.$refs.itemOverview.reloadItems();
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
                 .catch((error) => {
                     console.error("Failed to create radio coding:", error);

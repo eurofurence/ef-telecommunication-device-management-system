@@ -14,7 +14,7 @@
                     <template v-slot:prepend="{ isActive }">
                         <v-list-item-action start>
                             <v-icon
-                                :icon="ItemType[order.type] ? ItemType[order.type].icon : 'mdi-shape-outline'"
+                                :icon="ItemType.get(order.type) ? ItemType.get(order.type).icon : 'mdi-shape-outline'"
                                 :color="isActive ? 'grey' : 'black'"
                             ></v-icon>
                         </v-list-item-action>
@@ -42,7 +42,7 @@ export default defineComponent({
     name: "ItemBasket",
 
     props: {
-        orders: {type: Array, required: true},
+        orders: {type: Array<any>, required: true},
     },
 })
 </script>

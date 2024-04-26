@@ -87,7 +87,7 @@ export default defineComponent({
             maxPages: 1,
             pageSize: 25,
 
-            searchDebounceTimeout: null as number,
+            searchDebounceTimeout: null as ReturnType<typeof setTimeout>|null,
             filterSearchText: "",
             filterEventTypes: [],
         }

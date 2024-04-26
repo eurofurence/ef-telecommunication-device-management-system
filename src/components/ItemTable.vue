@@ -3,7 +3,7 @@
         :key="tableKey"
         v-model="selected"
         v-model:items-per-page="itemsPerPage"
-        :headers="headers"
+        :headers="headers as any[]"
         :items-length="totalItems"
         :items="serverItems"
         :loading="loading"
@@ -77,7 +77,7 @@
             <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
         </template>
 
-        <template v-slot:item.handed_out="{item}">
+        <template v-slot:item.handed_out="{item}: {item: any}">
             <v-chip
                 :color="item.handed_out ? 'error' : 'success'"
                 text-color="white"
@@ -86,7 +86,7 @@
             </v-chip>
         </template>
 
-        <template v-slot:item.has_camera="{item}">
+        <template v-slot:item.has_camera="{item}: {item: any}">
             <v-chip
                 :color="item.has_camera ? 'success' : 'error'"
                 text-color="white"
@@ -95,7 +95,7 @@
             </v-chip>
         </template>
 
-        <template v-slot:item.color="{item}">
+        <template v-slot:item.color="{item}: {item: any}">
             <v-chip
                 :color="item.color"
             >
@@ -103,7 +103,7 @@
             </v-chip>
         </template>
 
-        <template v-slot:item.coding="{item}">
+        <template v-slot:item.coding="{item}: {item: any}">
             <v-chip
                 :color="item.coding.color"
             >
@@ -111,7 +111,7 @@
             </v-chip>
         </template>
 
-        <template v-slot:item.template.coding="{item}">
+        <template v-slot:item.template.coding="{item}: {item: any}">
             <v-chip
                 :color="item.template.coding.color"
             >
@@ -119,19 +119,19 @@
             </v-chip>
         </template>
 
-        <template v-slot:item.type="{item}">
+        <template v-slot:item.type="{item}: {item: any}">
             <v-tooltip :text="item.type">
                 <template v-slot:activator="{ props }">
                     <v-icon
                         v-bind="props"
-                        :icon="ItemType[item.type] ? ItemType[item.type].icon : 'mdi-shape-outline'"
+                        :icon="ItemType.get(item.type) ? ItemType.get(item.type).icon : 'mdi-shape-outline'"
                     ></v-icon>
                 </template>
 
             </v-tooltip>
         </template>
 
-        <template v-slot:item.notes="{item}">
+        <template v-slot:item.notes="{item}: {item: any}">
             <v-tooltip v-if="item.notes" :text="item.notes">
                 <template v-slot:activator="{ props }">
                     <v-icon v-bind="props">mdi-information-outline</v-icon>
@@ -139,7 +139,7 @@
             </v-tooltip>
         </template>
 
-        <template v-slot:expanded-row="{ columns, item }">
+        <template v-slot:expanded-row="{ columns, item }: {columns: any, item: any}">
             <tr>
                 <td :colspan="columns.length">
                     <v-list lines="one" v-if="expandedRowProps">
@@ -201,7 +201,7 @@ export default defineComponent({
     },
 
     props: {
-        headers: {type: Array as PropType<TableHeader[]>, required: true},
+        headers: {type: Array<TableHeader>, required: true},
         fetchFunction: {type: Function, required: true},
         expandedRowProps: {type: Array as PropType<ExpandedRowProp[]>, required: false, default: null},
         initialSearch: {type: String, required: false, default: ''},
@@ -215,8 +215,8 @@ export default defineComponent({
         tableKey: 0,
         loading: true,
         totalItems: 0,
-        serverItems: [],
-        selected: [],
+        serverItems: [] as any[],
+        selected: [] as any[],
         search: '',
         searchDebounceTimeout: null as any,
     }),
@@ -226,7 +226,7 @@ export default defineComponent({
     },
 
     methods: {
-        loadItems({page, itemsPerPage, sortBy, search}) {
+        loadItems({page, itemsPerPage, sortBy, search}: {page: number, itemsPerPage: number, sortBy: string, search: string}) {
             this.loading = true;
 
             // Debounce search
@@ -234,7 +234,7 @@ export default defineComponent({
                 clearTimeout(this.searchDebounceTimeout);
             }
             this.searchDebounceTimeout = setTimeout(async () => {
-                this.fetchFunction(page, itemsPerPage, sortBy, search).then(({items, total}) => {
+                this.fetchFunction(page, itemsPerPage, sortBy, search).then(({items, total}: {items: any[], total: number}) => {
                     this.serverItems = items;
                     this.totalItems = total;
                     this.loading = false;

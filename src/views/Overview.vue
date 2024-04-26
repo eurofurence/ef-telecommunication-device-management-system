@@ -205,10 +205,10 @@ export default defineComponent({
 
     data() {
         return {
-            refreshIntervallId: null as number,
+            refreshIntervallId: null as ReturnType<typeof setInterval>|null,
 
             statisticsLodaded: false,
-            statistics: Object as SystemStatistics,
+            statistics: {} as SystemStatistics,
 
             logEventsLoaded: false,
             logEvents: []
@@ -244,7 +244,7 @@ export default defineComponent({
     },
 
     beforeUnmount() {
-        clearInterval(this.refreshIntervallId);
+        clearInterval(this.refreshIntervallId as any);
     }
 })
 </script>

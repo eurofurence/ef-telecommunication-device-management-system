@@ -107,19 +107,19 @@ export default defineComponent({
         },
 
         reloadItems() {
-            this.$refs.itemsTable.reload();
+            (this.$refs.itemsTable as InstanceType<typeof ItemTable>).reload();
         },
 
         reloadTemplates() {
-            this.$refs.templatesTable.reload();
+            (this.$refs.templatesTable as InstanceType<typeof ItemTable>).reload();
         },
 
         deselectItemsByKey(keys: number[]) {
-            this.$refs.itemsTable.deselectItemsByKey(keys);
+            (this.$refs.itemsTable as InstanceType<typeof ItemTable>).deselectItemsByKey(keys);
         },
 
         deselectTemplatesByKey(keys: number[]) {
-            this.$refs.templatesTable.deselectItemsByKey(keys);
+            (this.$refs.templatesTable as InstanceType<typeof ItemTable>).deselectItemsByKey(keys);
         },
     },
 })

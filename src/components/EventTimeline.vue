@@ -21,7 +21,7 @@
     </v-timeline>
     <v-timeline v-if="loading" side="end">
         <v-timeline-item
-            v-for="idx in this.loaderHeight"
+            v-for="idx in loaderHeight"
             :key="idx"
             dot-color="grey"
             fill-dot
@@ -54,7 +54,7 @@ export default defineComponent({
     computed: {
         eventsToDisplay(): LogEvent[] {
             return this.events.map((entry: any) => {
-                let type = LogEventType[entry.action];
+                let type = LogEventType.get(entry.action);
                 return {
                     id: entry.id,
                     date: entry.timestamp,
