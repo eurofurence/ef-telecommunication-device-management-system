@@ -1,0 +1,30 @@
+services:
+  web:
+    image: eftdms-web
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - backend_static:/usr/share/nginx/html/static:ro
+    ports:
+      - "8080:8080/tcp"
+
+  backend:
+    image: eftdms-backend
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    environment:
+      - EFTDMS_DJANGO_SECRET_KEY=${EFTDMS_DJANGO_SECRET_KEY}
+      - EFTDMS_DJANGO_BACKEND_INIT=true
+      - EFTDMS_DJANGO_BACKEND_MIGRATE=true
+    restart: unless-stopped
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+      - backend_static:/mnt/backend_static
+    expose:
+      - "8000/tcp"
+
+volumes:
+  backend_static:
