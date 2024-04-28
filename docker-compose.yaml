@@ -19,6 +19,7 @@ services:
       - EFTDMS_DJANGO_SECRET_KEY=${EFTDMS_DJANGO_SECRET_KEY}
       - EFTDMS_DJANGO_BACKEND_INIT=true
       - EFTDMS_DJANGO_BACKEND_MIGRATE=true
+      - EFTDMS_DJANGO_TIMEZONE=${EFTDMS_DJANGO_TIMEZONE}
     restart: unless-stopped
     volumes:
       - ./db.sqlite3:/app/db.sqlite3

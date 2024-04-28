@@ -131,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = env('EFTDMS_DJANGO_TIMEZONE', cast=str, default='UTC')
 
 USE_I18N = True
 
