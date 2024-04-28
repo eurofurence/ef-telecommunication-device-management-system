@@ -9,7 +9,8 @@ class StatisticsView(views.APIView):
     API endpoint that returns statistics about ItemBindings
     """
 
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
+    queryset = ItemBinding.objects.all()  # Only used for permission check
 
     def get(self, request, *args, **kwargs):
         total_items = Item.objects.count()

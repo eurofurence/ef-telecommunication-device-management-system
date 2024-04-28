@@ -15,7 +15,7 @@ class RadioCodingViewSet(BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows RadioCodings to be viewed or edited.
     """
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     queryset = RadioCoding.objects.all()
     serializer_class = RadioCodingSerializer
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]

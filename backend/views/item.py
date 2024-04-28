@@ -17,7 +17,7 @@ class AbstractItemTemplateViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows item templates to be viewed or edited.
     """
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -27,7 +27,7 @@ class AbstractItemViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows items to be viewed or edited.
     """
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -48,7 +48,7 @@ class AbstractItemViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
 class ItemMetadataViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemMetadataSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -64,7 +64,7 @@ class QuickAddItemTemplatesViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = RadioAccessoryTemplate.objects.filter(allow_quickadd=True)
     serializer_class = RadioAccessoryTemplateQuickAddSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -82,7 +82,7 @@ class ItemCoordinatesViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = ItemCoordinates.objects.all()
     serializer_class = ItemCoordinatesSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = '__all__'
     ordering = ['id']

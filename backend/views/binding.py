@@ -9,7 +9,6 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from backend.models import ItemBinding, Item
-from backend.serializers import UserSerializer
 from backend.serializers.binding import ItemBindingSerializer
 from backend.models import RadioAccessory
 from backend.models import User
@@ -29,7 +28,7 @@ class ItemBindingViewSet(
     """
 
     serializer_class = ItemBindingSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']

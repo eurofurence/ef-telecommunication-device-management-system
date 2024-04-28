@@ -35,7 +35,7 @@ from backend.views.eventlog import EventLogEntryViewSet
 router = routers.DefaultRouter()
 router.register(r'callbox_templates', CallboxTemplateViewSet)
 router.register(r'callboxes', CallboxViewSet)
-router.register(r'eventlog', EventLogEntryViewSet)
+router.register(r'eventlog', EventLogEntryViewSet, basename='eventlog')
 router.register(r'item_bindings', ItemBindingViewSet, basename='item_bindings')
 router.register(r'item_coordinates', ItemCoordinatesViewSet)
 router.register(r'item_metadata', ItemMetadataViewSet)

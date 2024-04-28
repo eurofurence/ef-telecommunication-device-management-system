@@ -15,9 +15,8 @@ class EventLogEntryViewSet(
     """
     API endpoint that allows EventLogEntries to be viewed.
     """
-    queryset = EventLogEntry.objects.all()
     serializer_class = EventLogEntrySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['-id']
