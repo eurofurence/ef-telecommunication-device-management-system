@@ -8,9 +8,30 @@
         :options="options"
         @click="clickedCoordinates = $event.latlng"
     >
-        <!-- Base map image -->
+        <!-- Base map images -->
         <l-image-overlay
-            :url="`/src/assets/deploymentmap/${floor}.svg`"
+            v-if="floor == 0"
+            :url="maplayerFloor0"
+            :bounds="[[0, 0], [100, 100]]"
+        ></l-image-overlay>
+        <l-image-overlay
+            v-if="floor == 1"
+            :url="maplayerFloor1"
+            :bounds="[[0, 0], [100, 100]]"
+        ></l-image-overlay>
+        <l-image-overlay
+            v-if="floor == 2"
+            :url="maplayerFloor2"
+            :bounds="[[0, 0], [100, 100]]"
+        ></l-image-overlay>
+        <l-image-overlay
+            v-if="floor == 3"
+            :url="maplayerFloor3"
+            :bounds="[[0, 0], [100, 100]]"
+        ></l-image-overlay>
+        <l-image-overlay
+            v-if="floor == 4"
+            :url="maplayerFloor4"
             :bounds="[[0, 0], [100, 100]]"
         ></l-image-overlay>
 
@@ -133,6 +154,14 @@
     </l-map>
 </template>
 
+<script lang="ts" setup>
+import maplayerFloor0 from '@/assets/deploymentmap/0.svg';
+import maplayerFloor1 from '@/assets/deploymentmap/1.svg';
+import maplayerFloor2 from '@/assets/deploymentmap/2.svg';
+import maplayerFloor3 from '@/assets/deploymentmap/3.svg';
+import maplayerFloor4 from '@/assets/deploymentmap/4.svg';
+</script>
+
 <script lang="ts">
 import {defineComponent} from "vue";
 import "leaflet/dist/leaflet.css";
@@ -187,14 +216,6 @@ export default defineComponent({
     },
 
     computed: {
-        ItemType() {
-            return ItemType
-        },
-
-        IconUtils() {
-            return IconUtils
-        },
-
         itemsFiltered(): any[] {
             return this.items.filter((item: any) => {
                 return this.selectedItemTypes.includes(item.item.resourcetype);
