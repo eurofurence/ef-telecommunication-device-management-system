@@ -45,9 +45,10 @@ def user_post_save(instance, update_fields, created, **kwargs):
     :param kwargs: Additional args
     :return: None
     """
-    if not created and 'last_login' in update_fields:
-        from backend.models import EventLogEntry
-        EventLogEntry.log(instance, EventLogEntry.Action.USER_LOGIN)
+    if update_fields is not None:
+        if not created and 'last_login' in update_fields:
+            from backend.models import EventLogEntry
+            EventLogEntry.log(instance, EventLogEntry.Action.USER_LOGIN)
 
 
 class ItemOwner(models.Model):
