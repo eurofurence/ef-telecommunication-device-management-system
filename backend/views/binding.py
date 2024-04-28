@@ -3,12 +3,12 @@ from collections import Counter
 from django.db import transaction, IntegrityError
 from rest_framework import viewsets
 from rest_framework import mixins
-from rest_framework import permissions
 from rest_framework import filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from backend.models import ItemBinding, Item
+from backend.permissions import FullDjangoModelPermissions
 from backend.serializers.binding import ItemBindingSerializer
 from backend.models import RadioAccessory
 from backend.models import User
@@ -28,7 +28,7 @@ class ItemBindingViewSet(
     """
 
     serializer_class = ItemBindingSerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']

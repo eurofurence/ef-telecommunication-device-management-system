@@ -1,10 +1,10 @@
 from rest_framework import viewsets
-from rest_framework import permissions
 from rest_framework import filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from backend.models import User, ItemOwner, ItemBinding, RadioDevice
+from backend.permissions import FullDjangoModelPermissions
 from backend.serializers import UserSerializer, ItemOwnerSerializer
 from backend.views.mixins import BulkDeleteMixin
 
@@ -15,7 +15,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -47,7 +47,7 @@ class ItemOwnerViewSet(BulkDeleteMixin, viewsets.ModelViewSet):
     """
     queryset = ItemOwner.objects.all()
     serializer_class = ItemOwnerSerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']

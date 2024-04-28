@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework import mixins
-from rest_framework import permissions
 from rest_framework import filters
 
+from backend.permissions import FullDjangoModelPermissions
 from backend.serializers.eventlog import EventLogEntrySerializer
 from backend.models import EventLogEntry
 
@@ -16,7 +16,7 @@ class EventLogEntryViewSet(
     API endpoint that allows EventLogEntries to be viewed.
     """
     serializer_class = EventLogEntrySerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['-id']

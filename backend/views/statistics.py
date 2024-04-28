@@ -1,7 +1,8 @@
-from rest_framework import views, permissions
+from rest_framework import views
 from rest_framework.response import Response
 
 from backend.models import ItemBinding, Item, User, ItemTemplate
+from backend.permissions import FullDjangoModelPermissions
 
 
 class StatisticsView(views.APIView):
@@ -9,7 +10,7 @@ class StatisticsView(views.APIView):
     API endpoint that returns statistics about ItemBindings
     """
 
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     queryset = ItemBinding.objects.all()  # Only used for permission check
 
     def get(self, request, *args, **kwargs):

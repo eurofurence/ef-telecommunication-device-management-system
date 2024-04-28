@@ -1,11 +1,11 @@
 from rest_framework import viewsets
-from rest_framework import permissions
 from rest_framework import filters
 from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from backend.models import Order
+from backend.permissions import FullDjangoModelPermissions
 from backend.serializers.order import OrderSerializer
 
 
@@ -22,7 +22,7 @@ class OrderViewSet(
 
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']

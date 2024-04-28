@@ -7,7 +7,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAdminUser'  # As restrictive as possible by default. Will be overridden in views to make decision explicit instead of implicit.
+        'backend.permissions.DenyAll'  # As restrictive as possible by default. Will be overridden in views to make decision explicit instead of implicit.
     ],
     'PAGE_SIZE': 100,  # This is the max page size when using LimitOffsetPagination
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',

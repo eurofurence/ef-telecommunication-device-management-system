@@ -1,13 +1,13 @@
 from abc import ABC
 
 from rest_framework import viewsets
-from rest_framework import permissions
 from rest_framework import filters
 
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from backend.models import RadioAccessoryTemplate, ItemCoordinates, Item
+from backend.permissions import FullDjangoModelPermissions
 from backend.serializers.item import ItemCoordinatesSerializer, ItemMetadataSerializer
 from backend.serializers.radio import RadioAccessoryTemplateQuickAddSerializer
 from backend.views.mixins import BulkDeleteMixin
@@ -17,7 +17,7 @@ class AbstractItemTemplateViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows item templates to be viewed or edited.
     """
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -27,7 +27,7 @@ class AbstractItemViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows items to be viewed or edited.
     """
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -48,7 +48,7 @@ class AbstractItemViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
 class ItemMetadataViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemMetadataSerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -64,7 +64,7 @@ class QuickAddItemTemplatesViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = RadioAccessoryTemplate.objects.filter(allow_quickadd=True)
     serializer_class = RadioAccessoryTemplateQuickAddSerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
@@ -82,7 +82,7 @@ class ItemCoordinatesViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = ItemCoordinates.objects.all()
     serializer_class = ItemCoordinatesSerializer
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = '__all__'
     ordering = ['id']
