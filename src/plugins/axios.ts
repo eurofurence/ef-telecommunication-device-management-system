@@ -63,6 +63,13 @@ axios.interceptors.response.use((response) => response, async (error) => {
             }
         }
 
+        if (error.response.status === 401 && error.response.data.code === 'user_inactive') {
+            authStore.logout();
+            router.push('/login');
+            toast.error('Your account has been deactivated. Please contact your administrator.');
+            return Promise.reject(error);
+        }
+
         if (error.response.status === 403 && error.response.data) {
             return Promise.reject(error.response.data);
         }

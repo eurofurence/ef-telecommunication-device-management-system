@@ -19,4 +19,5 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'UPDATE_LAST_LOGIN': True,
     'ISSUER': 'eftdms',
+    'USER_AUTHENTICATION_RULE': 'backend.authentication.simplejwt_user_authentication_rule',
 }
