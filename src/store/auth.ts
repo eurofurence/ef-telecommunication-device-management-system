@@ -1,48 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from '@/plugins/axios'
 
-// Register auth axios interceptor
-axios.interceptors.response.use((response) => {
-    return response;
-}, async (error) => {
-    if (error.response) {
-        if (useAuthStore().isLoggedIn) {
-            // Try to refresh the access token if the request failed with a 401
-            if (error.response.status === 401 && !error.config._isRetry) {
-                // Do not refresh a refresh
-                if (error.config.url?.includes('token/refresh/')) {
-                    console.debug('Request failed with 401, but it was a refresh request. Logging out and aborting...');
-                    useAuthStore().logout();
-                    return Promise.reject(error);
-                }
-
-                // Mark the request as a retry
-                error.config._isRetry = true;
-                console.debug('Request failed with 401, trying to refresh the access token...');
-
-                // Try to refresh the access token and retry original request
-                try {
-                    await useAuthStore().refresh();
-                    error.config.headers['Authorization'] = axios.defaults.headers['Authorization'];
-                    return axios(error.config);
-                } catch (innerError: any) {
-                    if (innerError.response && innerError.response.data) {
-                        return Promise.reject(innerError.response.data);
-                    }
-
-                    return Promise.reject(innerError);
-                }
-            }
-        }
-
-        if (error.response.status === 403 && error.response.data) {
-            return Promise.reject(error.response.data);
-        }
-    }
-
-    return Promise.reject(error);
-});
-
 export const useAuthStore = defineStore({
     id: 'auth',
 

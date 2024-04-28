@@ -98,7 +98,6 @@ export class APIUtils {
                 hasMore = response.data.next !== null;
             }).catch((error) => {
                 hasMore = false;
-                console.log(error);
             });
         } while (hasMore && (itemsPerPage === -1 || ret.items.length < itemsPerPage));
 
