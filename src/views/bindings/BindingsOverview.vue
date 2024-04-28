@@ -29,8 +29,8 @@ export default {
                 {key: 'item.template.name', title: 'Type', align: 'start', sortable: true},
                 {key: 'item.template.owner.shortname', title: 'Owner', align: 'start', sortable: true},
                 {key: 'item.serialnumber', title: 'S/N', align: 'start', sortable: true},
-                {key: 'user.username', title: 'Borrower', align: 'start', sortable: true},
-                {key: 'bound_by.username', title: 'Issuer', align: 'start', sortable: true},
+                {key: 'user.pretty_name', title: 'Borrower', align: 'start', sortable: true},
+                {key: 'bound_by.pretty_name', title: 'Issuer', align: 'start', sortable: true},
             ],
             expandedRowProps: [
                 {key: 'bound_at', title: 'Bound at'},

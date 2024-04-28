@@ -103,6 +103,6 @@ class RadioDeviceTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(user.User)
 class UsersAdmin(admin.ModelAdmin):
-    list_display = ['username', 'ef_reg_id', 'ef_security_collar_id', 'last_seen', 'is_active', 'is_staff', 'is_superuser']
-    search_fields = ['username', 'ef_reg_id', 'ef_security_collar_id']
+    list_display = ['username', 'nickname', 'ef_reg_id', 'ef_security_collar_id', 'last_seen', 'is_active', 'is_staff', 'is_superuser']
+    search_fields = ['username', 'nickname', 'ef_reg_id', 'ef_security_collar_id']
     ordering = ['username']

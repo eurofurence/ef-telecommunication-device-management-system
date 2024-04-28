@@ -19,7 +19,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = '__all__'
     ordering = ['id']
-    search_fields = ['username', 'email', 'ef_reg_id', 'ef_security_collar_id']
+    search_fields = ['nickname', 'email', 'ef_reg_id', 'ef_security_collar_id']
 
     @action(detail=False, methods=['get'], url_path="callsign/(?P<callsign>\\d+)")
     def by_callsign(self, request, callsign):

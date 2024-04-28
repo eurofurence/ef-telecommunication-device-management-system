@@ -113,7 +113,7 @@
                     <template v-slot:item.3>
                         <v-card title="Review Binding" flat>
                             <v-card-text>
-                                Please review your binding before creating it. You are about to bind {{ ($refs.basket as any).size() }} items to {{ (selectedUser as any).username }}.
+                                Please review your binding before creating it. You are about to bind {{ ($refs.basket as any).size() }} items to {{ (selectedUser as any).nickname }}.
                             </v-card-text>
                         </v-card>
 

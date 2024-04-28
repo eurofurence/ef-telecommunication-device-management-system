@@ -10,6 +10,12 @@ class User(AbstractUser):
     """
     Extended User model to store additional information about the user.
     """
+    nickname = models.CharField(
+        max_length=128,
+        blank=False,
+        null=False,
+        help_text="Nickname of the user"
+    )
     ef_reg_id = models.PositiveIntegerField(
         blank=False,
         null=True,
@@ -31,7 +37,7 @@ class User(AbstractUser):
     )
 
     def get_pretty_name(self):
-        return f"{self.username} (Reg-ID: {self.ef_reg_id})"
+        return f"{self.nickname} (Reg-ID: {self.ef_reg_id})"
 
 
 @receiver(post_save, sender=User, dispatch_uid="user_post_save")

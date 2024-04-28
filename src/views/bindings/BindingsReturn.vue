@@ -137,7 +137,7 @@
                     <template v-slot:item.3>
                         <v-card title="Review Items to Unbind" flat>
                             <v-card-text>
-                                Please review your action. You are about to unbind {{ bindingsToRemove.length }} items from {{ selectedUser.username }}.
+                                Please review your action. You are about to unbind {{ bindingsToRemove.length }} items from {{ selectedUser.nickname }}.
                             </v-card-text>
                         </v-card>
 
@@ -267,7 +267,7 @@ export default defineComponent({
             currentStep: 1,
 
             // Step 1 (User)
-            selectedUser: {username: 'unknown'},
+            selectedUser: {nickname: 'unknown'},
 
             // Step 2 (Items)
             userBindings: [] as any[],
@@ -381,7 +381,7 @@ export default defineComponent({
         reset() {
             (this.$refs.userSelector as InstanceType<typeof ServerItemSelector>).clear();
             (this.$refs.callsignSelector as InstanceType<typeof ServerItemSelector>).clear();
-            this.selectedUser = {username: 'unknown'};
+            this.selectedUser = {nickname: 'unknown'};
             this.userBindings = [];
             this.userBindingsLoading = true;
             this.bindingsToRemove = [];
