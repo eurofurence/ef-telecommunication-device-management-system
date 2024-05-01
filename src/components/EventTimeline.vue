@@ -36,6 +36,7 @@
             </div>
         </v-timeline-item>
     </v-timeline>
+    <p v-if="!loading && events.length === 0" class="text-center">No events to display</p>
 </template>
 
 <script lang="ts">
