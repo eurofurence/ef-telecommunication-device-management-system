@@ -13,4 +13,5 @@ TODO ;)
    - TODO: This needs to be improved but works for now ... Yes, I know that this is dirty ;)
 5. Build with `docker compose build`
 6. Run with `docker compose up -d`
-7. Create Django superuser with `docker compose exec -it backend python manage.py createsuperuser`
+7. Setup default permission groups: `docker compose exec -it backend python manage.py setuppermissions`
+8. Create Django superuser with `docker compose exec -it backend python manage.py createsuperuser`
