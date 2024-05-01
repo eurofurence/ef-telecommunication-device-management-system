@@ -217,10 +217,18 @@ export default defineComponent({
 
     computed: {
         itemsBoundPercentage() {
-            return this.statistics.items.bound / this.statistics.items.total * 100;
+            if (!this.statistics.items.total) {
+                return 0;
+            } else {
+                return this.statistics.items.bound / this.statistics.items.total * 100;
+            }
         },
         usersWithBindingsPercentage() {
-            return this.statistics.users.with_bindings / this.statistics.users.total * 100;
+            if (!this.statistics.users.total) {
+                return 0;
+            } else {
+                return this.statistics.users.with_bindings / this.statistics.users.total * 100;
+            }
         }
     },
 
