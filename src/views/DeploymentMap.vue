@@ -48,7 +48,7 @@
                         @click="clickedCoordinates = null"
                     >
                         <v-icon icon="mdi-crosshairs-gps"></v-icon>
-                        <span>Lat: {{ clickedCoordinatesRounded.lat }}, Lng:{{ clickedCoordinatesRounded.lng }}</span>
+                        <span>Lat: {{ clickedCoordinatesRounded.lat }}, Lng: {{ clickedCoordinatesRounded.lng }}</span>
                         <v-icon
                             v-if="isActive"
                             icon="mdi-close"
