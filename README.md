@@ -2,6 +2,7 @@
 
 TODO ;)
 
+
 ## Installation
 
 1. Clone the repository
@@ -15,3 +16,12 @@ TODO ;)
 6. Run with `docker compose up -d`
 7. Setup default permission groups: `docker compose exec -it backend python manage.py setuppermissions`
 8. Create Django superuser with `docker compose exec -it backend python manage.py createsuperuser`
+
+
+### Deploy a test installation using fixtures
+
+1. Create a running instance of the EF-TDMS. Do not set up permissions nor create a superuser yet.
+2. Load the desired fixtures into the database
+   - `docker compose exec -it backend python manage.py loaddata backend/fixtures/*`
+3. Set a password for the superuser
+   - `docker compose exec -it backend python manage.py changepassword admin`

@@ -1,0 +1,132 @@
+[
+{
+    "model": "backend.itembinding",
+    "pk": 1,
+    "fields": {
+        "item": 397,
+        "user": 23,
+        "bound_at": "2024-05-02T09:15:41.267Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 2,
+    "fields": {
+        "item": 387,
+        "user": 17,
+        "bound_at": "2024-05-02T09:16:26.282Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 3,
+    "fields": {
+        "item": 378,
+        "user": 21,
+        "bound_at": "2024-05-02T09:19:22.492Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 4,
+    "fields": {
+        "item": 379,
+        "user": 21,
+        "bound_at": "2024-05-02T09:19:29.529Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 5,
+    "fields": {
+        "item": 393,
+        "user": 23,
+        "bound_at": "2024-05-02T09:19:43.407Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 6,
+    "fields": {
+        "item": 394,
+        "user": 23,
+        "bound_at": "2024-05-02T09:19:52.238Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 7,
+    "fields": {
+        "item": 1,
+        "user": 4,
+        "bound_at": "2024-05-02T09:23:06.080Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 8,
+    "fields": {
+        "item": 118,
+        "user": 4,
+        "bound_at": "2024-05-02T09:23:06.083Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 9,
+    "fields": {
+        "item": 6,
+        "user": 13,
+        "bound_at": "2024-05-02T09:23:39.580Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 10,
+    "fields": {
+        "item": 68,
+        "user": 13,
+        "bound_at": "2024-05-02T09:23:39.588Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 11,
+    "fields": {
+        "item": 38,
+        "user": 24,
+        "bound_at": "2024-05-02T09:57:26.180Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 12,
+    "fields": {
+        "item": 153,
+        "user": 24,
+        "bound_at": "2024-05-02T09:57:26.184Z",
+        "bound_by": 1
+    }
+},
+{
+    "model": "backend.itembinding",
+    "pk": 14,
+    "fields": {
+        "item": 234,
+        "user": 24,
+        "bound_at": "2024-05-02T09:58:30.288Z",
+        "bound_by": 1
+    }
+}
+]

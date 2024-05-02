@@ -1,0 +1,638 @@
+[
+{
+    "model": "backend.user",
+    "pk": 1,
+    "fields": {
+        "password": "CHANGEME",
+        "last_login": "2024-05-01T13:41:20Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:35:57Z",
+        "nickname": "Administrator",
+        "ef_reg_id": 1,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 2,
+    "fields": {
+        "password": "CHANGEME",
+        "last_login": "2024-05-01T13:43:35.544Z",
+        "is_superuser": false,
+        "username": "manager",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:42:19Z",
+        "nickname": "Manager User",
+        "ef_reg_id": 42,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 3,
+    "fields": {
+        "password": "CHANGEME",
+        "last_login": "2024-05-01T13:44:47.020Z",
+        "is_superuser": false,
+        "username": "managerreadonly",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:42:51Z",
+        "nickname": "Manager ReadOnly",
+        "ef_reg_id": 21,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 4,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "randomfur42",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:45:36Z",
+        "nickname": "RandomFur42",
+        "ef_reg_id": 1001,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 5,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "fluffy",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:46:08Z",
+        "nickname": "Fluffy",
+        "ef_reg_id": 1002,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 6,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "macfluffbutt",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:46:26Z",
+        "nickname": "MacFluffbutt ~_~",
+        "ef_reg_id": 1003,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 7,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "heinmueck",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:46:59Z",
+        "nickname": "Hein Mück",
+        "ef_reg_id": 1004,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 8,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "beanythecorgy",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:47:14Z",
+        "nickname": "Beany the Corgy",
+        "ef_reg_id": 1005,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 9,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "smorrebrod",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:48:34Z",
+        "nickname": "Smørrebrød",
+        "ef_reg_id": 1006,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 10,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "fluffyjp",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:49:09Z",
+        "nickname": "ふわふわ",
+        "ef_reg_id": 1007,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 11,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "roadrunner",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:50:03Z",
+        "nickname": "Roadrunner",
+        "ef_reg_id": 1008,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 12,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "birdythebird",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:50:28Z",
+        "nickname": "Birdy the Bird",
+        "ef_reg_id": 1009,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 13,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "sealofapproval",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:50:41Z",
+        "nickname": "SealOfApproval 👍",
+        "ef_reg_id": 1010,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 14,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "rhino",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:51:07Z",
+        "nickname": "Rhino",
+        "ef_reg_id": 201,
+        "ef_security_collar_id": 123,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 15,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "tiger",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:51:29Z",
+        "nickname": "Tiger",
+        "ef_reg_id": 202,
+        "ef_security_collar_id": 165,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 16,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "gazzette",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:51:55Z",
+        "nickname": "Gazzette",
+        "ef_reg_id": 3209,
+        "ef_security_collar_id": 203,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 17,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dep_telecom",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:52:18Z",
+        "nickname": "Department: Telecommunications",
+        "ef_reg_id": 10001,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 18,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dep_stage",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:53:01Z",
+        "nickname": "Department: Stage",
+        "ef_reg_id": 10002,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 19,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dep_medic",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:53:13Z",
+        "nickname": "Department: Medics",
+        "ef_reg_id": 10003,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 20,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dep_bod",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:53:31Z",
+        "nickname": "Department: Board of Directors",
+        "ef_reg_id": 10004,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 21,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dep_conops",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:53:45Z",
+        "nickname": "Department: ConOps",
+        "ef_reg_id": 10005,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 22,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dep_jumpingcastle",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:54:05Z",
+        "nickname": "Department: Jumping Castles",
+        "ef_reg_id": 10006,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 23,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dep_efev",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:54:57Z",
+        "nickname": "Eurofurence e.V.",
+        "ef_reg_id": 99999,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 24,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "sneakysnake",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:55:30Z",
+        "nickname": "Sneaky-Snake",
+        "ef_reg_id": 1011,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 25,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "pylonfox",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:55:49Z",
+        "nickname": "Pyl0nF0xxy",
+        "ef_reg_id": 1012,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 26,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "slimesnake",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:56:36Z",
+        "nickname": "SlimeSnake",
+        "ef_reg_id": 1013,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 27,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "giraph",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:57:02Z",
+        "nickname": "Gir4ph",
+        "ef_reg_id": 1014,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user",
+    "pk": 28,
+    "fields": {
+        "password": "nologin",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "thirstyhyena",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-05-01T13:57:27Z",
+        "nickname": "Thirsty Hiyena",
+        "ef_reg_id": 1015,
+        "ef_security_collar_id": null,
+        "last_seen": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "backend.user_groups",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "group": 2
+    }
+},
+{
+    "model": "backend.user_groups",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "group": 1
+    }
+}
+]
