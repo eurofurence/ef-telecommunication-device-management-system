@@ -55,4 +55,4 @@ class Phone(Item):
     )
 
     def get_pretty_name(self):
-        return f"{self.template.name} {self.notes} (EXT: {self.extension}) #{self.pk}"
+        return f"{self.template.name} {self.location} (EXT: {self.extension}) #{self.pk}"
