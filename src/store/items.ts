@@ -356,19 +356,19 @@ export const useItemsStore = defineStore("item", {
             extension: string = '',
             network: string = '',
             dhcp: boolean|null = null,
-            ip_address: string = '',
-            mac_address: string = '',
-            location: string = '',
-            serialnumber: string = '',
-            notes: string = ''
+            ip_address: string|null = null,
+            mac_address: string|null = null,
+            location: string|null = null,
+            serialnumber: string|null = null,
+            notes: string|null = null
         ) {
             return APIUtils.post('/phones/', {
                 template_id: templateId,
                 extension: extension,
                 network: network,
                 dhcp: dhcp,
-                ip_address: ip_address,
-                mac_address: mac_address,
+                ip_address: ip_address || null,
+                mac_address: mac_address || null,
                 location: location,
                 serialnumber: serialnumber,
                 notes: notes,
