@@ -63,6 +63,9 @@ def item_binding_post_save(instance, created, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
+    if kwargs.get("raw", False):
+        return
+
     if created:
         action = EventLogEntry.Action.CREATE_ITEM_BINDING
     else:

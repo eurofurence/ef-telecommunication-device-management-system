@@ -59,6 +59,9 @@ def item_template_post_save(instance, created, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
+    if kwargs.get("raw", False):
+        return
+
     # Do not log operations on polymorphic base classes
     if type(instance) is ItemTemplate:
         return
@@ -197,6 +200,9 @@ def item_post_save(instance, created, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
+    if kwargs.get("raw", False):
+        return
+
     # Do not log operations on polymorphic base classes
     if type(instance) is Item:
         return
