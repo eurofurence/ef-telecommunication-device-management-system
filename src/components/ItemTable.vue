@@ -86,6 +86,15 @@
             </v-chip>
         </template>
 
+        <template v-slot:item.allow_quickadd="{item}: {item: any}">
+            <v-chip
+                :color="item.allow_quickadd ? 'success' : 'error'"
+                text-color="white"
+            >
+                {{ item.allow_quickadd ? 'Yes' : 'No' }}
+            </v-chip>
+        </template>
+
         <template v-slot:item.has_camera="{item}: {item: any}">
             <v-chip
                 :color="item.has_camera ? 'success' : 'error'"

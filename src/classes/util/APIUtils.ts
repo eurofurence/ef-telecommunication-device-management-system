@@ -19,6 +19,7 @@ export class APIUtils {
         let ordering = '';
 
         sortBy.forEach((item: any) => {
+            item.key = item.key.replace(/\./g, '__');
             ordering += (item.order === 'asc') ? item.key : '-' + item.key;
         });
 
