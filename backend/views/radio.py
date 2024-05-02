@@ -53,6 +53,7 @@ class RadioDeviceViewSet(AbstractItemViewSet):
         'template__description',
         'template__owner__name',
         'template__owner__shortname',
+        'template__coding__name',
         'notes',
         'serialnumber',
         'created_at',
