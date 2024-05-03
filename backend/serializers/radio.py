@@ -66,7 +66,7 @@ class RadioAccessoryTemplateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RadioAccessoryTemplate
-        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'allow_quickadd', 'pretty_name']
+        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'allow_quickadd', 'compatible_with', 'pretty_name']
 
 
 class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
@@ -77,7 +77,7 @@ class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RadioAccessoryTemplate
-        fields = ['id', 'type', 'name', 'pretty_name', 'description', 'owner', 'allow_quickadd', 'statistics']
+        fields = ['id', 'type', 'name', 'pretty_name', 'description', 'owner', 'allow_quickadd', 'compatible_with', 'statistics']
 
     def get_statistics(self, obj):
         total = RadioAccessory.objects.filter(template_id=obj.id).count()

@@ -15,7 +15,7 @@ class ItemOwnerAdmin(admin.ModelAdmin):
     ordering = ['name']
 
 
-@admin.register(item.ItemTemplate, callbox.CallboxTemplate, phone.PhoneTemplate, radio.PagerTemplate, radio.RadioAccessoryTemplate)
+@admin.register(item.ItemTemplate, callbox.CallboxTemplate, phone.PhoneTemplate, radio.PagerTemplate)
 class ItemTemplateAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'owner']
     search_fields = ['name', 'description', 'owner']
@@ -62,6 +62,14 @@ class PhoneAdmin(admin.ModelAdmin):
     @admin.display(description="Name", ordering='template__name')
     def get_name(self, obj):
         return obj.template.name
+
+
+@admin.register(radio.RadioAccessoryTemplate)
+class RadioAccessoryTemplateAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description', 'owner', 'allow_quickadd']
+    search_fields = ['name', 'description', 'owner']
+    ordering = ['name', 'owner']
+    filter_horizontal = ['compatible_with']
 
 
 @admin.register(radio.RadioCoding)

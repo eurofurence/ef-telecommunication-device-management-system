@@ -114,6 +114,12 @@ class RadioAccessoryTemplate(ItemTemplate):
         null=False,
         help_text="Whether to allow quick-adding accessories of this type",
     )
+    compatible_with = models.ManyToManyField(
+        ItemTemplate,
+        related_name='+',
+        blank=True,
+        help_text="Item templates this accessory is compatible with",
+    )
 
 
 class RadioAccessory(Item):
