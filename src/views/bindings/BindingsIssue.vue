@@ -89,7 +89,10 @@
                                     </template>
                                 </v-btn>
                                 <span v-if="!showAllQuickAddTemplates && basketIsEmpty">
-                                    Please add an item to the basket to see compatible quick add templates.
+                                    Please add an item to the basket to see compatible items.
+                                </span>
+                                <span v-if="!showAllQuickAddTemplates && !basketIsEmpty && compatibleQuickAddTemplates.length === 0">
+                                    No compatible items found.
                                 </span>
                                 <v-btn
                                     v-if="!showAllQuickAddTemplates && moreQuickAddTemplatesAvailable"
