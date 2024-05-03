@@ -70,8 +70,11 @@
                                     @update:selection="onItemSelect"
                                 ></ServerItemSelector>
 
+                                <p class="text-overline">
+                                    Quick Add Templates
+                                </p>
                                 <v-btn
-                                    v-for="template in quickAddTemplates"
+                                    v-for="template in compatibleQuickAddTemplates"
                                     :key="template.id"
                                     :disabled="template.statistics.available == 0"
                                     prepend-icon="mdi-plus-circle"
@@ -84,6 +87,31 @@
                                     <template v-slot:append>
                                         [{{ template.statistics.available }}]
                                     </template>
+                                </v-btn>
+                                <span v-if="!showAllQuickAddTemplates && basketIsEmpty">
+                                    Please add an item to the basket to see compatible quick add templates.
+                                </span>
+                                <v-btn
+                                    v-if="!showAllQuickAddTemplates && moreQuickAddTemplatesAvailable"
+                                    prepend-icon="mdi-plus-circle"
+                                    variant="outlined"
+                                    color="warning"
+                                    class="mx-2 my-1"
+                                    size="small"
+                                    @click="showAllQuickAddTemplates = true"
+                                >
+                                    Show all
+                                </v-btn>
+                                <v-btn
+                                    v-if="showAllQuickAddTemplates"
+                                    prepend-icon="mdi-minus-circle"
+                                    variant="outlined"
+                                    color="warning"
+                                    class="mx-2 my-1"
+                                    size="small"
+                                    @click="showAllQuickAddTemplates = false"
+                                >
+                                    Show compatible only
                                 </v-btn>
 
                                 <v-divider class="mt-5 mb-3"></v-divider>
@@ -248,6 +276,7 @@ export default defineComponent({
             // Step 2 (Items)
             itemSearchType: ItemType.RadioDevice,
             quickAddTemplates: [] as any[],
+            showAllQuickAddTemplates: false,
             basketIsEmpty: true,
             itemIdsToExclude: [] as number[],
             orders: [] as any[],
@@ -296,6 +325,46 @@ export default defineComponent({
                 case 4:
                     return true;
             }
+        },
+
+        itemTemplateIdsInBasket() {
+            let templateIds = new Set<number>();
+
+            this.itemsToBind.forEach((entry) => {
+                if (!entry.item.template) {
+                    return;
+                }
+
+                templateIds.add(entry.item.template.id);
+            });
+            this.itemTemplatesToBind.forEach((entry) => {
+                if (!entry.template) {
+                    return;
+                }
+
+                templateIds.add(entry.template.id);
+            });
+
+            return templateIds;
+        },
+
+        compatibleQuickAddTemplates() {
+            if (this.showAllQuickAddTemplates) {
+                return this.quickAddTemplates;
+            }
+
+            let templateIdsInBasket = this.itemTemplateIdsInBasket;
+            return this.quickAddTemplates.filter((template) => {
+                if (template.compatible_with) {
+                    return template.compatible_with.some((id: number) => templateIdsInBasket.has(id));
+                } else {
+                    return false;
+                }
+            });
+        },
+
+        moreQuickAddTemplatesAvailable() {
+            return this.compatibleQuickAddTemplates.length < this.quickAddTemplates.length;
         },
     },
 
@@ -365,6 +434,7 @@ export default defineComponent({
             this.itemsToBind = emptyItemsBasket();
             this.itemTemplatesToBind = emptyItemTemplatesBasket();
             this.orders = [];
+            this.showAllQuickAddTemplates = false;
             this.bindingInProgress = false;
             this.bindingError = "";
             this.createdBindings = [];

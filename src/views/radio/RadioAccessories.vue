@@ -71,6 +71,9 @@ export default {
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
                 {key: 'allow_quickadd', title: 'Quickadd', align: 'start', sortable: true},
             ],
+            expandedRowProps: [
+                {key: 'compatible_with', title: 'Compatible with'},
+            ],
             fetchFunction: itemsStore.fetchRadioAccessoryTemplatesPage,
         },
         showItemEditForm: false,
