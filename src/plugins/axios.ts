@@ -9,25 +9,37 @@ axios.defaults.xsrfHeaderName = "X-CSRFToken"
 axios.defaults.xsrfCookieName = 'csrftoken'
 
 /**
+ * Catch connection refused errors and display a toast message.
+ */
+axios.interceptors.response.use((response) => response, (error) => {
+    if (error.code === 'ERR_NETWORK') {
+        toast.error('API Request failed: Connection refused');
+    }
+
+    return Promise.reject(error);
+});
+
+/**
  * Catch 403 Forbidden errors and display a toast message.
  */
 axios.interceptors.response.use((response) => response, (error) => {
-        if (error.response) {
-            if (error.response.status === 403) {
-                if (error.response.data.detail) {
-                    toast.error(error.response.data.detail);
-                } else {
-                    toast.error('API Request failed with status 403');
-                }
+    if (error.response) {
+        if (error.response.status === 403) {
+            if (error.response.data.detail) {
+                toast.error(error.response.data.detail);
+            } else {
+                toast.error('API Request failed with status 403');
             }
         }
-
-        return Promise.reject(error);
     }
-);
+
+    return Promise.reject(error);
+});
 
 
-// Register auth axios interceptor
+/**
+ * Catch 401 Unauthorized errors and try to refresh the access token.
+ */
 axios.interceptors.response.use((response) => response, async (error) => {
     if (error.response) {
         const authStore = useAuthStore();
