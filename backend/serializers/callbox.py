@@ -11,7 +11,7 @@ class CallboxTemplateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CallboxTemplate
-        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'pretty_name']
+        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'private', 'pretty_name']
 
 
 class CallboxSerializer(serializers.ModelSerializer):

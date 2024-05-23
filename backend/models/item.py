@@ -41,6 +41,12 @@ class ItemTemplate(models.Model):
         on_delete=models.PROTECT,
         help_text="User that owns the items that use this template"
     )
+    private = models.BooleanField(
+        blank=False,
+        null=False,
+        default=False,
+        help_text="Whether this items are private and should not be issued via this system"
+    )
 
     def get_pretty_name(self):
         return f"{self.name} ({self.owner.shortname})"

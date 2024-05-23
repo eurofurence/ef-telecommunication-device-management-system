@@ -11,7 +11,7 @@ class PhoneTemplateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PhoneTemplate
-        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'pretty_name']
+        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'private', 'pretty_name']
 
 
 class PhoneSerializer(serializers.ModelSerializer):

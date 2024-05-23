@@ -30,6 +30,7 @@ class RadioDeviceTemplateSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'description',
+            'private',
             'owner',
             'owner_id',
             'coding',
@@ -66,7 +67,17 @@ class RadioAccessoryTemplateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RadioAccessoryTemplate
-        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'allow_quickadd', 'compatible_with', 'pretty_name']
+        fields = [
+            'id',
+            'name',
+            'description',
+            'private',
+            'owner',
+            'owner_id',
+            'allow_quickadd',
+            'compatible_with',
+            'pretty_name'
+        ]
 
 
 class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
@@ -77,7 +88,18 @@ class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RadioAccessoryTemplate
-        fields = ['id', 'type', 'name', 'pretty_name', 'description', 'owner', 'allow_quickadd', 'compatible_with', 'statistics']
+        fields = [
+            'id',
+            'type',
+            'name',
+            'pretty_name',
+            'description',
+            'private',
+            'owner',
+            'allow_quickadd',
+            'compatible_with',
+            'statistics'
+        ]
 
     def get_statistics(self, obj):
         total = RadioAccessory.objects.filter(template_id=obj.id).count()
@@ -116,7 +138,15 @@ class PagerTemplateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PagerTemplate
-        fields = ['id', 'name', 'description', 'owner', 'owner_id', 'pretty_name']
+        fields = [
+            'id',
+            'name',
+            'description',
+            'private',
+            'owner',
+            'owner_id',
+            'pretty_name'
+        ]
 
 
 class PagerSerializer(serializers.ModelSerializer):

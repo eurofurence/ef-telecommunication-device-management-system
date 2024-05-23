@@ -16,7 +16,7 @@ class ItemTemplateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ItemTemplate
-        fields = ['id', 'name', 'description', 'owner', 'pretty_name']
+        fields = ['id', 'name', 'description', 'owner', 'private', 'pretty_name']
 
 
 class PolymorphicItemTemplateSerializer(PolymorphicSerializer):
