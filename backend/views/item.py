@@ -34,7 +34,10 @@ class AbstractItemViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def available(self, request):
-        available_items = self.filter_queryset(self.queryset.filter(itembinding__isnull=True))
+        available_items = self.filter_queryset(self.queryset.filter(
+            itembinding__isnull=True,
+            template__private=False
+        ))
         page = self.paginate_queryset(available_items)
 
         if page is not None:
