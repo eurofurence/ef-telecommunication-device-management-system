@@ -80,6 +80,7 @@ export default {
                 {key: 'name', title: 'Template Name', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
+                {key: 'private', title: 'Private', align: 'start', sortable: true},
             ],
             fetchFunction: itemsStore.fetchCallboxTemplatesPage,
         },
@@ -174,14 +175,14 @@ export default {
                 return;
             }
 
-            if (!data.name || data.name.length < 1 || !data.owner) {
+            if (!data.name || data.name.length < 1 || !data.owner || data.private === undefined) {
                 console.error("Received incomplete data from VoipCallboxTemplateForm:", data);
                 toast.error("Failed to create callbox template.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create callbox template
-            itemsStore.createCallboxTemplate(data.name, data.owner, data.description)
+            itemsStore.createCallboxTemplate(data.name, data.owner, data.private, data.description)
                 .then((resp) => {
                     toast.success("Created callbox template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;

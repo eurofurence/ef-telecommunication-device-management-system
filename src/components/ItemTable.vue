@@ -79,10 +79,27 @@
 
         <template v-slot:item.handed_out="{item}: {item: any}">
             <v-chip
+                v-if="!item.template.private"
                 :color="item.handed_out ? 'error' : 'success'"
                 text-color="white"
             >
                 {{ item.handed_out ? 'Handed out' : 'Available' }}
+            </v-chip>
+            <v-chip
+                v-if="item.template.private"
+                color="grey"
+                text-color="white"
+            >
+                Private
+            </v-chip>
+        </template>
+
+        <template v-slot:item.private="{item}: {item: any}">
+            <v-chip
+                :color="item.private ? 'error' : 'success'"
+                text-color="white"
+            >
+                {{ item.private ? 'Yes' : 'No' }}
             </v-chip>
         </template>
 

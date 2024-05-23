@@ -96,13 +96,15 @@ export const useItemsStore = defineStore("item", {
          * @param name Name of the radio template.
          * @param ownerId ID of the owner of the radio template.
          * @param codingId ID of the coding of the radio template.
+         * @param priv Whether the radio template is private.
          * @param description Description of the radio template.
          * @return API response. Created structure on success.
          */
-        async createRadioTemplate(name: string, ownerId: number, codingId: number, description: string = '') {
+        async createRadioTemplate(name: string, ownerId: number, codingId: number, priv: boolean = false, description: string = '') {
             return APIUtils.post('/radio_templates/', {
                 name: name,
                 owner_id: ownerId,
+                private: priv,
                 coding_id: codingId,
                 description: description,
             });
@@ -194,14 +196,16 @@ export const useItemsStore = defineStore("item", {
          *
          * @param name Name of the radio accessory template.
          * @param ownerId ID of the owner of the radio accessory template.
+         * @param priv Whether the radio accessory template is private.
          * @param description Description of the radio accessory template.
          * @param allow_quickadd Whether to allow quick adding of radio accessories.
          * @return API response. Created structure on success.
          */
-        async createRadioAccessoryTemplate(name: string, ownerId: number, description: string = '', allow_quickadd: boolean = false) {
+        async createRadioAccessoryTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '', allow_quickadd: boolean = false) {
             return APIUtils.post('/radio_accessory_templates/', {
                 name: name,
                 owner_id: ownerId,
+                private: priv,
                 description: description,
                 allow_quickadd: allow_quickadd,
             });
@@ -293,13 +297,15 @@ export const useItemsStore = defineStore("item", {
          *
          * @param name Name of the pager template.
          * @param ownerId ID of the owner of the pager template.
+         * @param priv Whether the pager template is private.
          * @param description Description of the pager template.
          * @return API response. Created structure on success.
          */
-        async createPagerTemplate(name: string, ownerId: number, description: string = '') {
+        async createPagerTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
             return APIUtils.post('/pager_templates/', {
                 name: name,
                 owner_id: ownerId,
+                private: priv,
                 description: description,
             });
         },
@@ -415,10 +421,11 @@ export const useItemsStore = defineStore("item", {
          * @param description Description of the phone template.
          * @return API response. Created structure on success.
          */
-        async createPhoneTemplate(name: string, ownerId: number, description: string = '') {
+        async createPhoneTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
             return APIUtils.post('/phone_templates/', {
                 name: name,
                 owner_id: ownerId,
+                private: priv,
                 description: description,
             });
         },
@@ -546,13 +553,15 @@ export const useItemsStore = defineStore("item", {
          *
          * @param name Name of the callbox template.
          * @param ownerId ID of the owner of the callbox template.
+         * @param priv Whether the callbox template is private.
          * @param description Description of the callbox template.
          * @return API response. Created structure on success.
          */
-        async createCallboxTemplate(name: string, ownerId: number, description: string = '') {
+        async createCallboxTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
             return APIUtils.post('/callbox_templates/', {
                 name: name,
                 owner_id: ownerId,
+                private: priv,
                 description: description,
             });
         },

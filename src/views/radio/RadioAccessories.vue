@@ -69,6 +69,7 @@ export default {
                 {key: 'name', title: 'Template Name', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
+                {key: 'private', title: 'Private', align: 'start', sortable: true},
                 {key: 'allow_quickadd', title: 'Quickadd', align: 'start', sortable: true},
             ],
             expandedRowProps: [
@@ -152,14 +153,14 @@ export default {
                 return;
             }
 
-            if (!data.name || data.name.length < 1 || !data.owner || !data.allow_quickadd) {
+            if (!data.name || data.name.length < 1 || !data.owner || data.private === undefined || data.allow_quickadd === undefined) {
                 console.error("Received incomplete data from RadioAccessoryTemplateForm:", data);
                 toast.error("Failed to create radio accessory template.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create radio accessory template
-            itemsStore.createRadioAccessoryTemplate(data.name, data.owner, data.description, data.allow_quickadd)
+            itemsStore.createRadioAccessoryTemplate(data.name, data.owner, data.private, data.description, data.allow_quickadd)
                 .then((resp) => {
                     toast.success("Created radio accessory template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;

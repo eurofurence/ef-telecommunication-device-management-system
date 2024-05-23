@@ -72,6 +72,7 @@ export default {
                 {key: 'coding', title: 'Coding', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
+                {key: 'private', title: 'Private', align: 'start', sortable: true},
             ],
             fetchFunction: itemsStore.fetchRadioTemplatesPage,
         },
@@ -151,14 +152,14 @@ export default {
                 return;
             }
 
-            if (!data.name || data.name.length < 1 || !data.owner || !data.coding) {
+            if (!data.name || data.name.length < 1 || !data.owner || !data.coding || data.private === undefined) {
                 console.error("Received incomplete data from RadioDeviceTemplateForm:", data);
                 toast.error("Failed to create radio device template.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create radio template
-            itemsStore.createRadioTemplate(data.name, data.owner, data.coding, data.description)
+            itemsStore.createRadioTemplate(data.name, data.owner, data.coding, data.private, data.description)
                 .then((resp) => {
                     toast.success("Created radio device template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;

@@ -31,13 +31,19 @@
                     :fetch-function="usersStore.fetchItemOwnersPage"
                     :prefetch="true"
                     label="Item Owner"
-                    icon="mdi-account-arrow-right"
+                    icon="mdi-account"
                     item-title-key="pretty_name"
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
                     @update:selection="data.owner = $event.id"
                 ></ServerItemSelector>
+                <v-switch
+                    v-model="data.private"
+                    label="Private Item"
+                    color="primary"
+                    prepend-icon="mdi-account-lock"
+                ></v-switch>
                 <v-text-field
                     v-model="data.description"
                     label="Description"
@@ -48,14 +54,10 @@
                 <v-switch
                     v-model="data.allow_quickadd"
                     :rules="rules.allow_quickadd"
+                    prepend-icon="mdi-timer-plus-outline"
+                    label="Allow Quickadd"
                     color="primary"
-                >
-                    <template v-slot:label>
-                        <v-icon>mdi-timer-plus-outline</v-icon>
-                        &nbsp;
-                        Allow Quickadd
-                    </template>
-                </v-switch>
+                ></v-switch>
 
                 <v-card-actions>
                     <v-btn
@@ -104,6 +106,7 @@ export default defineComponent({
                 id: null,
                 name: '',
                 owner: null,
+                private: false,
                 description: '',
                 allow_quickadd: false,
             },

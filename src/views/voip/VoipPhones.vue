@@ -74,6 +74,7 @@ export default {
                 {key: 'name', title: 'Name', align: 'start', sortable: true},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
                 {key: 'owner.name', title: 'Owner', align: 'start', sortable: true},
+                {key: 'private', title: 'Private', align: 'start', sortable: true},
             ],
             fetchFunction: itemsStore.fetchPhoneTemplatesPage,
         },
@@ -163,14 +164,14 @@ export default {
                 return;
             }
 
-            if (!data.name || data.name.length < 1 || !data.owner) {
+            if (!data.name || data.name.length < 1 || !data.owner || data.private === undefined) {
                 console.error("Received incomplete data from VoipPhoneTemplateForm:", data);
                 toast.error("Failed to create phone template.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create phone template
-            itemsStore.createPhoneTemplate(data.name, data.owner, data.description)
+            itemsStore.createPhoneTemplate(data.name, data.owner, data.private, data.description)
                 .then((resp) => {
                     toast.success("Created phone template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;

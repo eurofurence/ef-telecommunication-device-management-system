@@ -31,13 +31,19 @@
                     :fetch-function="usersStore.fetchItemOwnersPage"
                     :prefetch="true"
                     label="Item Owner"
-                    icon="mdi-account-arrow-right"
+                    icon="mdi-account"
                     item-title-key="pretty_name"
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
                     @update:selection="data.owner = $event.id"
                 ></ServerItemSelector>
+                <v-switch
+                    v-model="data.private"
+                    label="Private Item"
+                    color="primary"
+                    prepend-icon="mdi-account-lock"
+                ></v-switch>
                 <ServerItemSelector
                     ref="codingSelector"
                     :fetch-function="itemsStore.fetchRadioCodingsPage"
@@ -106,6 +112,7 @@ export default defineComponent({
                 id: null,
                 name: '',
                 owner: null,
+                private: false,
                 coding: null,
                 description: '',
             },
