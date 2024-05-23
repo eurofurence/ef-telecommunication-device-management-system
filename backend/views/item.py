@@ -65,7 +65,7 @@ class QuickAddItemTemplatesViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows to list quick-add item templates.
     """
-    queryset = RadioAccessoryTemplate.objects.filter(allow_quickadd=True)
+    queryset = RadioAccessoryTemplate.objects.filter(allow_quickadd=True, private=False)
     serializer_class = RadioAccessoryTemplateQuickAddSerializer
     permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]

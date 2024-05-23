@@ -73,6 +73,12 @@
                                 <p class="text-overline">
                                     Quick Add Templates
                                 </p>
+                                <span v-if="!showAllQuickAddTemplates && compatibleQuickAddTemplates.length === 0 && basketIsEmpty">
+                                    Please add an item to the basket to see compatible items.
+                                </span>
+                                <span v-if="!showAllQuickAddTemplates && compatibleQuickAddTemplates.length === 0 && !basketIsEmpty">
+                                    No compatible items found.
+                                </span>
                                 <v-btn
                                     v-for="template in compatibleQuickAddTemplates"
                                     :key="template.id"
@@ -88,12 +94,6 @@
                                         [{{ template.statistics.available }}]
                                     </template>
                                 </v-btn>
-                                <span v-if="!showAllQuickAddTemplates && basketIsEmpty">
-                                    Please add an item to the basket to see compatible items.
-                                </span>
-                                <span v-if="!showAllQuickAddTemplates && !basketIsEmpty && compatibleQuickAddTemplates.length === 0">
-                                    No compatible items found.
-                                </span>
                                 <v-btn
                                     v-if="!showAllQuickAddTemplates && moreQuickAddTemplatesAvailable"
                                     prepend-icon="mdi-plus-circle"
@@ -359,9 +359,16 @@ export default defineComponent({
             let templateIdsInBasket = this.itemTemplateIdsInBasket;
             return this.quickAddTemplates.filter((template) => {
                 if (template.compatible_with) {
-                    return template.compatible_with.some((id: number) => templateIdsInBasket.has(id));
+                    if (template.compatible_with.length === 0) {
+                        // Show items without any compatibility limitations
+                        return true;
+                    } else {
+                        // Compatibility limitations given. Filter
+                        return template.compatible_with.some((id: number) => templateIdsInBasket.has(id));
+                    }
                 } else {
-                    return false;
+                    // Show if no compatibility list given
+                    return true;
                 }
             });
         },
