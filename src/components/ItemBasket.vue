@@ -73,6 +73,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import type { PropType } from "vue";
 import {ItemTemplateTypeMetadata, ItemTypeMetadata} from "@/types/ItemType";
 
 export const emptyItemsBasket = () => new Map<number, { type: ItemTypeMetadata, item: any }>();
@@ -82,7 +83,7 @@ export default defineComponent({
     name: "ItemBasket",
 
     props: {
-        title: {type: String|null, required: false, default: "Basket"},
+        title: {type: String as PropType<String|null>, required: false, default: "Basket"},
         basketItems: {type: Map<number, {type: ItemTypeMetadata, item: any}>, required: false, default: emptyItemsBasket},
         basketItemTemplates: {type: Array<{type: ItemTemplateTypeMetadata, template: any}>, required: false, default: emptyItemTemplatesBasket},
         readOnly: {type: Boolean, required: false, default: false},
