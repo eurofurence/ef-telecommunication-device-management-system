@@ -21,7 +21,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from backend.views import UserViewSet, ItemOwnerViewSet
+from backend.views import UserViewSet, ItemOwnerViewSet, CurrentUserProfileView
 from backend.views.binding import ItemBindingViewSet
 from backend.views.callbox import CallboxTemplateViewSet, CallboxViewSet
 from backend.views.item import QuickAddItemTemplatesViewSet, ItemCoordinatesViewSet, ItemMetadataViewSet
@@ -61,6 +61,7 @@ urlpatterns = [
     path('api/token/obtain/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/statistics/', StatisticsView.as_view(), name='item_binding_statistics'),
+    path('api/current_user/', CurrentUserProfileView.as_view(), name='current_user_profile'),
 
     # Admin UI
     path('admin/', admin.site.urls),

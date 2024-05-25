@@ -82,7 +82,7 @@ export default defineComponent({
     name: "ItemBasket",
 
     props: {
-        title: {type: String, required: false, default: "Basket"},
+        title: {type: String|null, required: false, default: "Basket"},
         basketItems: {type: Map<number, {type: ItemTypeMetadata, item: any}>, required: false, default: emptyItemsBasket},
         basketItemTemplates: {type: Array<{type: ItemTemplateTypeMetadata, template: any}>, required: false, default: emptyItemTemplatesBasket},
         readOnly: {type: Boolean, required: false, default: false},

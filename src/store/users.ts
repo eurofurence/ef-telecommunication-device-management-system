@@ -6,6 +6,15 @@ export const useUsersStore = defineStore("user", {
 
     actions: {
         /**
+         * Fetches the current user's profile from the API.
+         *
+         * @return Current user's profile information.
+         */
+        async fetchCurrentUserProfile() {
+            return APIUtils.get('/current_user/');
+        },
+
+        /**
          * Fetches a page of users from the API.
          *
          * @param page Number of the page to fetch.

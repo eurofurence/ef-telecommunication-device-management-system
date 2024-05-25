@@ -19,6 +19,9 @@ export const useAuthStore = defineStore({
 
             /** The username of the currently logged-in user */
             _username: localStorage.getItem('auth.username'),
+
+            /** The user ID of the currently logged-in user */
+            _userid: localStorage.getItem('auth.userid'),
         };
     },
 
@@ -34,6 +37,12 @@ export const useAuthStore = defineStore({
          * @param state
          */
         username: state => state._username,
+
+        /**
+         * Returns the user ID of the currently logged-in user.
+         * @param state
+         */
+        userid: state => state._userid,
     },
 
     actions: {

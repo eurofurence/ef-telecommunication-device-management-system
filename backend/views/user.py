@@ -1,3 +1,4 @@
+from rest_framework import views
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.decorators import action
@@ -7,6 +8,21 @@ from backend.models import User, ItemOwner, ItemBinding, RadioDevice
 from backend.permissions import FullDjangoModelPermissions
 from backend.serializers import UserSerializer, ItemOwnerSerializer
 from backend.views.mixins import BulkDeleteMixin
+
+
+class CurrentUserProfileView(views.APIView):
+    """
+    API endpoint that allows the current user profile to be viewed.
+    """
+    queryset = User.objects.all()
+    permission_classes = [FullDjangoModelPermissions]
+
+    def get(self, request):
+        if request.user is None:
+            return Response(status=401)
+
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
