@@ -22,6 +22,7 @@
 
             <v-list density="compact" slim>
                 <v-list-item prepend-icon="mdi-account" title="My Account" value="account" to="/profile"></v-list-item>
+                <v-list-item prepend-icon="mdi-form-textbox-password" title="Change Password" value="change-password" :href="passwordChangeUrl" target="_blank"></v-list-item>
                 <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout" to="/logout"></v-list-item>
             </v-list>
         </v-menu>
@@ -32,4 +33,5 @@
 import {useAuthStore} from "@/store/auth";
 
 const authStore = useAuthStore();
+const passwordChangeUrl = import.meta.env.VITE_EFTDMS_PASSWORD_CHANGE_URL;
 </script>
