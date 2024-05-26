@@ -7,9 +7,7 @@ export type SystemStatistics = {
         with_bindings: number,
         without_bindings: number,
     },
-    templates: {
-        total: number,
-    },
+    templates: object,
     items: {
         total: number,
         bound: number,

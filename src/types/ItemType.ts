@@ -6,6 +6,7 @@ export type ItemTypeMetadata = {
     label: string;
     shortLabel: string;
     icon: string;
+    color: string;
 }
 
 /**
@@ -18,41 +19,47 @@ export class ItemType {
         label: 'Radio Device',
         shortLabel: 'Radio',
         icon: 'mdi-cellphone-basic',
+        color: '#1E88E5',
     };
 
     public static RadioAccessory: ItemTypeMetadata = {
         key: 'RadioAccessory',
         label: 'Radio Accessory',
         shortLabel: 'Accessory',
-        icon: 'mdi-headset'
+        icon: 'mdi-headset',
+        color: '#00ACC1',
     };
 
     public static Pager: ItemTypeMetadata = {
         key: 'Pager',
         label: 'Pager',
         shortLabel: 'Pager',
-        icon: 'mdi-bell-ring-outline'
+        icon: 'mdi-bell-ring-outline',
+        color: '#26A69A',
     };
 
     public static Phone: ItemTypeMetadata = {
         key: 'Phone',
         label: 'Phone',
         shortLabel: 'Phone',
-        icon: 'mdi-phone'
+        icon: 'mdi-phone',
+        color: '#D4E157',
     };
 
     public static Callbox: ItemTypeMetadata = {
         key: 'Callbox',
         label: 'Callbox',
         shortLabel: 'Callbox',
-        icon: 'mdi-webcam'
+        icon: 'mdi-webcam',
+        color: '#6D4C41',
     };
 
     public static Unknown: ItemTypeMetadata = {
         key: 'Unknown',
         label: 'Unknown',
         shortLabel: 'Unknown',
-        icon: 'mdi-help-circle'
+        icon: 'mdi-help-circle',
+        color: '#BDBDBD'
     }
 
     /**
