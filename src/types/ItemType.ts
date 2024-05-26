@@ -43,7 +43,7 @@ export class ItemType {
         label: 'Phone',
         shortLabel: 'Phone',
         icon: 'mdi-phone',
-        color: '#D4E157',
+        color: '#FFA000',
     };
 
     public static Callbox: ItemTypeMetadata = {
@@ -51,7 +51,7 @@ export class ItemType {
         label: 'Callbox',
         shortLabel: 'Callbox',
         icon: 'mdi-webcam',
-        color: '#6D4C41',
+        color: '#E65100',
     };
 
     public static Unknown: ItemTypeMetadata = {

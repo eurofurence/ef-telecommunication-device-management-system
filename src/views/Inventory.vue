@@ -156,11 +156,12 @@
                 <LastUpdated :date="statisticsUpdated"/>
             </v-col>
         </v-row>
-        <v-row>
+        <v-row class="mb-5">
             <v-col>
                 <Doughnut
                     :data="chartData"
                     :options="chartOptions"
+                    style="max-height: 85vh"
                 ></Doughnut>
             </v-col>
         </v-row>
@@ -196,11 +197,41 @@ export default defineComponent({
             statistics: {} as SystemStatistics,
 
             chartOptions: {
+                cutout: '33%',
                 responsive: true,
-                legend: {
-                    display: false,
-                },
                 plugins: {
+                    legend: {
+                        labels: {
+                            // Taken from: Chart.js/src/controllers/controller.doughnut.js
+                            generateLabels(chart) {
+                                const data = chart.data;
+                                if (data.labels.length && data.datasets.length) {
+                                    const {labels: {pointStyle, color}} = chart.legend.options;
+
+                                    return data.labels.map((label, i) => {
+                                        const meta = chart.getDatasetMeta(
+                                            (data.datasets.length > 1) ? data.datasets.length-1 : 0
+                                        );
+                                        const style = meta.controller.getStyle(i);
+
+                                        return {
+                                            text: label,
+                                            fillStyle: style.backgroundColor,
+                                            strokeStyle: style.borderColor,
+                                            fontColor: color,
+                                            lineWidth: style.borderWidth,
+                                            pointStyle: pointStyle,
+                                            hidden: !chart.getDataVisibility(i),
+
+                                            // Extra data used for toggling the correct item
+                                            index: i
+                                        };
+                                    });
+                                }
+                                return [];
+                            }
+                        }
+                    },
                     tooltip: {
                         callbacks: {
                             title: (items) => items[0].dataset.titles[items[0].dataIndex] ?? '',
@@ -231,31 +262,32 @@ export default defineComponent({
             if (!this.statisticsLodaded) {
                 return {
                     labels: ['Loading...'],
-                    datasets: [{data: [1]}]
+                    datasets: [{data: [1], backgroundColor: ['#CCCCCC']}]
                 }
             }
 
             let datasets = {
-                itemTypes: {
+                tplAvailability: {
                     labels: [],
                     titles: [],
                     data: [],
                     backgroundColor: [],
-                    weight: 0.5,
+                    weight: 0.4,
                 },
                 tplTotals: {
                     labels: [],
                     titles: [],
                     data: [],
                     backgroundColor: [],
+                    weight: 1,
                 },
-                tplAvailability: {
+                itemTypes: {
                     labels: [],
                     titles: [],
                     data: [],
                     backgroundColor: [],
-                    weight: 0.3,
-                }
+                    weight: 0.75,
+                },
             }
 
             for (const [itemTypeKey, templates] of Object.entries(this.statistics.templates)) {
@@ -276,12 +308,12 @@ export default defineComponent({
                         datasets.tplAvailability.titles.push(tpl.pretty_name);
                         datasets.tplAvailability.labels.push('Available');
                         datasets.tplAvailability.data.push(tpl.total - tpl.bound);
-                        datasets.tplAvailability.backgroundColor.push('#00AA00');
+                        datasets.tplAvailability.backgroundColor.push('#4CAF50');
 
                         datasets.tplAvailability.titles.push(tpl.pretty_name);
                         datasets.tplAvailability.labels.push('Handed out');
                         datasets.tplAvailability.data.push(tpl.bound);
-                        datasets.tplAvailability.backgroundColor.push('#AA0000');
+                        datasets.tplAvailability.backgroundColor.push('#F44336');
 
                         itemTypeBound += tpl.bound;
                     } else {
