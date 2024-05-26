@@ -2,7 +2,7 @@ from django.db.models import Count
 from rest_framework import views
 from rest_framework.response import Response
 
-from backend.models import ItemBinding, Item, User, ItemTemplate, RadioDeviceTemplate, RadioDevice, RadioAccessory, \
+from backend.models import ItemBinding, User, RadioDeviceTemplate, RadioDevice, RadioAccessory, \
     RadioAccessoryTemplate, Pager, PagerTemplate, PhoneTemplate, Phone, CallboxTemplate, Callbox
 from backend.permissions import FullDjangoModelPermissions
 
@@ -12,16 +12,18 @@ class StatisticsView(views.APIView):
     API endpoint that returns statistics about ItemBindings
     """
 
+    TEMPLATE_TYPES = {
+        RadioDeviceTemplate: RadioDevice,
+        RadioAccessoryTemplate: RadioAccessory,
+        PagerTemplate: Pager,
+        PhoneTemplate: Phone,
+        CallboxTemplate: Callbox,
+    }
+
     permission_classes = [FullDjangoModelPermissions]
     queryset = ItemBinding.objects.all()  # Only used for permission check
 
     def get(self, request, *args, **kwargs):
-        total_items = Item.objects.count()
-        total_private_items = 0  # FIXME
-        total_bindable_items = total_items - total_private_items
-        bound_items = ItemBinding.objects.count()
-        unbound_items = total_bindable_items - bound_items
-
         total_users = User.objects.count()
         users_with_bindings = ItemBinding.count_users_with_bindings()
         users_without_bindings = total_users - users_with_bindings
@@ -32,43 +34,50 @@ class StatisticsView(views.APIView):
                 'with_bindings': users_with_bindings,
                 'without_bindings': users_without_bindings
             },
-            'templates': self.get_template_statistics(),
-            'items': {
-                'total': {
-                    'all': total_items,
-                    'bindable': total_bindable_items,
-                    'private': total_private_items,
-                },
-                'bound': bound_items,
-                'unbound': unbound_items
-            },
+            **self.get_item_statistics(),
         })
 
     @staticmethod
-    def get_template_statistics():
+    def get_item_statistics():
         """
         Calculates statistics for all items, grouped by their respective templates
 
-        :return: Dict containing a list for every template category with items
-        for each existing template and the statistics for its respective items
+        :return: Dict containing numerical stats for items and a list of templates
+        for every item type with entries for each existing template and the
+        statistics for its respective template items
         """
-        template_types = {
-            RadioDeviceTemplate: RadioDevice,
-            RadioAccessoryTemplate: RadioAccessory,
-            PagerTemplate: Pager,
-            PhoneTemplate: Phone,
-            CallboxTemplate: Callbox,
+        # Prepare result structure
+        res = {
+            'items': {
+                'total': 0,
+                'templates': 0,
+                'private': 0,
+                'bound': 0,
+            },
+            'templates': {}
         }
 
-        res = {}
-        for template_type, item_type in template_types.items():
+        # Iterate over each item type
+        for template_type, item_type in StatisticsView.TEMPLATE_TYPES.items():
             templates = template_type.objects.annotate(total=Count(item_type.__name__.lower()))
 
-            res[item_type.__name__] = [{
-                'pretty_name': tpl.get_pretty_name(),
-                'private': tpl.private,
-                'total': tpl.total,
-                'bound': ItemBinding.objects.filter(**{f'item__{item_type.__name__.lower()}__template': tpl}).count()
-            } for tpl in templates]
+            # Iterate over all existing templates for current item type
+            res['templates'][item_type.__name__] = []
+            for tpl in templates:
+                bound = ItemBinding.objects.filter(**{f'item__{item_type.__name__.lower()}__template': tpl}).count()
+
+                # Template data
+                res['templates'][item_type.__name__].append({
+                    'pretty_name': tpl.get_pretty_name(),
+                    'private': tpl.private,
+                    'total': tpl.total,
+                    'bound': bound
+                })
+
+                # Update global item stats
+                res['items']['templates'] += 1
+                res['items']['total'] += tpl.total
+                res['items']['private'] += tpl.total if tpl.private else 0
+                res['items']['bound'] += bound
 
         return res

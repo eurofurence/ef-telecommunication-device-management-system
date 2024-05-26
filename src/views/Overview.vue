@@ -35,44 +35,50 @@
                                 </template>
                             </v-tooltip>
 
-                            <div class="d-flex mt-4 justify-space-between">
-                                <v-list-item
-                                    density="compact"
+                            <div class="d-flex mt-4 justify-center ga-3">
+                                <v-chip
+                                    variant="text"
                                     prepend-icon="mdi-basket-outline"
+                                    class="cursor-default"
                                 >
-                                    <v-list-item-subtitle>
-                                        {{ statistics.items.total }} ({{ statistics.templates.total }})
-                                    </v-list-item-subtitle>
+                                    {{ statistics.items.total }} ({{ statistics.items.templates }})
                                     <v-tooltip activator="parent" location="top">
-                                        <span>Total items</span>
+                                        <span>Total items (templates)</span>
                                     </v-tooltip>
-                                </v-list-item>
+                                </v-chip>
 
-                                <v-list-item
-                                    density="compact"
+                                <v-chip
+                                    variant="text"
                                     prepend-icon="mdi-basket-plus-outline"
-                                    class="text-red-accent-4"
+                                    class="cursor-default text-red-accent-4"
                                 >
-                                    <v-list-item-subtitle>
-                                        {{ statistics.items.bound }}
-                                    </v-list-item-subtitle>
+                                    {{ statistics.items.bound }}
                                     <v-tooltip activator="parent" location="top">
                                         <span>Bound items</span>
                                     </v-tooltip>
-                                </v-list-item>
+                                </v-chip>
 
-                                <v-list-item
-                                    density="compact"
+                                <v-chip
+                                    variant="text"
                                     prepend-icon="mdi-basket-minus-outline"
-                                    class="text-green-darken-3"
+                                    class="cursor-default text-green-darken-3"
                                 >
-                                    <v-list-item-subtitle>
-                                        {{ statistics.items.unbound }}
-                                    </v-list-item-subtitle>
+                                    {{ statistics.items.total - statistics.items.bound - statistics.items.private }}
                                     <v-tooltip activator="parent" location="top">
-                                        <span>Unbound items</span>
+                                        <span>Available items</span>
                                     </v-tooltip>
-                                </v-list-item>
+                                </v-chip>
+
+                                <v-chip
+                                    variant="text"
+                                    prepend-icon="mdi-basket-off-outline"
+                                    class="cursor-default text-brown"
+                                >
+                                    {{ statistics.items.private }}
+                                    <v-tooltip activator="parent" location="top">
+                                        <span>Private items</span>
+                                    </v-tooltip>
+                                </v-chip>
                             </div>
                         </v-card-text>
                     </v-card>
@@ -105,45 +111,40 @@
                                 </template>
                             </v-tooltip>
 
-                            <div class="d-flex mt-4 justify-space-between">
-                                <v-list-item
-                                    density="compact"
+                            <div class="d-flex mt-4 justify-center ga-3">
+                                <v-chip
+                                    variant="text"
                                     prepend-icon="mdi-account-group"
+                                    class="cursor-default"
                                 >
-                                    <v-list-item-subtitle>
-                                        {{ statistics.users.total }}
-                                    </v-list-item-subtitle>
+                                    {{ statistics.users.total }}
                                     <v-tooltip activator="parent" location="top">
                                         <span>Total users</span>
                                     </v-tooltip>
-                                </v-list-item>
+                                </v-chip>
 
-                                <v-list-item
-                                    density="compact"
+                                <v-chip
+                                    variant="text"
                                     prepend-icon="mdi-account-arrow-right-outline"
-                                    class="text-red-accent-4"
+                                    class="cursor-default text-red-accent-4"
                                 >
-                                    <v-list-item-subtitle>
-                                        {{ statistics.users.with_bindings }}
-                                    </v-list-item-subtitle>
+                                    {{ statistics.users.with_bindings }}
                                     <v-tooltip activator="parent" location="top">
                                         <span>Users with bindings</span>
                                     </v-tooltip>
-                                </v-list-item>
+                                </v-chip>
 
 
-                                <v-list-item
-                                    density="compact"
+                                <v-chip
+                                    variant="text"
                                     prepend-icon="mdi-account-arrow-left-outline"
-                                    class="text-green-darken-3"
+                                    class="cursor-default text-green-darken-3"
                                 >
-                                    <v-list-item-subtitle>
-                                        {{ statistics.users.without_bindings }}
-                                    </v-list-item-subtitle>
+                                    {{ statistics.users.without_bindings }}
                                     <v-tooltip activator="parent" location="top">
                                         <span>Users without bindings</span>
                                     </v-tooltip>
-                                </v-list-item>
+                                </v-chip>
                             </div>
                         </v-card-text>
                     </v-card>
@@ -249,7 +250,7 @@ export default defineComponent({
             if (!this.statistics.items.total) {
                 return 0;
             } else {
-                return this.statistics.items.bound / this.statistics.items.total * 100;
+                return this.statistics.items.bound / (this.statistics.items.total - this.statistics.items.private) * 100;
             }
         },
         usersWithBindingsPercentage() {

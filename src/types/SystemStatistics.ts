@@ -9,8 +9,9 @@ export type SystemStatistics = {
     },
     templates: object,
     items: {
+        templates: number,
         total: number,
         bound: number,
-        unbound: number,
+        private: number,
     },
 }
