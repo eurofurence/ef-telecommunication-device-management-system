@@ -213,12 +213,12 @@ export default defineComponent({
                     legend: {
                         labels: {
                             // Taken from: Chart.js/src/controllers/controller.doughnut.js
-                            generateLabels(chart) {
+                            generateLabels(chart: any) {
                                 const data = chart.data;
                                 if (data.labels.length && data.datasets.length) {
                                     const {labels: {pointStyle, color}} = chart.legend.options;
 
-                                    return data.labels.map((label, i) => {
+                                    return data.labels.map((label: string, i: number) => {
                                         const meta = chart.getDatasetMeta(
                                             (data.datasets.length > 1) ? data.datasets.length-1 : 0
                                         );
@@ -244,8 +244,8 @@ export default defineComponent({
                     },
                     tooltip: {
                         callbacks: {
-                            title: (items) => items[0].dataset.titles[items[0].dataIndex] ?? '',
-                            label: (ctx) => ` ${ctx.dataset.labels[ctx.dataIndex]}: ${ctx.formattedValue}`,
+                            title: (items: any) => items[0].dataset.titles[items[0].dataIndex] ?? '',
+                            label: (ctx: any) => ` ${ctx.dataset.labels[ctx.dataIndex]}: ${ctx.formattedValue}`,
                         }
                     },
                 }
@@ -278,24 +278,24 @@ export default defineComponent({
 
             let datasets = {
                 tplAvailability: {
-                    labels: [],
-                    titles: [],
-                    data: [],
-                    backgroundColor: [],
+                    labels: [] as string[],
+                    titles: [] as string[],
+                    data: [] as number[],
+                    backgroundColor: [] as string[],
                     weight: 0.4,
                 },
                 tplTotals: {
-                    labels: [],
-                    titles: [],
-                    data: [],
-                    backgroundColor: [],
+                    labels: [] as string[],
+                    titles: [] as string[],
+                    data: [] as number[],
+                    backgroundColor: [] as string[],
                     weight: 1,
                 },
                 itemTypes: {
-                    labels: [],
-                    titles: [],
-                    data: [],
-                    backgroundColor: [],
+                    labels: [] as string[],
+                    titles: [] as string[],
+                    data: [] as number[],
+                    backgroundColor: [] as string[],
                     weight: 0.75,
                 },
             }

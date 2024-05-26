@@ -72,7 +72,12 @@ export default defineComponent({
     data() {
         return {
             username: authStore.username,
-            user: {},
+            user: {
+                id: 0,
+                nickname: null,
+                ef_reg_id: null,
+                ef_security_collar_id: null,
+            },
             bindings: [],
             loading: {
                 user: true,
@@ -84,7 +89,7 @@ export default defineComponent({
     computed: {
         boundItems() {
             let boundItems = new Map();
-            this.bindings.forEach((binding) => {
+            this.bindings.forEach((binding: any) => {
                 boundItems.set(binding.item.id, {
                     type: ItemType.get(binding.item.resourcetype),
                     item: binding.item,
