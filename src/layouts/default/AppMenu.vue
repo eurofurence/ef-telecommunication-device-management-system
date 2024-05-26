@@ -6,6 +6,7 @@
         <v-list density="compact" nav open-strategy="multiple" slim>
             <v-list-item prepend-icon="mdi-home-city" title="Overview" value="overview" to="/overview"></v-list-item>
             <v-list-item prepend-icon="mdi-account" title="My Account" value="account" to="/profile"></v-list-item>
+            <v-list-item prepend-icon="mdi-chart-box-outline" title="Inventory" value="inventory" to="/inventory"></v-list-item>
             <v-list-group value="Deployment Map">
                 <template v-slot:activator="{ props }">
                     <v-list-item v-bind="props" prepend-icon="mdi-map" title="Deployment Map"></v-list-item>

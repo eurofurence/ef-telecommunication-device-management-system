@@ -2,7 +2,7 @@
     <v-container class="main-container-boxed">
         <v-row>
             <v-col>
-                <h1>Overview</h1>
+                <h1>Inventory</h1>
             </v-col>
         </v-row>
         <v-row>
@@ -156,50 +156,12 @@
                 <LastUpdated :date="statisticsUpdated"/>
             </v-col>
         </v-row>
-        <v-row class="mt-0">
-            <v-col class="text-center">
-                <v-btn
-                    color="info"
-                    prepend-icon="mdi-chart-box-outline"
-                    class="mx-4"
-                    @click="$router.push('/inventory')"
-                >
-                    Show More
-                </v-btn>
-            </v-col>
-        </v-row>
-        <v-row class="mt-5">
-            <v-col class="text-center">
-                <v-btn
-                    size="x-large"
-                    color="success"
-                    prepend-icon="mdi-plus"
-                    class="mx-4"
-                    @click="$router.push('/bindings/issue')"
-                >
-                    Issue Items
-                </v-btn>
-                <v-btn
-                    size="x-large"
-                    color="error"
-                    prepend-icon="mdi-trash-can-outline"
-                    class="mx-4"
-                    @click="$router.push('/bindings/return')"
-                >
-                    Return Items
-                </v-btn>
-            </v-col>
-        </v-row>
         <v-row>
             <v-col>
-                <h2>Latest Events</h2>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
-                <EventTimeline
-                    :events="logEvents"
-                ></EventTimeline>
+                <Doughnut
+                    :data="chartData"
+                    :options="chartOptions"
+                ></Doughnut>
             </v-col>
         </v-row>
     </v-container>
@@ -210,17 +172,20 @@ import {defineComponent} from "vue";
 
 import {useBindingsStore} from "@/store/bindings";
 import {SystemStatistics} from "@/types/SystemStatistics";
-import EventTimeline from "@/components/EventTimeline.vue";
-import {useEventLogStore} from "@/store/eventlog";
+
+import { Doughnut } from 'vue-chartjs'
+import { Chart as ChartJS, RadialLinearScale, ArcElement, Tooltip, Legend } from 'chart.js'
+import {ItemType} from "@/types/ItemType";
 import LastUpdated from "@/components/LastUpdated.vue";
 
+ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend)
+
 const bindingsStore = useBindingsStore();
-const eventLogStore = useEventLogStore();
 
 export default defineComponent({
-    name: "Overview",
+    name: "Inventory",
 
-    components: {LastUpdated, EventTimeline},
+    components: {LastUpdated, Doughnut},
 
     data() {
         return {
@@ -230,8 +195,20 @@ export default defineComponent({
             statisticsUpdated: new Date(0),
             statistics: {} as SystemStatistics,
 
-            logEventsLoaded: false,
-            logEvents: [],
+            chartOptions: {
+                responsive: true,
+                legend: {
+                    display: false,
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: (items) => items[0].dataset.titles[items[0].dataIndex] ?? '',
+                            label: (ctx) => ` ${ctx.dataset.labels[ctx.dataIndex]}: ${ctx.formattedValue}`,
+                        }
+                    },
+                }
+            },
         }
     },
 
@@ -250,30 +227,100 @@ export default defineComponent({
                 return this.statistics.users.with_bindings / this.statistics.users.total * 100;
             }
         },
+        chartData() {
+            if (!this.statisticsLodaded) {
+                return {
+                    labels: ['Loading...'],
+                    datasets: [{data: [1]}]
+                }
+            }
+
+            let datasets = {
+                itemTypes: {
+                    labels: [],
+                    titles: [],
+                    data: [],
+                    backgroundColor: [],
+                    weight: 0.5,
+                },
+                tplTotals: {
+                    labels: [],
+                    titles: [],
+                    data: [],
+                    backgroundColor: [],
+                },
+                tplAvailability: {
+                    labels: [],
+                    titles: [],
+                    data: [],
+                    backgroundColor: [],
+                    weight: 0.3,
+                }
+            }
+
+            for (const [itemTypeKey, templates] of Object.entries(this.statistics.templates)) {
+                const itemType = ItemType.get(itemTypeKey);
+                let itemTypeTotal = 0;
+                let itemTypeBound = 0;
+                let itemTypePrivate = 0;
+
+                for (const tpl of templates) {
+                    // Segment for total item count of template
+                    datasets.tplTotals.titles.push(itemType.label);
+                    datasets.tplTotals.labels.push(tpl.pretty_name);
+                    datasets.tplTotals.data.push(tpl.total);
+                    datasets.tplTotals.backgroundColor.push(itemType.color);
+
+                    // Segments for (un-)available items of template
+                    if (!tpl.private) {
+                        datasets.tplAvailability.titles.push(tpl.pretty_name);
+                        datasets.tplAvailability.labels.push('Available');
+                        datasets.tplAvailability.data.push(tpl.total - tpl.bound);
+                        datasets.tplAvailability.backgroundColor.push('#00AA00');
+
+                        datasets.tplAvailability.titles.push(tpl.pretty_name);
+                        datasets.tplAvailability.labels.push('Handed out');
+                        datasets.tplAvailability.data.push(tpl.bound);
+                        datasets.tplAvailability.backgroundColor.push('#AA0000');
+
+                        itemTypeBound += tpl.bound;
+                    } else {
+                        datasets.tplAvailability.titles.push(tpl.pretty_name);
+                        datasets.tplAvailability.labels.push('Private');
+                        datasets.tplAvailability.data.push(tpl.total);
+                        datasets.tplAvailability.backgroundColor.push('#AAAAAA');
+
+                        itemTypePrivate += tpl.total;
+                    }
+
+                    itemTypeTotal += tpl.total;
+                }
+
+                datasets.itemTypes.labels.push(itemType.label);
+                datasets.itemTypes.data.push(itemTypeTotal);
+                datasets.itemTypes.backgroundColor.push(itemType.color + 'CC');
+            }
+
+            return {
+                labels: datasets.itemTypes.labels,
+                datasets: Object.values(datasets),
+            }
+        }
     },
 
     methods: {
         refreshData() {
+            this.statisticsLodaded = false;
             bindingsStore.fetchStatistics().then((response) => {
                 this.statistics = response;
                 this.statisticsUpdated = new Date();
                 this.statisticsLodaded = true;
-            });
-
-            eventLogStore.fetchEventLogsPage(1, 10, ['timestamp'], '').then((response) => {
-                this.logEvents = response.items;
-                this.logEventsLoaded = true;
             });
         }
     },
 
     mounted() {
         this.refreshData();
-        this.refreshIntervallId = setInterval(this.refreshData, 15000);
     },
-
-    beforeUnmount() {
-        clearInterval(this.refreshIntervallId as any);
-    }
 })
 </script>
