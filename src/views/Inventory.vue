@@ -2,6 +2,16 @@
     <v-container class="main-container-boxed">
         <v-row>
             <v-col>
+                <v-tooltip text="Refresh data">
+                    <template v-slot:activator="{ props }">
+                        <v-btn
+                            v-bind="props"
+                            class="float-end"
+                            icon="mdi-refresh"
+                            @click="refreshData"
+                        ></v-btn>
+                    </template>
+                </v-tooltip>
                 <h1>Inventory</h1>
             </v-col>
         </v-row>

@@ -269,7 +269,7 @@ export default defineComponent({
 
     mounted() {
         this.refreshData();
-        this.refreshIntervallId = setInterval(this.refreshData, 15000);
+        this.refreshIntervallId = setInterval(this.refreshData, 30000);
     },
 
     beforeUnmount() {
