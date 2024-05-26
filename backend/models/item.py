@@ -79,6 +79,7 @@ def item_template_post_save(instance, created, **kwargs):
 
     EventLogEntry.log(get_current_user(), action, {
         'id': instance.id,
+        'pretty_name': instance.get_pretty_name(),
         'name': instance.name,
         'owner': model_to_dict(instance.owner, fields=['name', 'shortname'])
     })
@@ -99,6 +100,7 @@ def item_template_post_delete(instance, **kwargs):
 
     EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM_TEMPLATE, {
         'id': instance.id,
+        'pretty_name': instance.get_pretty_name(),
         'name': instance.name,
         'owner': model_to_dict(instance.owner, fields=['name', 'shortname'])
     })
