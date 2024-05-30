@@ -168,6 +168,36 @@
         </v-row>
         <v-row class="mb-5">
             <v-col>
+                <div class="d-flex justify-center ga-4 mb-n4">
+                    <v-tooltip
+                        v-for="x in chartItemTypesFilter"
+                        :text="`${x.active ? 'Hide' : 'Show'} ${x.type.shortLabel}`"
+                        location="top"
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-switch
+                                v-bind="props"
+                                v-model="x.active"
+                                :label="x.type.label"
+                                :color="x.type.color"
+                            ></v-switch>
+                        </template>
+                    </v-tooltip>
+
+                    <v-tooltip
+                        :text="`${chartShowPrivateItems ? 'Hide' : 'Show'} private items`"
+                        location="top"
+                    >
+                        <template v-slot:activator="{ props }">
+                            <v-switch
+                                v-bind="props"
+                                v-model="chartShowPrivateItems"
+                                label="Private"
+                                color="grey"
+                            ></v-switch>
+                        </template>
+                    </v-tooltip>
+                </div>
                 <Doughnut
                     :data="chartData"
                     :options="chartOptions"
@@ -206,42 +236,14 @@ export default defineComponent({
             statisticsUpdated: new Date(0),
             statistics: {} as SystemStatistics,
 
+            chartItemTypesFilter: {} as {string, object},
+            chartShowPrivateItems: true,
+
             chartOptions: {
                 cutout: '33%',
                 responsive: true,
                 plugins: {
-                    legend: {
-                        labels: {
-                            // Taken from: Chart.js/src/controllers/controller.doughnut.js
-                            generateLabels(chart: any) {
-                                const data = chart.data;
-                                if (data.labels.length && data.datasets.length) {
-                                    const {labels: {pointStyle, color}} = chart.legend.options;
-
-                                    return data.labels.map((label: string, i: number) => {
-                                        const meta = chart.getDatasetMeta(
-                                            (data.datasets.length > 1) ? data.datasets.length-1 : 0
-                                        );
-                                        const style = meta.controller.getStyle(i);
-
-                                        return {
-                                            text: label,
-                                            fillStyle: style.backgroundColor,
-                                            strokeStyle: style.borderColor,
-                                            fontColor: color,
-                                            lineWidth: style.borderWidth,
-                                            pointStyle: pointStyle,
-                                            hidden: !chart.getDataVisibility(i),
-
-                                            // Extra data used for toggling the correct item
-                                            index: i
-                                        };
-                                    });
-                                }
-                                return [];
-                            }
-                        }
-                    },
+                    legend: false,
                     tooltip: {
                         callbacks: {
                             title: (items: any) => items[0].dataset.titles[items[0].dataIndex] ?? '',
@@ -301,12 +303,20 @@ export default defineComponent({
             }
 
             for (const [itemTypeKey, templates] of Object.entries(this.statistics.templates)) {
+                if (this.chartItemTypesFilter[itemTypeKey].active == false) {
+                    continue;
+                }
+
                 const itemType = ItemType.get(itemTypeKey);
                 let itemTypeTotal = 0;
                 let itemTypeBound = 0;
                 let itemTypePrivate = 0;
 
                 for (const tpl of templates) {
+                    if (!this.chartShowPrivateItems && tpl.private === true) {
+                        continue;
+                    }
+
                     // Segment for total item count of template
                     datasets.tplTotals.titles.push(itemType.label);
                     datasets.tplTotals.labels.push(tpl.pretty_name);
@@ -359,6 +369,15 @@ export default defineComponent({
                 this.statisticsLodaded = true;
             });
         }
+    },
+
+    beforeMount() {
+        ItemType.getAll()
+            .filter(t => t != ItemType.Unknown)
+            .forEach(t => this.chartItemTypesFilter[t.key] = {
+                active: true,
+                type: t,
+            });
     },
 
     mounted() {
