@@ -271,6 +271,7 @@ export default defineComponent({
             }
         },
         chartData() {
+            // Handle loading
             if (!this.statisticsLodaded) {
                 return {
                     labels: ['Loading...'],
@@ -278,6 +279,7 @@ export default defineComponent({
                 }
             }
 
+            // Prepare data structure
             let datasets = {
                 tplAvailability: {
                     labels: [] as string[],
@@ -302,21 +304,25 @@ export default defineComponent({
                 },
             }
 
+            // Iterate over all item types, adding all their templates and stats
             for (const [itemTypeKey, templates] of Object.entries(this.statistics.templates)) {
+                // Only process enabled item types
                 if (this.chartItemTypesFilter[itemTypeKey].active == false) {
                     continue;
                 }
 
+                // Prepare data and category counters
                 const itemType = ItemType.get(itemTypeKey);
                 let itemTypeTotal = 0;
                 let itemTypeBound = 0;
                 let itemTypePrivate = 0;
 
-                for (const tpl of templates) {
-                    if (!this.chartShowPrivateItems && tpl.private === true) {
-                        continue;
-                    }
-
+                /**
+                 * Adds the given template to the dataset structure
+                 *
+                 * @param tpl Template to append
+                 */
+                const _addTemplateToDataset = (tpl) => {
                     // Segment for total item count of template
                     datasets.tplTotals.titles.push(itemType.label);
                     datasets.tplTotals.labels.push(tpl.pretty_name);
@@ -348,6 +354,13 @@ export default defineComponent({
                     itemTypeTotal += tpl.total;
                 }
 
+                // Process templates
+                templates.filter(tpl => !tpl.private).forEach(tpl => _addTemplateToDataset(tpl))
+                if (this.chartShowPrivateItems) {
+                    templates.filter(tpl => tpl.private).forEach(tpl => _addTemplateToDataset(tpl))
+                }
+
+                // Add category stats
                 datasets.itemTypes.labels.push(itemType.label);
                 datasets.itemTypes.data.push(itemTypeTotal);
                 datasets.itemTypes.backgroundColor.push(itemType.color + 'CC');
