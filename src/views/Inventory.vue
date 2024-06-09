@@ -170,7 +170,7 @@
             <v-col>
                 <div class="d-flex justify-center ga-4 mb-n4">
                     <v-tooltip
-                        v-for="x in chartItemTypesFilter"
+                        v-for="x in chartItemTypesFilter as any"
                         :text="`${x.active ? 'Hide' : 'Show'} ${x.type.shortLabel}`"
                         location="top"
                     >
@@ -200,7 +200,7 @@
                 </div>
                 <Doughnut
                     :data="chartData"
-                    :options="chartOptions"
+                    :options="chartOptions as any"
                     style="max-height: 85vh"
                 ></Doughnut>
             </v-col>
@@ -236,7 +236,7 @@ export default defineComponent({
             statisticsUpdated: new Date(0),
             statistics: {} as SystemStatistics,
 
-            chartItemTypesFilter: {} as {string, object},
+            chartItemTypesFilter: {} as any,
             chartShowPrivateItems: true,
 
             chartOptions: {
@@ -322,7 +322,7 @@ export default defineComponent({
                  *
                  * @param tpl Template to append
                  */
-                const _addTemplateToDataset = (tpl) => {
+                const _addTemplateToDataset = (tpl: any) => {
                     // Segment for total item count of template
                     datasets.tplTotals.titles.push(itemType.label);
                     datasets.tplTotals.labels.push(tpl.pretty_name);
@@ -355,9 +355,9 @@ export default defineComponent({
                 }
 
                 // Process templates
-                templates.filter(tpl => !tpl.private).forEach(tpl => _addTemplateToDataset(tpl))
+                templates.filter((tpl: any) => !tpl.private).forEach((tpl: void) => _addTemplateToDataset(tpl))
                 if (this.chartShowPrivateItems) {
-                    templates.filter(tpl => tpl.private).forEach(tpl => _addTemplateToDataset(tpl))
+                    templates.filter((tpl: any) => tpl.private).forEach((tpl: void) => _addTemplateToDataset(tpl))
                 }
 
                 // Add category stats
