@@ -29,6 +29,10 @@ DEBUG = env('EFTDMS_DJANGO_DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    env('EFTDMS_DJANGO_BASE_URL'),
+]
+
 
 # Application definition
 

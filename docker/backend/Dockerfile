@@ -29,6 +29,7 @@ COPY backend /app/backend
 COPY manage.py /app
 RUN set -ex && \
     EFTDMS_DJANGO_SECRET_KEY=null \
+    EFTDMS_DJANGO_BASE_URL=localhost \
     /opt/poetry/bin/poetry run python manage.py collectstatic --noinput
 
 
