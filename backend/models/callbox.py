@@ -18,7 +18,6 @@ class Callbox(Item):
         STAFF = 'STAFF', 'Staff'
         SECU = 'SECU', 'Security'
 
-    template = models.ForeignKey(CallboxTemplate, on_delete=models.PROTECT)
     extension = models.CharField(
         max_length=32,
         blank=False,

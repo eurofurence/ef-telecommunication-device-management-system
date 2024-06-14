@@ -53,7 +53,7 @@ class RadioDeviceViewSet(AbstractItemViewSet):
         'template__description',
         'template__owner__name',
         'template__owner__shortname',
-        'template__coding__name',
+        # 'template__coding__name', TODO: This currently does not work together with django-polymorphic
         'notes',
         'serialnumber',
         'created_at',

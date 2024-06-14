@@ -11,7 +11,7 @@ from backend.models.user import User, ItemOwner
 from backend.models import EventLogEntry
 
 
-class ItemTemplate(models.Model):
+class ItemTemplate(PolymorphicModel):
     """
     Model for item templates (e.g., radio device templates)
     """
@@ -145,6 +145,13 @@ class Item(PolymorphicModel):
         post_save.connect(item_post_save, sender=cls)
         post_delete.connect(item_post_delete, sender=cls)
 
+    template = models.ForeignKey(
+        ItemTemplate,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        help_text="Template this item is based on"
+    )
     notes = models.CharField(
         max_length=512,
         blank=True,

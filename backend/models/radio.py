@@ -92,7 +92,6 @@ class RadioDevice(Item):
     Model for radios.
     """
 
-    template = models.ForeignKey(RadioDeviceTemplate, on_delete=models.PROTECT)
     callsign = models.CharField(
         max_length=32,
         blank=True,
@@ -127,8 +126,6 @@ class RadioAccessory(Item):
     Model for radio accessories.
     """
 
-    template = models.ForeignKey(RadioAccessoryTemplate, on_delete=models.PROTECT)
-
     def get_pretty_name(self):
         return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"
 
@@ -143,8 +140,6 @@ class Pager(Item):
     """
     Model for radio pagers.
     """
-
-    template = models.ForeignKey(PagerTemplate, on_delete=models.PROTECT)
 
     def get_pretty_name(self):
         return f"{self.template.name} ({self.template.owner.shortname}) #{self.pk}"
