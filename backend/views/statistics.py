@@ -1,4 +1,3 @@
-from django.db.models import Count
 from rest_framework import views
 from rest_framework.response import Response
 
@@ -59,25 +58,26 @@ class StatisticsView(views.APIView):
 
         # Iterate over each item type
         for template_type, item_type in StatisticsView.TEMPLATE_TYPES.items():
-            templates = template_type.objects.annotate(total=Count(item_type.__name__.lower()))
+            templates = template_type.objects.all()
 
             # Iterate over all existing templates for current item type
             res['templates'][item_type.__name__] = []
             for tpl in templates:
+                total = item_type.objects.filter(template=tpl).count()
                 bound = ItemBinding.objects.filter(**{f'item__{item_type.__name__.lower()}__template': tpl}).count()
 
                 # Template data
                 res['templates'][item_type.__name__].append({
                     'pretty_name': tpl.get_pretty_name(),
                     'private': tpl.private,
-                    'total': tpl.total,
+                    'total': total,
                     'bound': bound
                 })
 
                 # Update global item stats
                 res['items']['templates'] += 1
-                res['items']['total'] += tpl.total
-                res['items']['private'] += tpl.total if tpl.private else 0
+                res['items']['total'] += total
+                res['items']['private'] += total if tpl.private else 0
                 res['items']['bound'] += bound
 
         return res
