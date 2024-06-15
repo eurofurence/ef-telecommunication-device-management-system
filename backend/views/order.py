@@ -28,8 +28,8 @@ class OrderViewSet(
     ordering = ['id']
     search_fields = [
         'user__username',
-        'user__ef_reg_id',
-        'user__ef_security_collar_id',
+        '=user__ef_reg_id',
+        '=user__ef_security_collar_id',
         'title',
     ]
 

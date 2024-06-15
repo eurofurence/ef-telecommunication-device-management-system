@@ -13,7 +13,7 @@ class CallboxTemplateViewSet(AbstractItemTemplateViewSet):
         'name',
         'description',
         'owner__name',
-        'owner__shortname'
+        '=owner__shortname'
     ]
 
 
@@ -27,7 +27,7 @@ class CallboxViewSet(AbstractItemViewSet):
         'template__name',
         'template__description',
         'template__owner__name',
-        'template__owner__shortname',
+        '=template__owner__shortname',
         'notes',
         'serialnumber',
         'created_at',

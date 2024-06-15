@@ -38,7 +38,7 @@ class RadioDeviceTemplateViewSet(AbstractItemTemplateViewSet):
         'name',
         'description',
         'owner__name',
-        'owner__shortname'
+        '=owner__shortname'
     ]
 
 
@@ -52,7 +52,7 @@ class RadioDeviceViewSet(AbstractItemViewSet):
         'template__name',
         'template__description',
         'template__owner__name',
-        'template__owner__shortname',
+        '=template__owner__shortname',
         # 'template__coding__name', TODO: This currently does not work together with django-polymorphic
         'notes',
         'serialnumber',
@@ -72,7 +72,7 @@ class RadioAccessoryTemplateViewSet(AbstractItemTemplateViewSet):
         'name',
         'description',
         'owner__name',
-        'owner__shortname',
+        '=owner__shortname',
         'allow_quickadd'
     ]
 
@@ -87,7 +87,7 @@ class RadioAccessoryViewSet(BulkCreateMixin, AbstractItemViewSet):
         'template__name',
         'template__description',
         'template__owner__name',
-        'template__owner__shortname',
+        '=template__owner__shortname',
         'notes',
         'serialnumber',
         'created_at',
@@ -105,7 +105,7 @@ class PagerTemplateViewSet(AbstractItemTemplateViewSet):
         'name',
         'description',
         'owner__name',
-        'owner__shortname'
+        '=owner__shortname'
     ]
 
 
@@ -119,7 +119,7 @@ class PagerViewSet(AbstractItemViewSet):
         'template__name',
         'template__description',
         'template__owner__name',
-        'template__owner__shortname',
+        '=template__owner__shortname',
         'notes',
         'serialnumber',
         'created_at',

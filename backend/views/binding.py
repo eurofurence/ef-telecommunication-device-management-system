@@ -36,15 +36,15 @@ class ItemBindingViewSet(
         'item__template__name',
         'item__template__description',
         'item__template__owner__name',
-        'item__template__owner__shortname',
+        '=item__template__owner__shortname',
         'item__notes',
         'item__serialnumber',
         'user__username',
-        'user__ef_reg_id',
-        'user__ef_security_collar_id',
+        '=user__ef_reg_id',
+        '=user__ef_security_collar_id',
         'bound_by__username',
-        'bound_by__ef_reg_id',
-        'bound_by__ef_security_collar_id',
+        '=bound_by__ef_reg_id',
+        '=bound_by__ef_security_collar_id',
     ]
 
     def get_queryset(self):

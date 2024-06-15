@@ -75,7 +75,7 @@ class QuickAddItemTemplatesViewSet(viewsets.ReadOnlyModelViewSet):
         'name',
         'description',
         'owner__name',
-        'owner__shortname'
+        '=owner__shortname'
     ]
 
 
