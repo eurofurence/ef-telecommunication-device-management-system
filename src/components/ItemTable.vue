@@ -84,6 +84,11 @@
                 text-color="white"
             >
                 {{ item.handed_out ? 'Handed out' : 'Available' }}
+                <v-tooltip
+                    v-if="item.handed_out"
+                    activator="parent"
+                    :text="item.handed_out"
+                ></v-tooltip>
             </v-chip>
             <v-chip
                 v-if="item.template.private"

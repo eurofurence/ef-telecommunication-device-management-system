@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from backend.models import CallboxTemplate, Callbox
 from backend.serializers import ItemOwnerSerializer
+from backend.serializers.mixins import ItemHandedOutSerializationMixin
 
 
 class CallboxTemplateSerializer(serializers.ModelSerializer):
@@ -14,10 +15,11 @@ class CallboxTemplateSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'owner', 'owner_id', 'private', 'pretty_name']
 
 
-class CallboxSerializer(serializers.ModelSerializer):
+class CallboxSerializer(serializers.ModelSerializer, ItemHandedOutSerializationMixin):
     template = CallboxTemplateSerializer(read_only=True)
     template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=CallboxTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
+    handed_out = serializers.SerializerMethodField()
 
     class Meta:
         model = Callbox

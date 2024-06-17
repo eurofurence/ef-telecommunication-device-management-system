@@ -3,6 +3,7 @@ from rest_framework import serializers
 from backend.models import RadioDeviceTemplate, RadioDevice, RadioAccessoryTemplate, RadioAccessory, Pager, RadioCoding, \
     PagerTemplate
 from backend.serializers import ItemOwnerSerializer
+from backend.serializers.mixins import ItemHandedOutSerializationMixin
 
 
 class RadioCodingSerializer(serializers.ModelSerializer):
@@ -39,10 +40,11 @@ class RadioDeviceTemplateSerializer(serializers.ModelSerializer):
         ]
 
 
-class RadioDeviceSerializer(serializers.ModelSerializer):
+class RadioDeviceSerializer(serializers.ModelSerializer, ItemHandedOutSerializationMixin):
     template = RadioDeviceTemplateSerializer(read_only=True)
     template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=RadioDeviceTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
+    handed_out = serializers.SerializerMethodField()
 
     class Meta:
         model = RadioDevice
@@ -111,10 +113,11 @@ class RadioAccessoryTemplateQuickAddSerializer(serializers.ModelSerializer):
         }
 
 
-class RadioAccessorySerializer(serializers.ModelSerializer):
+class RadioAccessorySerializer(serializers.ModelSerializer, ItemHandedOutSerializationMixin):
     template = RadioAccessoryTemplateSerializer(read_only=True)
     template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=RadioAccessoryTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
+    handed_out = serializers.SerializerMethodField()
 
     class Meta:
         model = RadioAccessory
@@ -149,10 +152,11 @@ class PagerTemplateSerializer(serializers.ModelSerializer):
         ]
 
 
-class PagerSerializer(serializers.ModelSerializer):
+class PagerSerializer(serializers.ModelSerializer, ItemHandedOutSerializationMixin):
     template = PagerTemplateSerializer(read_only=True)
     template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=PagerTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
+    handed_out = serializers.SerializerMethodField()
 
     class Meta:
         model = Pager
