@@ -5,23 +5,27 @@
         icon="mdi-headset"
         :items-table="itemsTable"
         :templates-table="templatesTable"
-        @click:create-item="showItemEditForm = true"
+        @click:create-item="itemFormData = null; showItemEditForm = true"
+        @click:edit-item="itemFormData = $event; showItemEditForm = true"
         @click:delete-items="deleteRadioAccessories"
-        @click:create-item-template="showTemplateEditForm = true"
+        @click:create-item-template="templateFormData = null; showTemplateEditForm = true"
+        @click:edit-item-template="templateFormData = $event; showTemplateEditForm = true"
         @click:delete-item-templates="deleteRadioAccessoryTemplates"
     />
 
     <v-dialog v-model="showItemEditForm" max-width="560">
         <RadioAccessoriesForm
+            :item="itemFormData"
             @abort="showItemEditForm = false"
-            @submit="createRadioAccessories($event)"
+            @submit="itemFormData ? updateRadioAccessory($event) : createRadioAccessories($event)"
         />
     </v-dialog>
 
     <v-dialog v-model="showTemplateEditForm" max-width="560">
         <RadioAccessoryTemplateForm
+            :item="templateFormData"
             @abort="showTemplateEditForm = false"
-            @submit="createRadioAccessoryTemplate($event)"
+            @submit="templateFormData ? updateRadioAccessoryTemplate($event) : createRadioAccessoryTemplate($event)"
         />
     </v-dialog>
 </template>
@@ -77,7 +81,9 @@ export default {
             ],
             fetchFunction: itemsStore.fetchRadioAccessoryTemplatesPage,
         },
+        itemFormData: null as any,
         showItemEditForm: false,
+        templateFormData: null as any,
         showTemplateEditForm: false,
     }),
 
@@ -108,14 +114,14 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.amount) {
+            if (!data.template || !data.template.id || !data.amount) {
                 console.error("Received incomplete data from RadioAccessoriesForm:", data);
                 toast.error("Failed to create radio accessories.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create radio accessories
-            itemsStore.createRadioAccessories(data.template, data.serialnumber, data.notes, data.amount)
+            itemsStore.createRadioAccessories(data.template.id, data.serialnumber, data.notes, data.amount)
                 .then((resp) => {
                     toast.success(`Created ${resp.data.length} radio accessories`);
                     this.showItemEditForm = false;
@@ -124,6 +130,39 @@ export default {
                 .catch((error) => {
                     console.error("Failed to create radio accessories:", error);
                     toast.error("Failed to create radio accessories.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        updateRadioAccessory(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from RadioAccessoriesForm.");
+                toast.error("Failed to update radio accessory.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from RadioAccessoriesForm:", data);
+                toast.error("Failed to update radio accessory.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.template || !data.template.id) {
+                console.error("Received incomplete data from RadioAccessoriesForm:", data);
+                toast.error("Failed to update radio accessory.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update radio accessory
+            itemsStore.updateRadioAccessory(data.id, data.template.id, data.serialnumber, data.notes)
+                .then((resp) => {
+                    toast.success("Updated radio accessory with ID " + resp.data.id);
+                    this.showItemEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
+                })
+                .catch((error) => {
+                    console.error("Failed to update radio accessory:", error);
+                    toast.error("Failed to update radio accessory.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
 
@@ -153,14 +192,14 @@ export default {
                 return;
             }
 
-            if (!data.name || data.name.length < 1 || !data.owner || data.private === undefined || data.allow_quickadd === undefined) {
+            if (!data.name || data.name.length < 1 || !data.owner || !data.owner.id || data.private === undefined || data.allow_quickadd === undefined) {
                 console.error("Received incomplete data from RadioAccessoryTemplateForm:", data);
                 toast.error("Failed to create radio accessory template.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create radio accessory template
-            itemsStore.createRadioAccessoryTemplate(data.name, data.owner, data.private, data.description, data.allow_quickadd)
+            itemsStore.createRadioAccessoryTemplate(data.name, data.owner.id, data.private, data.description, data.allow_quickadd)
                 .then((resp) => {
                     toast.success("Created radio accessory template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;
@@ -169,6 +208,39 @@ export default {
                 .catch((error) => {
                     console.error("Failed to create radio accessory template:", error);
                     toast.error("Failed to create radio accessory template.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        updateRadioAccessoryTemplate(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from RadioAccessoryTemplateForm.");
+                toast.error("Failed to update radio accessory template.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from RadioAccessoryTemplateForm:", data);
+                toast.error("Failed to update radio accessory template.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.name || data.name.length < 1 || !data.owner || !data.owner.id || data.private === undefined || data.allow_quickadd === undefined) {
+                console.error("Received incomplete data from RadioAccessoryTemplateForm:", data);
+                toast.error("Failed to update radio accessory template.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update radio accessory template
+            itemsStore.updateRadioAccessoryTemplate(data.id, data.name, data.owner.id, data.private, data.description, data.allow_quickadd)
+                .then((resp) => {
+                    toast.success("Updated radio accessory template with ID " + resp.data.id);
+                    this.showTemplateEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
+                })
+                .catch((error) => {
+                    console.error("Failed to update radio accessory template:", error);
+                    toast.error("Failed to update radio accessory template.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
     }

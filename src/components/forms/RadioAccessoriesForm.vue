@@ -29,7 +29,8 @@
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
-                    @update:selection="data.template = $event.id"
+                    :initial-selection="data.template"
+                    @update:selection="data.template = $event"
                 ></ServerItemSelector>
                 <v-text-field
                     v-model="data.serialnumber"
@@ -46,6 +47,7 @@
                     prepend-inner-icon="mdi-pencil"
                 ></v-text-field>
                 <v-slider
+                    v-if="!isEdit"
                     v-model="data.amount"
                     :step="1"
                     :min="1"
@@ -109,6 +111,8 @@ export default defineComponent({
 
     components: {ServerItemSelector},
 
+    emits: ['submit', 'abort'],
+
     props: {
         item: {type: Object, required: false, default: null},
     },
@@ -118,7 +122,7 @@ export default defineComponent({
             isValid: false,
             data: {
                 id: null,
-                template: null,
+                template: null as any,
                 serialnumber: '',
                 notes: '',
                 amount: 1,
@@ -126,7 +130,7 @@ export default defineComponent({
             rules: {
                 template: [
                     (v: any) => !!v || 'Template is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'Template is invalid',
+                    (v: any) => (/^[0-9]+/.test(v.id)) || 'Template is invalid',
                 ],
                 serialnumber: [
                     (v: string) => (v.length <= 128) || 'Serialnumber must be less than 128 characters',
@@ -140,6 +144,31 @@ export default defineComponent({
                 ],
             },
         }
+    },
+
+    watch: {
+        item: {
+            immediate: true,
+            handler(item) {
+                if (item === null) {
+                    this.data = {
+                        id: null,
+                        template: null,
+                        serialnumber: '',
+                        notes: '',
+                        amount: 1,
+                    };
+                } else {
+                    this.data = {
+                        id: item.id,
+                        template: item.template,
+                        serialnumber: item.serialnumber ?? '',
+                        notes: item.notes ?? '',
+                        amount: item.amount,
+                    };
+                }
+            },
+        },
     },
 
     computed: {

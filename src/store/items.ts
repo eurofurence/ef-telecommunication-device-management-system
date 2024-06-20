@@ -198,6 +198,22 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Updates a radio accessory via the API.
+         *
+         * @param radioAccessoryId ID of the radio accessory to update.
+         * @param templateId ID of the radio accessory template to update the radio accessory to.
+         * @param serialnumber Serial number of the radio accessory.
+         * @param notes Notes for the radio accessory.
+         */
+        async updateRadioAccessory(radioAccessoryId: number, templateId: number, serialnumber: string = '', notes: string = '') {
+            return APIUtils.patch('/radio_accessories/' + radioAccessoryId + '/', {
+                template_id: templateId,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
          * Deletes a single radio accessory via the API.
          *
          * @param radioAccessoryId ID of the radio accessory to delete.
@@ -241,6 +257,26 @@ export const useItemsStore = defineStore("item", {
          */
         async createRadioAccessoryTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '', allow_quickadd: boolean = false) {
             return APIUtils.post('/radio_accessory_templates/', {
+                name: name,
+                owner_id: ownerId,
+                private: priv,
+                description: description,
+                allow_quickadd: allow_quickadd,
+            });
+        },
+
+        /**
+         * Updates a radio accessory template via the API.
+         *
+         * @param templateId ID of the radio accessory template to update.
+         * @param name Name of the radio accessory template.
+         * @param ownerId ID of the owner of the radio accessory template.
+         * @param priv Whether the radio accessory template is private.
+         * @param description Description of the radio accessory template.
+         * @param allow_quickadd Whether to allow quick adding of radio accessories.
+         */
+        async updateRadioAccessoryTemplate(templateId: number, name: string, ownerId: number, priv: boolean = false, description: string = '', allow_quickadd: boolean = false) {
+            return APIUtils.patch('/radio_accessory_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
                 private: priv,
