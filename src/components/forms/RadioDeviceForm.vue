@@ -29,7 +29,8 @@
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
-                    @update:selection="data.template = $event.id"
+                    :initial-selection="data.template"
+                    @update:selection="data.template = $event"
                 ></ServerItemSelector>
                 <v-text-field
                     v-model="data.callsign"
@@ -88,6 +89,8 @@ export default defineComponent({
 
     components: {ServerItemSelector},
 
+    emits: ['submit', 'abort'],
+
     props: {
         item: {type: Object, required: false, default: null},
     },
@@ -97,7 +100,7 @@ export default defineComponent({
             isValid: false,
             data: {
                 id: null,
-                template: null,
+                template: null as any,
                 callsign: '',
                 serialnumber: '',
                 notes: '',
@@ -105,7 +108,7 @@ export default defineComponent({
             rules: {
                 template: [
                     (v: any) => !!v || 'Template is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'Template is invalid',
+                    (v: any) => (/^[0-9]+/.test(v.id)) || 'Template is invalid',
                 ],
                 callsign: [
                     (v: string) => (/^[0-9]*$/.test(v)) || 'Callsign must be numeric',
@@ -119,6 +122,27 @@ export default defineComponent({
                 ],
             },
         }
+    },
+
+    watch: {
+        item: {
+            immediate: true,
+            handler(value) {
+                if (value !== null) {
+                    this.data.id = value.id;
+                    this.data.template = value.template;
+                    this.data.callsign = value.callsign;
+                    this.data.serialnumber = value.serialnumber;
+                    this.data.notes = value.notes;
+                } else {
+                    this.data.id = null;
+                    this.data.template = null;
+                    this.data.callsign = '';
+                    this.data.serialnumber = '';
+                    this.data.notes = '';
+                }
+            }
+        },
     },
 
     computed: {

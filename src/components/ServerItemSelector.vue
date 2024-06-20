@@ -54,6 +54,7 @@ export default defineComponent({
         itemIdsToExclude: {type: Array, required: false, default: []},
         noFilter: {type: Boolean, required: false, default: false},
         prefetch: {type: Boolean, required: false, default: false},
+        initialSelection: {type: Object, required: false, default: null},
     },
 
     emits: [
@@ -65,11 +66,14 @@ export default defineComponent({
         searchDebounceTimeout: null as any,
         searchHasMore: false,
         loading: false,
-        selection: null,
+        selection: null as any,
         items: [],
     }),
 
     created() {
+        if (this.initialSelection) {
+            this.selection = this.initialSelection;
+        }
         if (this.prefetch) {
             this.searchItems('');
         }

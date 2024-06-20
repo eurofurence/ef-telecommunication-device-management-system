@@ -45,6 +45,16 @@ export class APIUtils {
     }
 
     /**
+     * Sends a patch request to the API using HTTP PATCH.
+     *
+     * @param apipath API path to send request to (e.g. '/users/').
+     * @param data Data to patch.
+     */
+    public static async patch(apipath: string, data: any) {
+        return axios.patch(`${import.meta.env.VITE_EFTDMS_API_BASE_URL}${apipath}`, data);
+    }
+
+    /**
      * Issues a delete call to the given API path, followed by optional the args
      * @param apipath API path to query (e.g. '/users/').
      * @param args Arguments to append to the API path (e.g. '1' for '/users/1').

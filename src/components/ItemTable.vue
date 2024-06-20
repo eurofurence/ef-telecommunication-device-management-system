@@ -186,7 +186,16 @@
                     </v-list>
 
                     <v-btn
-                        class="mx-4 mb-4"
+                        class="ml-4 mb-4"
+                        color="warning"
+                        @click="$emit('click:editItem', item)"
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        Edit
+                    </v-btn>
+
+                    <v-btn
+                        class="ml-4 mb-4"
                         color="error"
                         :disabled="preventDelete"
                         @click="$emit('click:deleteItems', [item.id])"
@@ -222,6 +231,7 @@ export default defineComponent({
 
     emits: [
         'click:createItem',
+        'click:editItem',
         'click:deleteItems',
     ],
 

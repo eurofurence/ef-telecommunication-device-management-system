@@ -59,6 +59,24 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Updates a radio device via the API.
+         *
+         * @param radioId ID of the radio device to update.
+         * @param templateId ID of the radio template to update the radio device to.
+         * @param callsign Callsign of the radio device.
+         * @param serialnumber Serial number of the radio device.
+         * @param notes Notes for the radio device.
+         */
+        async updateRadio(radioId: number, templateId: number, callsign: string = '', serialnumber: string = '', notes: string = '') {
+            return APIUtils.patch('/radios/' + radioId + '/', {
+                template_id: templateId,
+                callsign: callsign,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
          * Deletes a single radio device via the API.
          *
          * @param radioId ID of the radio device to delete.
@@ -102,6 +120,26 @@ export const useItemsStore = defineStore("item", {
          */
         async createRadioTemplate(name: string, ownerId: number, codingId: number, priv: boolean = false, description: string = '') {
             return APIUtils.post('/radio_templates/', {
+                name: name,
+                owner_id: ownerId,
+                private: priv,
+                coding_id: codingId,
+                description: description,
+            });
+        },
+
+        /**
+         * Updates a radio device template via the API.
+         *
+         * @param templateId ID of the radio device template to update.
+         * @param name Name of the radio device template.
+         * @param ownerId ID of the owner of the radio device template.
+         * @param codingId ID of the coding of the radio device template.
+         * @param priv Whether the radio device template is private.
+         * @param description Description of the radio device template.
+         */
+        async updateRadioTemplate(templateId: number, name: string, ownerId: number, codingId: number, priv: boolean = false, description: string = '') {
+            return APIUtils.patch('/radio_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
                 private: priv,

@@ -5,23 +5,27 @@
         icon="mdi-cellphone-basic"
         :items-table="itemsTable"
         :templates-table="templatesTable"
-        @click:create-item="showItemEditForm = true"
+        @click:create-item="itemFormData = null; showItemEditForm = true"
+        @click:edit-item="itemFormData = $event; showItemEditForm = true"
         @click:delete-items="deleteRadios"
-        @click:create-item-template="showTemplateEditForm = true"
+        @click:create-item-template="templateFormData = null; showTemplateEditForm = true"
+        @click:edit-item-template="templateFormData = $event; showTemplateEditForm = true"
         @click:delete-item-templates="deleteRadioTemplates"
     />
 
     <v-dialog v-model="showItemEditForm" max-width="560">
         <RadioDeviceForm
+            :item="itemFormData"
             @abort="showItemEditForm = false"
-            @submit="createRadio($event)"
+            @submit="itemFormData ? updateRadio($event) : createRadio($event)"
         />
     </v-dialog>
 
     <v-dialog v-model="showTemplateEditForm" max-width="560">
         <RadioDeviceTemplateForm
+            :item="templateFormData"
             @abort="showTemplateEditForm = false"
-            @submit="createRadioTemplate($event)"
+            @submit="templateFormData ? updateRadioTemplate($event) : createRadioTemplate($event)"
         />
     </v-dialog>
 </template>
@@ -76,7 +80,9 @@ export default {
             ],
             fetchFunction: itemsStore.fetchRadioTemplatesPage,
         },
+        itemFormData: null as any,
         showItemEditForm: false,
+        templateFormData: null as any,
         showTemplateEditForm: false,
     }),
 
@@ -107,14 +113,14 @@ export default {
                 return;
             }
 
-            if (!data.template) {
+            if (!data.template || !data.template.id) {
                 console.error("Received incomplete data from RadioDeviceForm:", data);
                 toast.error("Failed to create radio device.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create radio
-            itemsStore.createRadio(data.template, data.callsign, data.serialnumber, data.notes)
+            itemsStore.createRadio(data.template.id, data.callsign, data.serialnumber, data.notes)
                 .then((resp) => {
                     toast.success("Created radio device with ID " + resp.data.id);
                     this.showItemEditForm = false;
@@ -123,6 +129,38 @@ export default {
                 .catch((error) => {
                     console.error("Failed to create radio device:", error);
                     toast.error("Failed to create radio device.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        updateRadio(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from RadioDeviceForm.");
+                toast.error("Failed to edit radio device.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Missing ID in received data from RadioDeviceForm:", data);
+                toast.error("Failed to edit radio device.\r\nID is missing.");
+            }
+
+            if (!data.template || !data.template.id) {
+                console.error("Received incomplete data from RadioDeviceForm:", data);
+                toast.error("Failed to edit radio device.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Edit radio
+            itemsStore.updateRadio(data.id, data.template.id, data.callsign, data.serialnumber, data.notes)
+                .then((resp) => {
+                    toast.success("Edited radio device with ID " + resp.data.id);
+                    this.showItemEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
+                })
+                .catch((error) => {
+                    console.error("Failed to edit radio device:", error);
+                    toast.error("Failed to edit radio device.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
 
@@ -152,14 +190,14 @@ export default {
                 return;
             }
 
-            if (!data.name || data.name.length < 1 || !data.owner || !data.coding || data.private === undefined) {
+            if (!data.name || data.name.length < 1 || !data.owner || !data.owner.id || !data.coding || !data.coding.id || data.private === undefined) {
                 console.error("Received incomplete data from RadioDeviceTemplateForm:", data);
                 toast.error("Failed to create radio device template.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create radio template
-            itemsStore.createRadioTemplate(data.name, data.owner, data.coding, data.private, data.description)
+            itemsStore.createRadioTemplate(data.name, data.owner.id, data.coding.id, data.private, data.description)
                 .then((resp) => {
                     toast.success("Created radio device template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;
@@ -168,6 +206,38 @@ export default {
                 .catch((error) => {
                     console.error("Failed to create radio device template:", error);
                     toast.error("Failed to create radio device template.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        updateRadioTemplate(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from RadioDeviceTemplateForm.");
+                toast.error("Failed to edit radio device template.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Missing ID in received data from RadioDeviceTemplateForm:", data);
+                toast.error("Failed to edit radio device template.\r\nID is missing.");
+            }
+
+            if (!data.name || data.name.length < 1 || !data.owner || !data.owner.id || !data.coding || !data.coding.id || data.private === undefined) {
+                console.error("Received incomplete data from RadioDeviceTemplateForm:", data);
+                toast.error("Failed to edit radio device template.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Edit radio template
+            itemsStore.updateRadioTemplate(data.id, data.name, data.owner.id, data.coding.id, data.private, data.description)
+                .then((resp) => {
+                    toast.success("Edited radio device template with ID " + resp.data.id);
+                    this.showTemplateEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
+                })
+                .catch((error) => {
+                    console.error("Failed to edit radio device template:", error);
+                    toast.error("Failed to edit radio device template.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
     },

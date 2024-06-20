@@ -34,6 +34,7 @@
                         :prevent-edit="itemsTable.preventEdit ?? false"
                         :prevent-delete="itemsTable.preventDelete ?? false"
                         @click:create-item="$emit('click:createItem', $event)"
+                        @click:edit-item="$emit('click:editItem', $event)"
                         @click:delete-items="$emit('click:deleteItems', $event)"
                     ></ItemTable>
                 </v-window-item>
@@ -50,6 +51,7 @@
                         :prevent-edit="templatesTable.preventEdit ?? false"
                         :prevent-delete="templatesTable.preventDelete ?? false"
                         @click:create-item="$emit('click:createItemTemplate', $event)"
+                        @click:edit-item="$emit('click:editItemTemplate', $event)"
                         @click:delete-items="$emit('click:deleteItemTemplates', $event)"
                     ></ItemTable>
                 </v-window-item>
@@ -82,6 +84,8 @@ export default defineComponent({
     emits: [
         'click:createItem',
         'click:createItemTemplate',
+        'click:editItem',
+        'click:editItemTemplate',
         'click:deleteItems',
         'click:deleteItemTemplates',
     ],
