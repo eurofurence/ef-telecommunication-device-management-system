@@ -97,6 +97,20 @@ export const useUsersStore = defineStore("user", {
         },
 
         /**
+         * Updates an existing item owner via the API.
+         *
+         * @param itemOwnerId ID of the item owner to update.
+         * @param name Full name of the item owner
+         * @param shortname Short name of the item owner
+         */
+        async updateItemOwner(itemOwnerId: number, name: string, shortname: string) {
+            return APIUtils.patch('/item_owners/' + itemOwnerId + '/', {
+                name: name,
+                shortname: shortname,
+            });
+        },
+
+        /**
          * Deletes a single item owner via the API.
          *
          * @param itemOwnerId ID of the item owner to delete.

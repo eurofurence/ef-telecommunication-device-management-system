@@ -22,14 +22,16 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         title="Item Owners"
         icon="mdi-account-arrow-right"
         :items-table="itemsTable"
-        @click:create-item="showEditForm = true"
+        @click:create-item="itemFormData = null; showEditForm = true"
+        @click:edit-item="itemFormData = $event; showEditForm = true"
         @click:delete-items="deleteItemOwners"
     />
 
     <v-dialog v-model="showEditForm" max-width="560">
         <ItemOwnerForm
+            :item="itemFormData"
             @abort="showEditForm = false"
-            @submit="createItemOwner($event)"
+            @submit="itemFormData ? updateItemOwner($event) : createItemOwner($event)"
         />
     </v-dialog>
 </template>
@@ -61,6 +63,7 @@ export default {
             ],
             fetchFunction: usersStore.fetchItemOwnersPage,
         },
+        itemFormData: null as any,
         showEditForm: false,
     }),
 
@@ -100,7 +103,7 @@ export default {
                 // Create new item owner
                 usersStore.createItemOwner(data.name, data.shortname)
                     .then((resp) => {
-                        toast.success("Created item owner with ID " + resp.data.id);
+                        toast.success("Created new item owner:\r\n" + resp.data.pretty_name);
                         this.showEditForm = false;
                         (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                     })
@@ -108,7 +111,40 @@ export default {
                         console.error("Failed to create item owner:", error);
                         toast.error("Failed to create item owner.\r\n" + APIUtils.createErrorToString(error));
                     });
-        }
+        },
+
+        updateItemOwner(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from ItemOwnerForm");
+                toast.error("Failed to update item owner.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from ItemOwnerForm:", data);
+                toast.error("Failed to update item owner.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.name || !data.shortname) {
+                console.error("Received incomplete data from ItemOwnerForm:", data);
+                toast.error("Failed to update item owner.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update item owner
+            usersStore.updateItemOwner(data.id, data.name, data.shortname)
+                .then((resp) => {
+                    toast.success("Updated item owner:\r\n" + resp.data.pretty_name);
+                    this.showEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
+                })
+                .catch((error) => {
+                    console.error("Failed to update item owner:", error);
+                    toast.error("Failed to update item owner.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
     }
 }
 </script>

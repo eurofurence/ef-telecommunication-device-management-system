@@ -78,6 +78,8 @@ import {defineComponent} from 'vue'
 export default defineComponent({
     name: "ItemOwnerForm",
 
+    emits: ['submit', 'abort'],
+
     props: {
         item: {type: Object, required: false, default: null},
     },
@@ -101,6 +103,27 @@ export default defineComponent({
                     (v: string) => (v && v.length <= 16) || 'Shortname must be less than 32 characters',
                     (v: string) => (v && v.length >= 2) || 'Shortname must be at least 2 characters',
                 ],
+            },
+        }
+    },
+
+    watch: {
+        item: {
+            immediate: true,
+            handler(item) {
+                if (item !== null) {
+                    this.data = {
+                        id: item.id,
+                        name: item.name,
+                        shortname: item.shortname,
+                    }
+                } else {
+                    this.data = {
+                        id: null,
+                        name: '',
+                        shortname: '',
+                    }
+                }
             },
         }
     },
