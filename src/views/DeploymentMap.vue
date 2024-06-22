@@ -77,6 +77,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             </v-tooltip>
         </l-control>
 
+        <!-- Zoom control -->
+        <!-- ATTENTION: Keep the l-control-zoom at precisely this location because if l-control order is changed, a
+        black magic like race condition will occur that right away catapults the Vue main loop into a never-ending loop
+        of death. This bug only occurs in production builds. Develop builds work just fine. And please, do not even
+        think about asking me why this is happening. -->
+        <l-control-zoom position="bottomright"></l-control-zoom>
+
         <!-- Refresh button -->
         <l-control
             position="topright"
@@ -106,9 +113,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 </template>
             </v-tooltip>
         </l-control>
-
-        <!-- Zoom control -->
-        <l-control-zoom position="topright"></l-control-zoom>
 
         <!-- ItemType selector -->
         <l-control
