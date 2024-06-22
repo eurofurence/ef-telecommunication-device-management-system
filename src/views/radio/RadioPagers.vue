@@ -5,23 +5,27 @@
         icon="mdi-bell-ring-outline"
         :items-table="itemsTable"
         :templates-table="templatesTable"
-        @click:create-item="showItemEditForm = true"
+        @click:create-item="itemFormData = null; showItemEditForm = true"
+        @click:edit-item="itemFormData = $event; showItemEditForm = true"
         @click:delete-items="deletePagers"
-        @click:create-item-template="showTemplateEditForm = true"
+        @click:create-item-template="templateFormData = null; showTemplateEditForm = true"
+        @click:edit-item-template="templateFormData = $event; showTemplateEditForm = true"
         @click:delete-item-templates="deletePagerTemplates"
     />
 
     <v-dialog v-model="showItemEditForm" max-width="560">
         <PagerForm
+            :item="itemFormData"
             @abort="showItemEditForm = false"
-            @submit="createPager($event)"
+            @submit="itemFormData ? updatePager($event) : createPager($event)"
         />
     </v-dialog>
 
     <v-dialog v-model="showTemplateEditForm" max-width="560">
         <PagerTemplateForm
+            :item="templateFormData"
             @abort="showTemplateEditForm = false"
-            @submit="createPagerTemplate($event)"
+            @submit="templateFormData ? updatePagerTemplate($event) : createPagerTemplate($event)"
         />
     </v-dialog>
 </template>
@@ -79,7 +83,9 @@ export default {
             serverItems: [],
             totalItems: 0,
         },
+        itemFormData: null as any,
         showItemEditForm: false,
+        templateFormData: null as any,
         showTemplateEditForm: false,
     }),
 
@@ -110,14 +116,14 @@ export default {
                 return;
             }
 
-            if (!data.template) {
+            if (!data.template || !data.template.id) {
                 console.error("Received incomplete data from PagerForm:", data);
                 toast.error("Failed to create pager.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create pager
-            itemsStore.createPager(data.template, data.serialnumber, data.notes)
+            itemsStore.createPager(data.template.id, data.serialnumber, data.notes)
                 .then((resp) => {
                     toast.success("Created pager with ID " + resp.data.id);
                     this.showItemEditForm = false;
@@ -126,6 +132,39 @@ export default {
                 .catch((error) => {
                     console.error("Failed to create pager:", error);
                     toast.error("Failed to create pager.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        updatePager(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from PagerForm.");
+                toast.error("Failed to update pager.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from PagerForm:", data);
+                toast.error("Failed to update pager.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.template || !data.template.id) {
+                console.error("Received incomplete data from PagerForm:", data);
+                toast.error("Failed to update pager.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update pager
+            itemsStore.updatePager(data.id, data.template.id, data.serialnumber, data.notes)
+                .then((resp) => {
+                    toast.success("Updated pager with ID " + resp.data.id);
+                    this.showItemEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
+                })
+                .catch((error) => {
+                    console.error("Failed to update pager:", error);
+                    toast.error("Failed to update pager.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
 
@@ -155,14 +194,14 @@ export default {
                 return;
             }
 
-            if (!data.name || data.name.length < 1 || !data.owner || data.private === undefined) {
+            if (!data.name || data.name.length < 1 || !data.owner || !data.owner.id || data.private === undefined) {
                 console.error("Received incomplete data from PagerTemplateForm:", data);
                 toast.error("Failed to create pager template.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create pager template
-            itemsStore.createPagerTemplate(data.name, data.owner, data.private, data.description)
+            itemsStore.createPagerTemplate(data.name, data.owner.id, data.private, data.description)
                 .then((resp) => {
                     toast.success("Created pager template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;
@@ -171,6 +210,39 @@ export default {
                 .catch((error) => {
                     console.error("Failed to create pager template:", error);
                     toast.error("Failed to create pager template.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        updatePagerTemplate(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from PagerTemplateForm.");
+                toast.error("Failed to update pager template.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from PagerTemplateForm:", data);
+                toast.error("Failed to update pager template.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.name || data.name.length < 1 || !data.owner || !data.owner.id || data.private === undefined) {
+                console.error("Received incomplete data from PagerTemplateForm:", data);
+                toast.error("Failed to update pager template.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update pager template
+            itemsStore.updatePagerTemplate(data.id, data.name, data.owner.id, data.private, data.description)
+                .then((resp) => {
+                    toast.success("Updated pager template with ID " + resp.data.id);
+                    this.showTemplateEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
+                })
+                .catch((error) => {
+                    console.error("Failed to update pager template:", error);
+                    toast.error("Failed to update pager template.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
     },

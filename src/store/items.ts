@@ -335,6 +335,22 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Updates a pager via the API.
+         *
+         * @param pagerId ID of the pager to update.
+         * @param templateId ID of the pager template to update the pager to.
+         * @param serialnumber Serial number of the pager.
+         * @param notes Notes for the pager.
+         */
+        async updatePager(pagerId: number, templateId: number, serialnumber: string = '', notes: string = '') {
+            return APIUtils.patch('/pagers/' + pagerId + '/', {
+                template_id: templateId,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
          * Deletes a single pager via the API.
          *
          * @param pagerId ID of the pager to delete.
@@ -377,6 +393,24 @@ export const useItemsStore = defineStore("item", {
          */
         async createPagerTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
             return APIUtils.post('/pager_templates/', {
+                name: name,
+                owner_id: ownerId,
+                private: priv,
+                description: description,
+            });
+        },
+
+        /**
+         * Updates a pager template via the API.
+         *
+         * @param templateId ID of the pager template to update.
+         * @param name Name of the pager template.
+         * @param ownerId ID of the owner of the pager template.
+         * @param priv Whether the pager template is private.
+         * @param description Description of the pager template.
+         */
+        async updatePagerTemplate(templateId: number, name: string, ownerId: number, priv: boolean = false, description: string = '') {
+            return APIUtils.patch('/pager_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
                 private: priv,

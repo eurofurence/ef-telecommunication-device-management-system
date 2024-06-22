@@ -36,7 +36,8 @@
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
-                    @update:selection="data.owner = $event.id"
+                    :initial-selection="data.owner"
+                    @update:selection="data.owner = $event"
                 ></ServerItemSelector>
                 <v-switch
                     v-model="data.private"
@@ -88,6 +89,8 @@ export default defineComponent({
 
     components: {ServerItemSelector},
 
+    emits: ['abort', 'submit'],
+
     props: {
         item: {type: Object, required: false, default: null},
     },
@@ -98,7 +101,7 @@ export default defineComponent({
             data: {
                 id: null,
                 name: '',
-                owner: null,
+                owner: null as any,
                 private: false,
                 description: '',
             },
@@ -109,13 +112,38 @@ export default defineComponent({
                 ],
                 owner: [
                     (v: any) => !!v || 'Owner is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'Owner is invalid',
+                    (v: any) => (/^[0-9]+/.test(v.id)) || 'Owner is invalid',
                 ],
                 description: [
                     (v: string) => (v.length <= 256) || 'Description must be less than 256 characters',
                 ],
             },
         }
+    },
+
+    watch: {
+        item: {
+            immediate: true,
+            handler(item) {
+                if (item === null) {
+                    this.data = {
+                        id: null,
+                        name: '',
+                        owner: null,
+                        private: false,
+                        description: '',
+                    };
+                } else {
+                    this.data = {
+                        id: item.id,
+                        name: item.name,
+                        owner: item.owner,
+                        private: item.private,
+                        description: item.description ?? '',
+                    };
+                }
+            },
+        },
     },
 
     computed: {
