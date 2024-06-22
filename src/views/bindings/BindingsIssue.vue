@@ -462,6 +462,8 @@ export default defineComponent({
             this.itemsToBind = emptyItemsBasket();
             this.itemTemplatesToBind = emptyItemTemplatesBasket();
             this.orders = [];
+            this.basketIsEmpty = true;
+            this.itemIdsToExclude = [];
             this.showAllQuickAddTemplates = false;
             this.bindingInProgress = false;
             this.bindingError = "";
