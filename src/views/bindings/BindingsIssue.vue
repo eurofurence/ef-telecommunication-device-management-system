@@ -403,7 +403,7 @@ export default defineComponent({
                 if (this.$route.query.itemid) {
                     this.addItemToBasketById(
                         parseInt(String(this.$route.query.itemid)),
-                        (String(this.$route.query.skipbasket) === "true") ?? false
+                        String(this.$route.query.skipbasket) === "true"
                     );
 
                     this.$router.replace({query: {
