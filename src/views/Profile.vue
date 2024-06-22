@@ -35,6 +35,19 @@
                         <v-skeleton-loader v-if="loading.user" type="text" max-width="256" class="no-margin-loader"></v-skeleton-loader>
                         <v-list-item-subtitle v-if="!loading.user">{{ user.ef_security_collar_id ?? 'N/A' }}</v-list-item-subtitle>
                     </v-list-item>
+                    <v-list-item
+                        prepend-icon="mdi-form-textbox-password"
+                    >
+                            <v-list-item-title>
+                                <v-btn
+                                    color="primary"
+                                    text="Change Password"
+                                    :href="passwordChangeUrl"
+                                    target="_blank"
+                                    size="small"
+                                ></v-btn>
+                            </v-list-item-title>
+                    </v-list-item>
                 </v-list>
             </v-col>
         </v-row>
@@ -51,6 +64,10 @@
         </v-row>
     </v-container>
 </template>
+
+<script lang="ts" setup>
+const passwordChangeUrl = import.meta.env.VITE_EFTDMS_PASSWORD_CHANGE_URL;
+</script>
 
 <script lang="ts">
 import {defineComponent} from "vue";
