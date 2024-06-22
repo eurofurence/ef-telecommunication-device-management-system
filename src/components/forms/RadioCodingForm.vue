@@ -75,6 +75,8 @@ import {defineComponent} from 'vue'
 export default defineComponent({
     name: "RadioCodingForm",
 
+    emits: ['abort', 'submit'],
+
     props: {
         item: {type: Object, required: false, default: null},
     },
@@ -101,6 +103,29 @@ export default defineComponent({
                 description: [
                     (v: string) => (v.length <= 256) || 'Description must be less than 256 characters',
                 ],
+            },
+        }
+    },
+
+    watch: {
+        item: {
+            immediate: true,
+            handler(item) {
+                if (item === null) {
+                    this.data = {
+                        id: null,
+                        name: '',
+                        color: '',
+                        description: '',
+                    };
+                } else {
+                    this.data = {
+                        id: item.id,
+                        name: item.name,
+                        color: item.color,
+                        description: item.description ?? '',
+                    };
+                }
             },
         }
     },

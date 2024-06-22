@@ -4,14 +4,16 @@
         title="Radio Codings"
         icon="mdi-sim"
         :items-table="itemsTable"
-        @click:create-item="showEditForm = true"
+        @click:create-item="itemFormData = null; showEditForm = true"
+        @click:edit-item="itemFormData = $event; showEditForm = true"
         @click:delete-items="deleteRadioCodings"
     />
 
     <v-dialog v-model="showEditForm" max-width="560">
         <RadioCodingForm
+            :item="itemFormData"
             @abort="showEditForm = false"
-            @submit="createRadioCoding($event)"
+            @submit="itemFormData ? updateRadioCoding($event) : createRadioCoding($event)"
         />
     </v-dialog>
 </template>
@@ -44,6 +46,7 @@ export default {
             ],
             fetchFunction: itemsStore.fetchRadioCodingsPage,
         },
+        itemFormData: null as any,
         showEditForm: false,
     }),
 
@@ -91,7 +94,40 @@ export default {
                     console.error("Failed to create radio coding:", error);
                     toast.error("Failed to create radio coding.\r\n" + APIUtils.createErrorToString(error));
                 });
-        }
+        },
+
+        updateRadioCoding(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from RadioCodingForm.");
+                toast.error("Failed to update radio coding.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from RadioCodingForm:", data);
+                toast.error("Failed to update radio coding.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.name || !data.color) {
+                console.error("Received incomplete data from RadioCodingForm:", data);
+                toast.error("Failed to update radio coding.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update radio coding
+            itemsStore.updateRadioCoding(data.id, data.name, data.color, data.description)
+                .then((resp) => {
+                    toast.success("Updated radio coding with ID " + resp.data.id);
+                    this.showEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
+                })
+                .catch((error) => {
+                    console.error("Failed to update radio coding:", error);
+                    toast.error("Failed to update radio coding.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
     }
 }
 </script>

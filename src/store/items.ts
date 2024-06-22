@@ -729,6 +729,22 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Updates a radio coding via the API.
+         *
+         * @param radioCodingId ID of the radio coding to update
+         * @param name Name of the radio coding
+         * @param color Color of the radio coding in hex format
+         * @param description Description of the radio coding
+         */
+        async updateRadioCoding(radioCodingId: number, name: string, color: string, description: string = '') {
+            return APIUtils.patch('/radio_codings/' + radioCodingId + '/', {
+                name: name,
+                color: color,
+                description: description,
+            });
+        },
+
+        /**
          * Deletes a single radio coding via the API.
          *
          * @param radioCodingId ID of the radio coding to delete.
