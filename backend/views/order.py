@@ -25,13 +25,16 @@ from rest_framework.response import Response
 from backend.models import Order
 from backend.permissions import FullDjangoModelPermissions
 from backend.serializers.order import OrderSerializer
+from backend.views import BulkDeleteMixin
 
 
 class OrderViewSet(
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.ListModelMixin,
+    mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
+    BulkDeleteMixin,
     viewsets.GenericViewSet
 ):
     """

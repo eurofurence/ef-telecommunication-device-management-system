@@ -75,6 +75,9 @@ class Order(models.Model):
         help_text="Exact Item template that was ordered"
     )
 
+    def get_pretty_name(self):
+        return f"{self.title} for {self.user.get_pretty_name()} #{self.pk}"
+
     def __str__(self):
         return f"{self.title} for {self.user}"
 

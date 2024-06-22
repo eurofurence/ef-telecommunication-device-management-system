@@ -30,6 +30,7 @@ class OrderSerializer(serializers.ModelSerializer):
     # TODO: Implement write support for item
     item_template = PolymorphicItemTemplateSerializer(read_only=True)
     # TODO: Implement write support for item_template
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
 
     class Meta:
         model = Order
@@ -41,4 +42,5 @@ class OrderSerializer(serializers.ModelSerializer):
             'title',
             'item',
             'item_template',
+            'pretty_name'
         ]

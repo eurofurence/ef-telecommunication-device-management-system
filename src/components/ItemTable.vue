@@ -206,6 +206,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     <v-btn
                         class="ml-4 mb-4"
                         color="warning"
+                        :disabled="preventEdit"
                         @click="$emit('click:editItem', item)"
                     >
                         <v-icon left>mdi-pencil</v-icon>

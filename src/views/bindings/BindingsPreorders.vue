@@ -22,14 +22,16 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         title="Pre-Orders"
         icon="mdi-basket-fill"
         :items-table="itemsTable"
-        @click:create-item="showItemEditForm = true"
+        @click:create-item="itemFormData = null; showItemEditForm = true"
+        @click:edit-item="itemFormData = $event; showItemEditForm = true"
         @click:delete-items="deleteOrders"
     />
 
     <v-dialog v-model="showItemEditForm" max-width="560">
         <BindingPreorderForm
+            :item="itemFormData"
             @abort="showItemEditForm = false"
-            @submit="createOrder($event)"
+            @submit="itemFormData ? updateOrder($event) : createOrder($event)"
         />
     </v-dialog>
 </template>
@@ -66,6 +68,7 @@ export default {
             ],
             fetchFunction: bindingsStore.fetchOrdersPage,
         },
+        itemFormData: null as any,
         showItemEditForm: false,
     }),
 
@@ -96,16 +99,16 @@ export default {
                 return;
             }
 
-            if (!data.user || !data.type || !data.title) {
+            if (!data.user || !data.user.id || !data.type || !data.title) {
                 console.error("Received incomplete data from BindingPreorderForm:", data);
                 toast.error("Failed to create pre-order.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create pre-order
-            bindingsStore.createOrder(data.user, data.type, data.title)
+            bindingsStore.createOrder(data.user.id, data.type, data.title)
                 .then((resp) => {
-                    toast.success("Created pre-order with ID " + resp.data.id);
+                    toast.success("Created new pre-order:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -113,7 +116,40 @@ export default {
                     console.error("Failed to create pre-order:", error);
                     toast.error("Failed to create pre-order.\r\n" + APIUtils.createErrorToString(error));
                 });
-        }
+        },
+
+        updateOrder(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from BindingPreorderForm.");
+                toast.error("Failed to update pre-order.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from BindingPreorderForm:", data);
+                toast.error("Failed to update pre-order.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.user || !data.user.id || !data.type || !data.title) {
+                console.error("Received incomplete data from BindingPreorderForm:", data);
+                toast.error("Failed to update pre-order.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update pre-order
+            bindingsStore.updateOrder(data.id, data.user.id, data.type, data.title)
+                .then((resp) => {
+                    toast.success("Updated pre-order:\r\n" + resp.data.pretty_name);
+                    this.showItemEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
+                })
+                .catch((error) => {
+                    console.error("Failed to update pre-order:", error);
+                    toast.error("Failed to update pre-order.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
     },
 }
 </script>

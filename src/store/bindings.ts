@@ -144,6 +144,26 @@ export const useBindingsStore = defineStore("bindings", {
         },
 
         /**
+         * Updates an existing order via the API.
+         *
+         * @param orderId ID of the order to update.
+         * @param userId ID of the user this order is for.
+         * @param type Type of the ordered item.
+         * @param title Title of the order.
+         * @param itemId Optional ID of an exact item to order.
+         * @param itemTemplateId Optional ID of an item template the ordered
+         */
+        async updateOrder(orderId: number, userId: number, type: string, title: string, itemId: number|null = null, itemTemplateId: number|null = null) {
+            return APIUtils.patch('/orders/' + orderId + '/', {
+                user_id: userId,
+                type: type,
+                title: title,
+                item_id: itemId,
+                item_template_id: itemTemplateId,
+            });
+        },
+
+        /**
          * Deletes a single order via the API.
          *
          * @param orderId ID of the order to delete.

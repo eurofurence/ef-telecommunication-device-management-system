@@ -60,6 +60,7 @@ export default {
                 {key: 'item.callsign', title: 'Callsign', hideMissing: true},
             ],
             fetchFunction: bindingsStore.fetchBindingsPage,
+            preventEdit: true,
         },
     }),
 }

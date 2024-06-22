@@ -47,7 +47,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
-                    @update:selection="data.user = $event.id"
+                    :initial-selection="data.user"
+                    @update:selection="data.user = $event"
                 ></ServerItemSelector>
                 <v-radio-group
                     v-model="data.type"
@@ -112,6 +113,8 @@ export default defineComponent({
 
     components: {ServerItemSelector},
 
+    emits: ['submit', 'abort'],
+
     props: {
         item: {type: Object, required: false, default: null},
     },
@@ -128,7 +131,7 @@ export default defineComponent({
             rules: {
                 user: [
                     (v: any) => !!v || 'User is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'User is invalid',
+                    (v: any) => (/^[0-9]+/.test(v.id)) || 'User is invalid',
                 ],
                 type: [
                     (v: any) => !!v || 'Type is required',
@@ -138,6 +141,29 @@ export default defineComponent({
                     (v: string) => (v.length <= 128) || 'Title must be less or equal than 128 characters',
                 ],
             },
+        }
+    },
+
+    watch: {
+        item: {
+            immediate: true,
+            handler(item) {
+                if (item !== null) {
+                    this.data = {
+                        id: item.id,
+                        user: item.user,
+                        type: item.type,
+                        title: item.title ?? '',
+                    }
+                } else {
+                    this.data = {
+                        id: null,
+                        user: null,
+                        type: null,
+                        title: '',
+                    }
+                }
+            }
         }
     },
 
