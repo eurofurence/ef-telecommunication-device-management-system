@@ -46,7 +46,7 @@ export default {
                 {key: 'nickname', title: 'Nickname', align: 'start', sortable: true},
                 {key: 'email', title: 'E-Mail', align: 'start', sortable: false},
                 {key: 'ef_security_collar_id', title: 'Collar-ID', align: 'start', sortable: true},
-                {key: 'last_seen', title: 'Last seen', align: 'start', sortable: false},
+                {key: 'last_login', title: 'Last login', align: 'start', sortable: false},
             ],
             fetchFunction: usersStore.fetchUsersPage,
             preventCreate: true,
