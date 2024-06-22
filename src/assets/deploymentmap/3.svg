@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1588"
+   height="842pt"
+   viewBox="0 0 1191 842"
+   version="1.1"
+   id="svg11644"
+   sodipodi:docname="0.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview11644"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     inkscape:zoom="0.49622166"
+     inkscape:cx="785.93909"
+     inkscape:cy="725.48223"
+     inkscape:window-width="2560"
+     inkscape:window-height="1388"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg11644" />
+  <defs
+     id="defs8">
+    <clipPath
+       id="a">
+      <path
+         d="M366 627h1v1h-1Zm0 0"
+         id="path1" />
+    </clipPath>
+    <clipPath
+       id="b">
+      <path
+         d="M145.613 905.66 1278.11 105.02 1083.672-32.441-48.824 768.199Zm0 0"
+         id="path2" />
+    </clipPath>
+    <clipPath
+       id="c">
+      <path
+         d="M457 562h1v1h-1Zm0 0"
+         id="path3" />
+    </clipPath>
+    <clipPath
+       id="d">
+      <path
+         d="M145.613 905.66 1278.11 105.02 1083.672-32.441-48.824 768.199Zm0 0"
+         id="path4" />
+    </clipPath>
+    <clipPath
+       id="e">
+      <path
+         d="M745 359h1v1h-1Zm0 0"
+         id="path5" />
+    </clipPath>
+    <clipPath
+       id="f">
+      <path
+         d="M145.613 905.66 1278.11 105.02 1083.672-32.441-48.824 768.199Zm0 0"
+         id="path6" />
+    </clipPath>
+    <clipPath
+       id="g">
+      <path
+         d="M942 220h1v1h-1Zm0 0"
+         id="path7" />
+    </clipPath>
+    <clipPath
+       id="h">
+      <path
+         d="M145.613 905.66 1278.11 105.02 1083.672-32.441-48.824 768.199Zm0 0"
+         id="path8" />
+    </clipPath>
+  </defs>
+  <rect
+     style="fill:none;stroke-width:3.65;stroke:#000000;stroke-opacity:1;stroke-dasharray:none"
+     id="rect11644"
+     width="1169.9169"
+     height="816.4834"
+     x="10.836773"
+     y="15.50978" />
+  <text
+     xml:space="preserve"
+     style="font-size:50.1749px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';fill:#495057;fill-opacity:1;stroke:none;stroke-width:13.0813;stroke-dasharray:none;stroke-opacity:1"
+     x="311.98837"
+     y="433.64883"
+     id="text11644"><tspan
+       sodipodi:role="line"
+       id="tspan11644"
+       style="fill:#495057;fill-opacity:1;stroke:none;stroke-width:13.0813"
+       x="311.98837"
+       y="433.64883">Place your Map file here :)</tspan></text>
+</svg>
