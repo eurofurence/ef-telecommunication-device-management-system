@@ -4,10 +4,17 @@
 FROM node:20-alpine as build
 
 WORKDIR /data
-COPY . /data
+
+# Install dependencies
+COPY package.json /data
+COPY yarn.lock /data
 
 RUN set -ex && \
-    yarn install && \
+    yarn install
+
+# Build frontend application
+COPY . /data
+RUN set -ex && \
     yarn build
 
 
