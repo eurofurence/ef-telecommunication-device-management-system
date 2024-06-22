@@ -29,7 +29,8 @@
                     item-value-key="id"
                     :autofocus="false"
                     :no-filter="true"
-                    @update:selection="data.template = $event.id"
+                    :initial-selection="data.template"
+                    @update:selection="data.template = $event"
                 ></ServerItemSelector>
                 <v-text-field
                     v-model="data.extension"
@@ -198,6 +199,8 @@ export default defineComponent({
 
     components: {ServerItemSelector},
 
+    emits: ['abort', 'submit'],
+
     props: {
         item: {type: Object, required: false, default: null},
     },
@@ -207,7 +210,7 @@ export default defineComponent({
             isValid: false,
             data: {
                 id: null,
-                template: null,
+                template: null as any,
                 extension: null,
                 network: null,
                 dhcp: false,
@@ -225,7 +228,7 @@ export default defineComponent({
             rules: {
                 template: [
                     (v: any) => !!v || 'Template is required',
-                    (v: string) => (/^[0-9]+/.test(v)) || 'Template is invalid',
+                    (v: any) => (/^[0-9]+/.test(v.id)) || 'Template is invalid',
                 ],
                 extension: [
                     (v: string) => !!v || 'Extension is required',
@@ -261,6 +264,51 @@ export default defineComponent({
                     (v: string) => (v.length <= 256) || 'Notes must be less than 256 characters',
                 ],
             },
+        }
+    },
+
+    watch: {
+        item: {
+            immediate: true,
+            handler(item) {
+                if (item === null) {
+                    this.data = {
+                        id: null,
+                        template: null,
+                        extension: null,
+                        network: null,
+                        dhcp: false,
+                        ip_address: '',
+                        mac_address: '',
+                        location: '',
+                        has_camera: false,
+                        camera_network: null,
+                        camera_dhcp: false,
+                        camera_ip_address: '',
+                        camera_mac_address: '',
+                        serialnumber: '',
+                        notes: '',
+                    };
+                } else {
+                    this.data = {
+                        id: item.id,
+                        template: item.template,
+                        extension: item.extension,
+                        network: item.network,
+                        dhcp: item.dhcp,
+                        ip_address: item.ip_address ?? '',
+                        mac_address: item.mac_address ?? '',
+                        location: item.location ?? '',
+                        has_camera: item.has_camera,
+                        camera_network: item.camera_network,
+                        camera_dhcp: item.camera_dhcp,
+                        camera_ip_address: item.camera_ip_address ?? '',
+                        camera_mac_address: item.camera_mac_address ?? '',
+                        serialnumber: item.serialnumber ?? '',
+                        notes: item.notes ?? '',
+                    };
+                }
+            }
         }
     },
 

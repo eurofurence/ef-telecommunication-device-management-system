@@ -682,6 +682,60 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Updates a callbox via the API.
+         *
+         * @param callboxId ID of the callbox to update.
+         * @param templateId ID of the callbox template to update the callbox to.
+         * @param extension Extension of the phone.
+         * @param network Network the callbox is on.
+         * @param dhcp Whether the phone uses DHCP.
+         * @param ip_address IP address of the phone.
+         * @param mac_address MAC address of the phone.
+         * @param location Location of the phone.
+         * @param has_camera Whether the phone has a camera.
+         * @param camera_network Network the camera is on.
+         * @param camera_dhcp Whether the camera uses DHCP.
+         * @param camera_ip_address IP address of the camera.
+         * @param camera_mac_address MAC address of the camera.
+         * @param serialnumber Serial number of the phone.
+         * @param notes Notes for the phone.
+         */
+        async updateCallbox(
+            callboxId: number,
+            templateId: number,
+            extension: string = '',
+            network: string = '',
+            dhcp: boolean|null = null,
+            ip_address: string|null = null,
+            mac_address: string|null = null,
+            location: string|null = null,
+            has_camera: boolean|null = null,
+            camera_network: string|null = null,
+            camera_dhcp: boolean|null = null,
+            camera_ip_address: string|null = null,
+            camera_mac_address: string|null = null,
+            serialnumber: string|null = null,
+            notes: string|null = null
+        ) {
+            return APIUtils.patch('/callboxes/' + callboxId + '/', {
+                template_id: templateId,
+                extension: extension,
+                network: network,
+                dhcp: dhcp,
+                ip_address: ip_address || null,
+                mac_address: mac_address || null,
+                location: location,
+                has_camera: has_camera,
+                camera_network: camera_network,
+                camera_dhcp: camera_dhcp,
+                camera_ip_address: camera_ip_address || null,
+                camera_mac_address: camera_mac_address || null,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
          * Deletes a single callbox via the API.
          *
          * @param callboxId ID of the callbox to delete.
@@ -724,6 +778,24 @@ export const useItemsStore = defineStore("item", {
          */
         async createCallboxTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
             return APIUtils.post('/callbox_templates/', {
+                name: name,
+                owner_id: ownerId,
+                private: priv,
+                description: description,
+            });
+        },
+
+        /**
+         * Updates a callbox template via the API.
+         *
+         * @param templateId ID of the callbox template to update.
+         * @param name Name of the callbox template.
+         * @param ownerId ID of the owner of the callbox template.
+         * @param priv Whether the callbox template is private.
+         * @param description Description of the callbox template.
+         */
+        async updateCallboxTemplate(templateId: number, name: string, ownerId: number, priv: boolean = false, description: string = '') {
+            return APIUtils.patch('/callbox_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
                 private: priv,
