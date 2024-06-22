@@ -490,6 +490,45 @@ export const useItemsStore = defineStore("item", {
         },
 
         /**
+         * Updates a phone via the API.
+         *
+         * @param phoneId ID of the phone to update.
+         * @param templateId ID of the phone template to update the phone to.
+         * @param extension Extension of the phone.
+         * @param network Network the phone is on.
+         * @param dhcp Whether the phone uses DHCP.
+         * @param ip_address IP address of the phone.
+         * @param mac_address MAC address of the phone.
+         * @param location Location of the phone.
+         * @param serialnumber Serial number of the phone.
+         * @param notes Notes for the phone.
+         */
+        async updatePhone(
+            phoneId: number,
+            templateId: number,
+            extension: string = '',
+            network: string = '',
+            dhcp: boolean|null = null,
+            ip_address: string|null = null,
+            mac_address: string|null = null,
+            location: string|null = null,
+            serialnumber: string|null = null,
+            notes: string|null = null
+        ) {
+            return APIUtils.patch('/phones/' + phoneId + '/', {
+                template_id: templateId,
+                extension: extension,
+                network: network,
+                dhcp: dhcp,
+                ip_address: ip_address || null,
+                mac_address: mac_address || null,
+                location: location,
+                serialnumber: serialnumber,
+                notes: notes,
+            });
+        },
+
+        /**
          * Deletes a single phone via the API.
          *
          * @param phoneId ID of the phone to delete.
@@ -531,6 +570,24 @@ export const useItemsStore = defineStore("item", {
          */
         async createPhoneTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
             return APIUtils.post('/phone_templates/', {
+                name: name,
+                owner_id: ownerId,
+                private: priv,
+                description: description,
+            });
+        },
+
+        /**
+         * Updates a phone template via the API.
+         *
+         * @param templateId ID of the phone template to update.
+         * @param name Name of the phone template.
+         * @param ownerId ID of the owner of the phone template.
+         * @param priv Whether the phone template is private.
+         * @param description Description of the phone template.
+         */
+        async updatePhoneTemplate(templateId: number, name: string, ownerId: number, priv: boolean = false, description: string = '') {
+            return APIUtils.patch('/phone_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
                 private: priv,

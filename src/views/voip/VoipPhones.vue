@@ -5,23 +5,27 @@
         icon="mdi-phone"
         :items-table="itemsTable"
         :templates-table="templatesTable"
-        @click:create-item="showItemEditForm = true"
+        @click:create-item="itemFormData = null; showItemEditForm = true"
+        @click:edit-item="itemFormData = $event; showItemEditForm = true"
         @click:delete-items="deletePhones"
-        @click:create-item-template="showTemplateEditForm = true"
+        @click:create-item-template="templateFormData = null; showTemplateEditForm = true"
+        @click:edit-item-template="templateFormData = $event; showTemplateEditForm = true"
         @click:delete-item-templates="deletePhoneTemplates"
     />
 
     <v-dialog v-model="showItemEditForm" max-width="560">
         <VoipPhoneForm
+            :item="itemFormData"
             @abort="showItemEditForm = false"
-            @submit="createPhone($event)"
+            @submit="itemFormData ? updatePhone($event) : createPhone($event)"
         />
     </v-dialog>
 
     <v-dialog v-model="showTemplateEditForm" max-width="560">
         <VoipPhoneTemplateForm
+            :item="templateFormData"
             @abort="showTemplateEditForm = false"
-            @submit="createPhoneTemplate($event)"
+            @submit="templateFormData ? updatePhoneTemplate($event) : createPhoneTemplate($event)"
         />
     </v-dialog>
 </template>
@@ -78,7 +82,9 @@ export default {
             ],
             fetchFunction: itemsStore.fetchPhoneTemplatesPage,
         },
+        itemFormData: null as any,
         showItemEditForm: false,
+        templateFormData: null as any,
         showTemplateEditForm: false,
     }),
 
@@ -109,7 +115,7 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.extension || !data.network || data.dhcp === null) {
+            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null) {
                 console.error("Received incomplete data from VoipPhoneForm:", data);
                 toast.error("Failed to create phone.\r\nReceived incomplete data.");
                 return;
@@ -117,7 +123,7 @@ export default {
 
             // Create phone
             itemsStore.createPhone(
-                data.template,
+                data.template.id,
                 data.extension,
                 data.network,
                 data.dhcp,
@@ -135,6 +141,50 @@ export default {
                 .catch((error) => {
                     console.error("Failed to create phone:", error);
                     toast.error("Failed to create phone.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        updatePhone(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from VoipPhoneForm.");
+                toast.error("Failed to update phone.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from VoipPhoneForm:", data);
+                toast.error("Failed to update phone.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null) {
+                console.error("Received incomplete data from VoipPhoneForm:", data);
+                toast.error("Failed to update phone.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update phone
+            itemsStore.updatePhone(
+                data.id,
+                data.template.id,
+                data.extension,
+                data.network,
+                data.dhcp,
+                data.ip_address,
+                data.mac_address,
+                data.location,
+                data.serialnumber,
+                data.notes
+            )
+                .then((resp) => {
+                    toast.success("Updated phone with ID " + resp.data.id);
+                    this.showItemEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
+                })
+                .catch((error) => {
+                    console.error("Failed to update phone:", error);
+                    toast.error("Failed to update phone.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
 
@@ -164,14 +214,14 @@ export default {
                 return;
             }
 
-            if (!data.name || data.name.length < 1 || !data.owner || data.private === undefined) {
+            if (!data.name || data.name.length < 1 || !data.owner || !data.owner.id || data.private === undefined) {
                 console.error("Received incomplete data from VoipPhoneTemplateForm:", data);
                 toast.error("Failed to create phone template.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create phone template
-            itemsStore.createPhoneTemplate(data.name, data.owner, data.private, data.description)
+            itemsStore.createPhoneTemplate(data.name, data.owner.id, data.private, data.description)
                 .then((resp) => {
                     toast.success("Created phone template with ID " + resp.data.id);
                     this.showTemplateEditForm = false;
@@ -180,6 +230,39 @@ export default {
                 .catch((error) => {
                     console.error("Failed to create phone template:", error);
                     toast.error("Failed to create phone template.\r\n" + APIUtils.createErrorToString(error));
+                });
+        },
+
+        updatePhoneTemplate(data: any) {
+            // Check received data
+            if (data === null) {
+                console.error("Received null data from VoipPhoneTemplateForm.");
+                toast.error("Failed to update phone template.\r\nReceived no data.");
+                return;
+            }
+
+            if (!data.id) {
+                console.error("Received incomplete data from VoipPhoneTemplateForm:", data);
+                toast.error("Failed to update phone template.\r\nMissing ID.");
+                return;
+            }
+
+            if (!data.name || data.name.length < 1 || !data.owner || !data.owner.id || data.private === undefined) {
+                console.error("Received incomplete data from VoipPhoneTemplateForm:", data);
+                toast.error("Failed to update phone template.\r\nReceived incomplete data.");
+                return;
+            }
+
+            // Update phone template
+            itemsStore.updatePhoneTemplate(data.id, data.name, data.owner.id, data.private, data.description)
+                .then((resp) => {
+                    toast.success("Updated phone template with ID " + resp.data.id);
+                    this.showTemplateEditForm = false;
+                    (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
+                })
+                .catch((error) => {
+                    console.error("Failed to update phone template:", error);
+                    toast.error("Failed to update phone template.\r\n" + APIUtils.createErrorToString(error));
                 });
         },
     },
