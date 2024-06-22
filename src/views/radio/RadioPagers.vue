@@ -125,7 +125,7 @@ export default {
             // Create pager
             itemsStore.createPager(data.template.id, data.serialnumber, data.notes)
                 .then((resp) => {
-                    toast.success("Created pager with ID " + resp.data.id);
+                    toast.success("Created new pager:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -158,7 +158,7 @@ export default {
             // Update pager
             itemsStore.updatePager(data.id, data.template.id, data.serialnumber, data.notes)
                 .then((resp) => {
-                    toast.success("Updated pager with ID " + resp.data.id);
+                    toast.success("Updated pager:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -203,7 +203,7 @@ export default {
             // Create pager template
             itemsStore.createPagerTemplate(data.name, data.owner.id, data.private, data.description)
                 .then((resp) => {
-                    toast.success("Created pager template with ID " + resp.data.id);
+                    toast.success("Created new pager template:\r\n" + resp.data.pretty_name);
                     this.showTemplateEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })
@@ -236,7 +236,7 @@ export default {
             // Update pager template
             itemsStore.updatePagerTemplate(data.id, data.name, data.owner.id, data.private, data.description)
                 .then((resp) => {
-                    toast.success("Updated pager template with ID " + resp.data.id);
+                    toast.success("Updated pager template:\r\n" + resp.data.pretty_name);
                     this.showTemplateEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })

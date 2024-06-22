@@ -123,7 +123,7 @@ export default {
             // Create radio accessories
             itemsStore.createRadioAccessories(data.template.id, data.serialnumber, data.notes, data.amount)
                 .then((resp) => {
-                    toast.success(`Created ${resp.data.length} radio accessories`);
+                    toast.success(`Created ${resp.data.length} new radio accessories:\r\n` + resp.data[0].pretty_name + ' ...');
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -156,7 +156,7 @@ export default {
             // Update radio accessory
             itemsStore.updateRadioAccessory(data.id, data.template.id, data.serialnumber, data.notes)
                 .then((resp) => {
-                    toast.success("Updated radio accessory with ID " + resp.data.id);
+                    toast.success("Updated radio accessory:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -201,7 +201,7 @@ export default {
             // Create radio accessory template
             itemsStore.createRadioAccessoryTemplate(data.name, data.owner.id, data.private, data.description, data.allow_quickadd)
                 .then((resp) => {
-                    toast.success("Created radio accessory template with ID " + resp.data.id);
+                    toast.success("Created new radio accessory template:\r\n" + resp.data.pretty_name);
                     this.showTemplateEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })
@@ -234,7 +234,7 @@ export default {
             // Update radio accessory template
             itemsStore.updateRadioAccessoryTemplate(data.id, data.name, data.owner.id, data.private, data.description, data.allow_quickadd)
                 .then((resp) => {
-                    toast.success("Updated radio accessory template with ID " + resp.data.id);
+                    toast.success("Updated radio accessory template:\r\n" + resp.data.pretty_name);
                     this.showTemplateEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })

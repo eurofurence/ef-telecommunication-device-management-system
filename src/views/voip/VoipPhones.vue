@@ -134,7 +134,7 @@ export default {
                 data.notes
             )
                 .then((resp) => {
-                    toast.success("Created phone with ID " + resp.data.id);
+                    toast.success("Created new phone:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -178,7 +178,7 @@ export default {
                 data.notes
             )
                 .then((resp) => {
-                    toast.success("Updated phone with ID " + resp.data.id);
+                    toast.success("Updated phone:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -223,7 +223,7 @@ export default {
             // Create phone template
             itemsStore.createPhoneTemplate(data.name, data.owner.id, data.private, data.description)
                 .then((resp) => {
-                    toast.success("Created phone template with ID " + resp.data.id);
+                    toast.success("Created new phone template:\r\n" + resp.data.pretty_name);
                     this.showTemplateEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })
@@ -256,7 +256,7 @@ export default {
             // Update phone template
             itemsStore.updatePhoneTemplate(data.id, data.name, data.owner.id, data.private, data.description)
                 .then((resp) => {
-                    toast.success("Updated phone template with ID " + resp.data.id);
+                    toast.success("Updated phone template:\r\n" + resp.data.pretty_name);
                     this.showTemplateEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })

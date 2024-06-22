@@ -86,7 +86,7 @@ export default {
             // Create radio coding
             itemsStore.createRadioCoding(data.name, data.color, data.description)
                 .then((resp) => {
-                    toast.success("Created radio coding with ID " + resp.data.id);
+                    toast.success("Created new radio coding:\r\n" + resp.data.pretty_name);
                     this.showEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -119,7 +119,7 @@ export default {
             // Update radio coding
             itemsStore.updateRadioCoding(data.id, data.name, data.color, data.description)
                 .then((resp) => {
-                    toast.success("Updated radio coding with ID " + resp.data.id);
+                    toast.success("Updated radio coding:\r\n" + resp.data.pretty_name);
                     this.showEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })

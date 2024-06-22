@@ -30,6 +30,9 @@ class RadioCoding(models.Model):
         help_text="Description of the coding"
     )
 
+    def get_pretty_name(self):
+        return f"{self.name} #{self.pk}"
+
     def __str__(self):
         return self.name
 

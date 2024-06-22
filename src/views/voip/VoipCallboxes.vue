@@ -145,7 +145,7 @@ export default {
                 data.notes
             )
                 .then((resp) => {
-                    toast.success("Created callbox with ID " + resp.data.id);
+                    toast.success("Created new callbox:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -194,7 +194,7 @@ export default {
                 data.notes
             )
                 .then((resp) => {
-                    toast.success("Updated callbox with ID " + resp.data.id);
+                    toast.success("Updated callbox:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadItems();
                 })
@@ -239,7 +239,7 @@ export default {
             // Create callbox template
             itemsStore.createCallboxTemplate(data.name, data.owner.id, data.private, data.description)
                 .then((resp) => {
-                    toast.success("Created callbox template with ID " + resp.data.id);
+                    toast.success("Created new callbox tempalte:\r\n" + resp.data.pretty_name);
                     this.showTemplateEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })
@@ -272,7 +272,7 @@ export default {
             // Update callbox template
             itemsStore.updateCallboxTemplate(data.id, data.name, data.owner.id, data.private, data.description)
                 .then((resp) => {
-                    toast.success("Updated callbox template with ID " + resp.data.id);
+                    toast.success("Updated callbox template:\r\n" + resp.data.pretty_name);
                     this.showTemplateEditForm = false;
                     (this.$refs.itemOverview as InstanceType<typeof ItemOverview>).reloadTemplates();
                 })

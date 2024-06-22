@@ -7,9 +7,11 @@ from backend.serializers.mixins import ItemHandedOutSerializationMixin
 
 
 class RadioCodingSerializer(serializers.ModelSerializer):
+    pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
+
     class Meta:
         model = RadioCoding
-        fields = ['id', 'name', 'color', 'description']
+        fields = ['id', 'name', 'color', 'description', 'pretty_name']
 
 
 class RadioCodingSerializerReduced(serializers.ModelSerializer):
