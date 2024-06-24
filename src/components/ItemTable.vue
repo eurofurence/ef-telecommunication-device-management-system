@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <v-data-table-server
         :key="tableKey"
         v-model="selected"
-        v-model:items-per-page="itemsPerPage"
+        v-model:items-per-page="currentItemsPerPage"
         :headers="headers as any[]"
         :items-length="totalItems"
         :items="serverItems"
@@ -275,6 +275,7 @@ export default defineComponent({
         tableKey: 0,
         loading: true,
         totalItems: 0,
+        currentItemsPerPage: 25,
         serverItems: [] as any[],
         selected: [] as any[],
         search: '',
@@ -283,6 +284,12 @@ export default defineComponent({
 
     created() {
         this.search = this.initialSearch;
+    },
+
+    watch: {
+        itemsPerPage() {
+            this.currentItemsPerPage = this.itemsPerPage;
+        },
     },
 
     methods: {
