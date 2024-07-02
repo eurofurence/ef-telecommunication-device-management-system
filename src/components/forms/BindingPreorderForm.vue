@@ -124,7 +124,7 @@ export default defineComponent({
             isValid: false,
             data: {
                 id: null,
-                user: null,
+                user: null as any,
                 type: null,
                 title: '',
             },

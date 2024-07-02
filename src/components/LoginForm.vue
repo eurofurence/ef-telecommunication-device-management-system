@@ -48,7 +48,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                             <v-form v-model="loginFormIsValid" fast-fail @submit.prevent="login">
                                 <v-text-field
                                     v-model="username"
-                                    :rules="[v => !!v || 'Username is required']"
+                                    :rules="[(v: string) => !!v || 'Username is required']"
                                     name="username"
                                     label="Username"
                                     placeholder="Username"
@@ -59,7 +59,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
                                 <v-text-field
                                     v-model="password"
-                                    :rules="[v => !!v || 'Password is required']"
+                                    :rules="[(v: string) => !!v || 'Password is required']"
                                     name="password"
                                     label="Password"
                                     placeholder="Password"
