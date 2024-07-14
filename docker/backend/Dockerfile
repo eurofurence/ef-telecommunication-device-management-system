@@ -56,7 +56,7 @@ RUN set -ex && \
     chown django:django /app && \
     chown -R django:django /mnt/backend_static
 
-USER django
+USER django:django
 
 EXPOSE 8000
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
