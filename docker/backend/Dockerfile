@@ -51,8 +51,8 @@ RUN set -ex && \
 
 # Setup permissions to allow Django to run as unprivileged user
 RUN set -ex && \
-    addgroup -S django && \
-    adduser -S django -G django && \
+    addgroup -g 1000 -S django && \
+    adduser -u 1000 -S django -G django && \
     chown django:django /app && \
     chown -R django:django /mnt/backend_static
 

@@ -10,8 +10,7 @@ TODO ;)
 3. Place map assets into `src/assets/deploymentmap/`
 4. Create empty SQLite database file
    - `touch db.sqlite3`
-   - `chmod 777 db.sqlite3`
-   - TODO: This needs to be improved but works for now ... Yes, I know that this is dirty ;)
+   - `chown 1000:1000 db.sqlite3`
 5. Build with `docker compose build`
 6. Run with `docker compose up -d`
 7. Setup default permission groups: `docker compose exec -it backend python manage.py setuppermissions`
