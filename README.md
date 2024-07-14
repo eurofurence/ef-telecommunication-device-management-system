@@ -1,7 +1,21 @@
 # Eurofurence Telecommunication Device Management System (EF-TDMS)
 
-TODO ;)
+An advanced asset management system, specifically designed for managing handheld
+radio devices as well as other telecommunication devices during the Eurofurence
+convention.
 
+#### Features
+
+- Asset management of handheld radio devices, radio accessories, pagers, VoIP
+  phones, and emergency phones
+- Managing device handout and return processes, including pre-orders
+- Handling of different item owners and private item sources
+- Interactive deployment map for tracking the location of devices
+- Live dashboard and inventory view
+- User management with different permission groups
+- Event log for tracking all events within the system, e.g., item handouts, 
+  returns, creations, changes, ...
+ 
 
 ## Installation
 
