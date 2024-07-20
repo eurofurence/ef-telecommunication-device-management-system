@@ -3,7 +3,14 @@
   "version": "1.4.4",
   "type": "module",
   "description": "Eurofurence Telecommunication Device Management System",
-  "repository": "TODO",
+  "homepage": "https://github.com/eurofurence/ef-telecommunication-device-management-system",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eurofurence/ef-telecommunication-device-management-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eurofurence/ef-telecommunication-device-management-system/issues"
+  },
   "author": "Niels Gandraß <niels@gandrass.de>",
   "license": "MIT",
   "private": true,
