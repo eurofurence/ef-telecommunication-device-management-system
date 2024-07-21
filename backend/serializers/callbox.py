@@ -15,11 +15,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 from rest_framework import serializers
 
 from backend.models import CallboxTemplate, Callbox
 from backend.serializers import ItemOwnerSerializer
+from backend.serializers.itemcoordinates import ItemCoordinatesSerializer
 from backend.serializers.mixins import ItemHandedOutSerializationMixin
 
 
@@ -33,11 +34,12 @@ class CallboxTemplateSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'owner', 'owner_id', 'private', 'pretty_name']
 
 
-class CallboxSerializer(serializers.ModelSerializer, ItemHandedOutSerializationMixin):
+class CallboxSerializer(WritableNestedModelSerializer, ItemHandedOutSerializationMixin):
     template = CallboxTemplateSerializer(read_only=True)
     template_id = serializers.PrimaryKeyRelatedField(write_only=True, queryset=CallboxTemplate.objects.all(), source='template')
     pretty_name = serializers.CharField(source='get_pretty_name', read_only=True)
     handed_out = serializers.SerializerMethodField()
+    coordinates = ItemCoordinatesSerializer(source='itemcoordinates', required=False, allow_null=True, many=False)
 
     class Meta:
         model = Callbox
@@ -61,5 +63,6 @@ class CallboxSerializer(serializers.ModelSerializer, ItemHandedOutSerializationM
             'camera_network',
             'camera_dhcp',
             'camera_ip_address',
-            'camera_mac_address'
+            'camera_mac_address',
+            'coordinates',
         ]
