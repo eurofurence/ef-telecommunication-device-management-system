@@ -26,7 +26,7 @@ from rest_framework.response import Response
 
 from backend.models import RadioAccessoryTemplate, ItemCoordinates, Item
 from backend.permissions import FullDjangoModelPermissions
-from backend.serializers.item import ItemCoordinatesSerializer, ItemMetadataSerializer
+from backend.serializers.item import ItemMetadataSerializer, PolymorphicItemWithCoordinatesSerializer
 from backend.serializers.radio import RadioAccessoryTemplateQuickAddSerializer
 from backend.views.mixins import BulkDeleteMixin
 
@@ -102,7 +102,7 @@ class ItemCoordinatesViewSet(viewsets.ReadOnlyModelViewSet):
     API endpoint that allows item coordinates to be viewed.
     """
     queryset = ItemCoordinates.objects.all()
-    serializer_class = ItemCoordinatesSerializer
+    serializer_class = PolymorphicItemWithCoordinatesSerializer
     permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = '__all__'

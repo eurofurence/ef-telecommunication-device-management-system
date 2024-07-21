@@ -58,12 +58,12 @@ class PolymorphicItemSerializer(PolymorphicSerializer):
     }
 
 
-class ItemCoordinatesSerializer(serializers.ModelSerializer):
+class PolymorphicItemWithCoordinatesSerializer(serializers.ModelSerializer):
     item = PolymorphicItemSerializer(read_only=True)
 
     class Meta:
         model = ItemCoordinates
-        fields = ['floor', 'latitude', 'longitude', 'item']
+        fields = ['item', 'floor', 'latitude', 'longitude']
 
 
 class ItemMetadataSerializer(PolymorphicSerializer):
