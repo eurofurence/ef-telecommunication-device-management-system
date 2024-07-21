@@ -6,3 +6,4 @@
 - [Misc] Update metadata in package manager files
 - [Misc] Improve code readability in API abstraction layer
 - [Maintenance] Update Python dependencies
+- [Maintenance] Update JavaScript dependencies
