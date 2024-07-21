@@ -1,7 +1,7 @@
 ######################################
 # Stage 0: Build backend application #
 ######################################
-FROM python:3.11-alpine as build
+FROM python:3.11-alpine AS build
 
 RUN set -ex && \
     apk add --no-cache curl

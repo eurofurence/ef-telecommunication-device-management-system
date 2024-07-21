@@ -1,7 +1,7 @@
 #######################################
 # Stage 0: Build frontend application #
 #######################################
-FROM node:20-alpine as build
+FROM node:20-alpine AS build
 
 WORKDIR /data
 
