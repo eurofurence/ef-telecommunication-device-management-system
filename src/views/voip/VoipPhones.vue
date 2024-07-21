@@ -133,7 +133,9 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null) {
+            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null ||
+                (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0)))
+            {
                 console.error("Received incomplete data from VoipPhoneForm:", data);
                 toast.error("Failed to create phone.\r\nReceived incomplete data.");
                 return;
@@ -149,7 +151,8 @@ export default {
                 data.mac_address,
                 data.location,
                 data.serialnumber,
-                data.notes
+                data.notes,
+                data.has_coordinates ? data.coordinates : null
             )
                 .then((resp) => {
                     toast.success("Created new phone:\r\n" + resp.data.pretty_name);
@@ -176,7 +179,9 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null) {
+            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null ||
+                (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0)))
+            {
                 console.error("Received incomplete data from VoipPhoneForm:", data);
                 toast.error("Failed to update phone.\r\nReceived incomplete data.");
                 return;
@@ -193,7 +198,8 @@ export default {
                 data.mac_address,
                 data.location,
                 data.serialnumber,
-                data.notes
+                data.notes,
+                data.has_coordinates ? data.coordinates : null
             )
                 .then((resp) => {
                     toast.success("Updated phone:\r\n" + resp.data.pretty_name);

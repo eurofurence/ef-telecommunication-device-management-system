@@ -139,7 +139,9 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null || data.has_camera === null) {
+            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null || data.has_camera === null ||
+                (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0)))
+            {
                 console.error("Received incomplete data from VoipCallboxForm:", data);
                 toast.error("Failed to create callbox.\r\nReceived incomplete data.");
                 return;
@@ -160,7 +162,8 @@ export default {
                 data.camera_ip_address,
                 data.camera_mac_address,
                 data.serialnumber,
-                data.notes
+                data.notes,
+                data.has_coordinates ? data.coordinates : null
             )
                 .then((resp) => {
                     toast.success("Created new callbox:\r\n" + resp.data.pretty_name);
@@ -187,7 +190,9 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null || data.has_camera === null) {
+            if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null || data.has_camera === null ||
+                (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0)))
+            {
                 console.error("Received incomplete data from VoipCallboxForm:", data);
                 toast.error("Failed to update callbox.\r\nReceived incomplete data.");
                 return;
@@ -209,7 +214,8 @@ export default {
                 data.camera_ip_address,
                 data.camera_mac_address,
                 data.serialnumber,
-                data.notes
+                data.notes,
+                data.has_coordinates ? data.coordinates : null
             )
                 .then((resp) => {
                     toast.success("Updated callbox:\r\n" + resp.data.pretty_name);

@@ -134,14 +134,19 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id) {
+            if (!data.template || !data.template.id || (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0))) {
                 console.error("Received incomplete data from PagerForm:", data);
                 toast.error("Failed to create pager.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create pager
-            itemsStore.createPager(data.template.id, data.serialnumber, data.notes)
+            itemsStore.createPager(
+                data.template.id,
+                data.serialnumber,
+                data.notes,
+                data.has_coordinates ? data.coordinates : null
+            )
                 .then((resp) => {
                     toast.success("Created new pager:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
@@ -167,14 +172,20 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id) {
+            if (!data.template || !data.template.id || (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0))) {
                 console.error("Received incomplete data from PagerForm:", data);
                 toast.error("Failed to update pager.\r\nReceived incomplete data.");
                 return;
             }
 
             // Update pager
-            itemsStore.updatePager(data.id, data.template.id, data.serialnumber, data.notes)
+            itemsStore.updatePager(
+                data.id,
+                data.template.id,
+                data.serialnumber,
+                data.notes,
+                data.has_coordinates ? data.coordinates : null
+            )
                 .then((resp) => {
                     toast.success("Updated pager:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;

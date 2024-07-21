@@ -17,6 +17,7 @@
 
 import { defineStore } from 'pinia'
 import {APIUtils} from "@/classes/util/APIUtils";
+import {ItemCoordinates} from "@/types/ItemCoordinates";
 
 export const useItemsStore = defineStore("item", {
     state: () => ({}),
@@ -64,14 +65,22 @@ export const useItemsStore = defineStore("item", {
          * @param callsign Callsign of the radio device.
          * @param serialnumber Serial number of the radio device.
          * @param notes Notes for the radio device.
+         * @param coordinates Coordinates of the radio device.
          * @return API response. Created structure on success.
          */
-        async createRadio(templateId: number, callsign: string = '', serialnumber: string = '', notes: string = '') {
+        async createRadio(
+            templateId: number,
+            callsign: string = '',
+            serialnumber: string = '',
+            notes: string = '',
+            coordinates: ItemCoordinates|null = null
+        ) {
             return APIUtils.post('/radios/', {
                 template_id: templateId,
                 callsign: callsign,
                 serialnumber: serialnumber,
                 notes: notes,
+                coordinates: coordinates,
             });
         },
 
@@ -83,13 +92,22 @@ export const useItemsStore = defineStore("item", {
          * @param callsign Callsign of the radio device.
          * @param serialnumber Serial number of the radio device.
          * @param notes Notes for the radio device.
+         * @param coordinates Coordinates of the radio device.
          */
-        async updateRadio(radioId: number, templateId: number, callsign: string = '', serialnumber: string = '', notes: string = '') {
+        async updateRadio(
+            radioId: number,
+            templateId: number,
+            callsign: string = '',
+            serialnumber: string = '',
+            notes: string = '',
+            coordinates: ItemCoordinates|null = null
+        ) {
             return APIUtils.patch('/radios/' + radioId + '/', {
                 template_id: templateId,
                 callsign: callsign,
                 serialnumber: serialnumber,
                 notes: notes,
+                coordinates: coordinates,
             });
         },
 
@@ -341,13 +359,20 @@ export const useItemsStore = defineStore("item", {
          * @param templateId ID of the pager template to create the pager from.
          * @param serialnumber Serial number of the pager.
          * @param notes Notes for the pager.
+         * @param coordinates Coordinates of the pager.
          * @return API response. Created structure on success.
          */
-        async createPager(templateId: number, serialnumber: string = '', notes: string = '') {
+        async createPager(
+            templateId: number,
+            serialnumber: string = '',
+            notes: string = '',
+            coordinates: ItemCoordinates|null = null
+        ) {
             return APIUtils.post('/pagers/', {
                 template_id: templateId,
                 serialnumber: serialnumber,
                 notes: notes,
+                coordinates: coordinates,
             });
         },
 
@@ -358,12 +383,20 @@ export const useItemsStore = defineStore("item", {
          * @param templateId ID of the pager template to update the pager to.
          * @param serialnumber Serial number of the pager.
          * @param notes Notes for the pager.
+         * @param coordinates Coordinates of the pager.
          */
-        async updatePager(pagerId: number, templateId: number, serialnumber: string = '', notes: string = '') {
+        async updatePager(
+            pagerId: number,
+            templateId: number,
+            serialnumber: string = '',
+            notes: string = '',
+            coordinates: ItemCoordinates|null = null
+        ) {
             return APIUtils.patch('/pagers/' + pagerId + '/', {
                 template_id: templateId,
                 serialnumber: serialnumber,
                 notes: notes,
+                coordinates: coordinates,
             });
         },
 
@@ -480,6 +513,7 @@ export const useItemsStore = defineStore("item", {
          * @param location Location of the phone.
          * @param serialnumber Serial number of the phone.
          * @param notes Notes for the phone.
+         * @param coordinates Coordinates of the phone.
          * @return API response. Created structure on success.
          */
         async createPhone(
@@ -491,7 +525,8 @@ export const useItemsStore = defineStore("item", {
             mac_address: string|null = null,
             location: string|null = null,
             serialnumber: string|null = null,
-            notes: string|null = null
+            notes: string|null = null,
+            coordinates: ItemCoordinates|null = null
         ) {
             return APIUtils.post('/phones/', {
                 template_id: templateId,
@@ -503,6 +538,7 @@ export const useItemsStore = defineStore("item", {
                 location: location,
                 serialnumber: serialnumber,
                 notes: notes,
+                coordinates: coordinates,
             });
         },
 
@@ -519,6 +555,7 @@ export const useItemsStore = defineStore("item", {
          * @param location Location of the phone.
          * @param serialnumber Serial number of the phone.
          * @param notes Notes for the phone.
+         * @param coordinates Coordinates of the phone.
          */
         async updatePhone(
             phoneId: number,
@@ -530,7 +567,8 @@ export const useItemsStore = defineStore("item", {
             mac_address: string|null = null,
             location: string|null = null,
             serialnumber: string|null = null,
-            notes: string|null = null
+            notes: string|null = null,
+            coordinates: ItemCoordinates|null = null
         ) {
             return APIUtils.patch('/phones/' + phoneId + '/', {
                 template_id: templateId,
@@ -542,6 +580,7 @@ export const useItemsStore = defineStore("item", {
                 location: location,
                 serialnumber: serialnumber,
                 notes: notes,
+                coordinates: coordinates,
             });
         },
 
@@ -662,6 +701,7 @@ export const useItemsStore = defineStore("item", {
          * @param camera_mac_address MAC address of the camera.
          * @param serialnumber Serial number of the phone.
          * @param notes Notes for the phone.
+         * @param coordinates Coordinates of the callbox.
          * @return API response. Created structure on success.
          */
         async createCallbox(
@@ -678,7 +718,8 @@ export const useItemsStore = defineStore("item", {
             camera_ip_address: string|null = null,
             camera_mac_address: string|null = null,
             serialnumber: string|null = null,
-            notes: string|null = null
+            notes: string|null = null,
+            coordinates: ItemCoordinates|null = null
         ) {
             return APIUtils.post('/callboxes/', {
                 template_id: templateId,
@@ -695,6 +736,7 @@ export const useItemsStore = defineStore("item", {
                 camera_mac_address: camera_mac_address || null,
                 serialnumber: serialnumber,
                 notes: notes,
+                coordinates: coordinates,
             });
         },
 
@@ -716,6 +758,7 @@ export const useItemsStore = defineStore("item", {
          * @param camera_mac_address MAC address of the camera.
          * @param serialnumber Serial number of the phone.
          * @param notes Notes for the phone.
+         * @param coordinates Coordinates of the callbox.
          */
         async updateCallbox(
             callboxId: number,
@@ -732,7 +775,8 @@ export const useItemsStore = defineStore("item", {
             camera_ip_address: string|null = null,
             camera_mac_address: string|null = null,
             serialnumber: string|null = null,
-            notes: string|null = null
+            notes: string|null = null,
+            coordinates: ItemCoordinates|null = null
         ) {
             return APIUtils.patch('/callboxes/' + callboxId + '/', {
                 template_id: templateId,
@@ -749,6 +793,7 @@ export const useItemsStore = defineStore("item", {
                 camera_mac_address: camera_mac_address || null,
                 serialnumber: serialnumber,
                 notes: notes,
+                coordinates: coordinates,
             });
         },
 

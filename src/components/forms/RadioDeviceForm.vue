@@ -71,6 +71,47 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     variant="outlined"
                     prepend-inner-icon="mdi-pencil"
                 ></v-text-field>
+                <v-switch
+                    v-model="data.has_coordinates"
+                    color="primary"
+                >
+                    <template v-slot:prepend>
+                            <span class="text-grey-darken-2">
+                                <v-icon>mdi-map-marker</v-icon>
+                                &nbsp;
+                                Show on Deployment Map
+                            </span>
+                    </template>
+                </v-switch>
+                <div v-if="data.has_coordinates" class="d-inline-flex mt-n3 ga-3 align-center">
+                    <v-select
+                        v-model="data.coordinates.floor"
+                        :items="[0, 1, 2, 3, 4].map(i => ({title: `Floor ${i}`, value: i}))"
+                        :rules="rules.coordinates_floor"
+                        variant="outlined"
+                        density="comfortable"
+                        label="Floor"
+                        prepend-icon="mdi-stairs"
+                    ></v-select>
+                    <v-text-field
+                        v-model="data.coordinates.latitude"
+                        :rules="rules.coordinates_latitude"
+                        variant="outlined"
+                        density="comfortable"
+                        label="Latitude"
+                        prepend-icon="mdi-latitude"
+                        width="120"
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="data.coordinates.longitude"
+                        :rules="rules.coordinates_longitude"
+                        variant="outlined"
+                        density="comfortable"
+                        label="Longitude"
+                        prepend-icon="mdi-longitude"
+                        width="120"
+                    ></v-text-field>
+                </div>
 
                 <v-card-actions>
                     <v-btn
@@ -122,6 +163,12 @@ export default defineComponent({
                 callsign: '',
                 serialnumber: '',
                 notes: '',
+                has_coordinates: false,
+                coordinates: {
+                    floor: 0,
+                    latitude: null,
+                    longitude: null,
+                }
             },
             rules: {
                 template: [
@@ -138,6 +185,15 @@ export default defineComponent({
                 notes: [
                     (v: string) => (v.length <= 256) || 'Notes must be less than 256 characters',
                 ],
+                coordinates_floor: [
+                    (v: number) => (v >= 0 && v <= 4) || 'Floor must be between 0 and 4',
+                ],
+                coordinates_latitude: [
+                    (v: number) => (v >= 0 && v <= 100) || 'Latitude must be between 0 and 100',
+                ],
+                coordinates_longitude: [
+                    (v: number) => (v >= 0 && v <= 100) || 'Longitude must be between 0 and 100',
+                ],
             },
         }
     },
@@ -145,19 +201,35 @@ export default defineComponent({
     watch: {
         item: {
             immediate: true,
-            handler(value) {
-                if (value !== null) {
-                    this.data.id = value.id;
-                    this.data.template = value.template;
-                    this.data.callsign = value.callsign;
-                    this.data.serialnumber = value.serialnumber;
-                    this.data.notes = value.notes;
+            handler(item) {
+                if (item === null) {
+                    this.data = {
+                        id: null,
+                        template: null,
+                        callsign: '',
+                        serialnumber: '',
+                        notes: '',
+                        has_coordinates: false,
+                        coordinates: {
+                            floor: 0,
+                            latitude: null,
+                            longitude: null,
+                        }
+                    };
                 } else {
-                    this.data.id = null;
-                    this.data.template = null;
-                    this.data.callsign = '';
-                    this.data.serialnumber = '';
-                    this.data.notes = '';
+                    this.data = {
+                        id: item.id,
+                        template: item.template,
+                        callsign: item.callsign ?? '',
+                        serialnumber: item.serialnumber ?? '',
+                        notes: item.notes ?? '',
+                        has_coordinates: !!item.coordinates,
+                        coordinates: item.coordinates ?? {
+                            floor: 0,
+                            latitude: null,
+                            longitude: null,
+                        }
+                    };
                 }
             }
         },

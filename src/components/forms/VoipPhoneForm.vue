@@ -64,11 +64,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         inline
                     >
                         <template v-slot:prepend>
-                        <span class="text-grey-darken-2">
-                           <v-icon>mdi-network-outline</v-icon>
-                            &nbsp;
-                            Network
-                        </span>
+                            <span class="text-grey-darken-2">
+                                <v-icon>mdi-network-outline</v-icon>
+                                &nbsp;
+                                Network
+                            </span>
                         </template>
                         <v-radio label="Staff" value="STAFF"/>
                         <v-radio label="Security" value="SECU"/>
@@ -121,6 +121,47 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     variant="outlined"
                     prepend-inner-icon="mdi-pencil"
                 ></v-text-field>
+                <v-switch
+                    v-model="data.has_coordinates"
+                    color="primary"
+                >
+                    <template v-slot:prepend>
+                            <span class="text-grey-darken-2">
+                                <v-icon>mdi-map-marker</v-icon>
+                                &nbsp;
+                                Show on Deployment Map
+                            </span>
+                    </template>
+                </v-switch>
+                <div v-if="data.has_coordinates" class="d-inline-flex mt-n3 ga-3 align-center">
+                    <v-select
+                        v-model="data.coordinates.floor"
+                        :items="[0, 1, 2, 3, 4].map(i => ({title: `Floor ${i}`, value: i}))"
+                        :rules="rules.coordinates_floor"
+                        variant="outlined"
+                        density="comfortable"
+                        label="Floor"
+                        prepend-icon="mdi-stairs"
+                    ></v-select>
+                    <v-text-field
+                        v-model="data.coordinates.latitude"
+                        :rules="rules.coordinates_latitude"
+                        variant="outlined"
+                        density="comfortable"
+                        label="Latitude"
+                        prepend-icon="mdi-latitude"
+                        width="120"
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="data.coordinates.longitude"
+                        :rules="rules.coordinates_longitude"
+                        variant="outlined"
+                        density="comfortable"
+                        label="Longitude"
+                        prepend-icon="mdi-longitude"
+                        width="120"
+                    ></v-text-field>
+                </div>
 
                 <v-card-actions>
                     <v-btn
@@ -177,6 +218,12 @@ export default defineComponent({
                 location: '',
                 serialnumber: '',
                 notes: '',
+                has_coordinates: false,
+                coordinates: {
+                    floor: 0,
+                    latitude: null,
+                    longitude: null,
+                }
             },
             rules: {
                 template: [
@@ -207,6 +254,15 @@ export default defineComponent({
                 notes: [
                     (v: string) => (v.length <= 256) || 'Notes must be less than 256 characters',
                 ],
+                coordinates_floor: [
+                    (v: number) => (v >= 0 && v <= 4) || 'Floor must be between 0 and 4',
+                ],
+                coordinates_latitude: [
+                    (v: number) => (v >= 0 && v <= 100) || 'Latitude must be between 0 and 100',
+                ],
+                coordinates_longitude: [
+                    (v: number) => (v >= 0 && v <= 100) || 'Longitude must be between 0 and 100',
+                ],
             },
         }
     },
@@ -227,6 +283,12 @@ export default defineComponent({
                         location: '',
                         serialnumber: '',
                         notes: '',
+                        has_coordinates: false,
+                        coordinates: {
+                            floor: 0,
+                            latitude: null,
+                            longitude: null,
+                        }
                     };
                 } else {
                     this.data = {
@@ -240,6 +302,12 @@ export default defineComponent({
                         location: item.location ?? '',
                         serialnumber: item.serialnumber ?? '',
                         notes: item.notes ?? '',
+                        has_coordinates: !!item.coordinates,
+                        coordinates: item.coordinates ?? {
+                            floor: 0,
+                            latitude: null,
+                            longitude: null,
+                        }
                     };
                 }
             }

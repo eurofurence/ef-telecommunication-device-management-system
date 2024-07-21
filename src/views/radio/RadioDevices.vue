@@ -131,14 +131,20 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id) {
+            if (!data.template || !data.template.id || (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0))) {
                 console.error("Received incomplete data from RadioDeviceForm:", data);
                 toast.error("Failed to create radio device.\r\nReceived incomplete data.");
                 return;
             }
 
             // Create radio
-            itemsStore.createRadio(data.template.id, data.callsign, data.serialnumber, data.notes)
+            itemsStore.createRadio(
+                data.template.id,
+                data.callsign,
+                data.serialnumber,
+                data.notes,
+                data.has_coordinates ? data.coordinates : null,
+            )
                 .then((resp) => {
                     toast.success("Created new radio device:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
@@ -163,14 +169,21 @@ export default {
                 toast.error("Failed to edit radio device.\r\nID is missing.");
             }
 
-            if (!data.template || !data.template.id) {
+            if (!data.template || !data.template.id || (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0))) {
                 console.error("Received incomplete data from RadioDeviceForm:", data);
                 toast.error("Failed to edit radio device.\r\nReceived incomplete data.");
                 return;
             }
 
             // Edit radio
-            itemsStore.updateRadio(data.id, data.template.id, data.callsign, data.serialnumber, data.notes)
+            itemsStore.updateRadio(
+                data.id,
+                data.template.id,
+                data.callsign,
+                data.serialnumber,
+                data.notes,
+                data.has_coordinates ? data.coordinates : null,
+            )
                 .then((resp) => {
                     toast.success("Updated radio device:\r\n" + resp.data.pretty_name);
                     this.showItemEditForm = false;
