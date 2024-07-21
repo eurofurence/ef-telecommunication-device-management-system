@@ -222,6 +222,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         <v-icon left>mdi-trash-can-outline</v-icon>
                         Delete
                     </v-btn>
+
+                    <v-btn
+                        v-if="item.coordinates !== null || alwaysShowMapButton"
+                        class="ml-4 mb-4"
+                        color="primary"
+                        :disabled="item.coordinates === null"
+                        :to="{name: 'Deployment Map', params: {floor: item.coordinates?.floor ?? 0, highlightItemId: item.id}}"
+                    >
+                        <v-tooltip
+                            activator="parent"
+                            :text="`[Floor ${item.coordinates?.floor}] Lat: ${item.coordinates?.latitude}, Lon: ${item.coordinates?.longitude}`"
+                            location="top"
+                        ></v-tooltip>
+                        <v-icon left>mdi-map-marker</v-icon>
+                        Show on Map
+                    </v-btn>
                 </td>
             </tr>
         </template>
@@ -269,6 +285,7 @@ export default defineComponent({
         preventCreate: {type: Boolean, required: false, default: false},
         preventEdit: {type: Boolean, required: false, default: false},
         preventDelete: {type: Boolean, required: false, default: false},
+        alwaysShowMapButton: {type: Boolean, required: false, default: false},
     },
 
     data: () => ({

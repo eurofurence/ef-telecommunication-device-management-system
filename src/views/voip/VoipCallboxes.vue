@@ -95,6 +95,7 @@ export default {
                 {key: 'updated_at', title: 'Updated at'},
             ],
             fetchFunction: itemsStore.fetchCallboxesPage,
+            alwaysShowMapButton: true,
         },
         templatesTable: {
             headers: [

@@ -69,7 +69,7 @@ const routes = [{
             meta: { requiresAuth: true },
         },
         {
-            path: 'deployment-map/:floor',
+            path: 'deployment-map/:floor/:highlightItemId(\\d+)?',
             name: 'Deployment Map',
             component: () => import('@/views/DeploymentMap.vue'),
             props: true,

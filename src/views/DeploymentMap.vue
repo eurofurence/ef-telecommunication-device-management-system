@@ -141,6 +141,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             v-for="item in itemsFiltered"
             :key="item.item.id"
             :lat-lng="[item.latitude, item.longitude]"
+            :ref="`itemMarker-${item.item.id}`"
             @click="clickedCoordinates = {lat: item.latitude, lng: item.longitude}"
         >
             <l-icon
@@ -209,6 +210,7 @@ export default defineComponent({
 
     props: {
         floor: {type: [Number, String], required: true},
+        highlightItemId: {type: [Number, String], required: false},
     },
 
     data() {
@@ -228,7 +230,16 @@ export default defineComponent({
     },
 
     mounted() {
-        this.updateItems();
+        this.updateItems().then(() => {
+            setTimeout(() => {
+                if (this.highlightItemId) {
+                    const marker = this.$refs[`itemMarker-${this.highlightItemId}`];
+                    if (marker) {
+                        (marker as any)[0].leafletObject.openPopup();
+                    }
+                }
+            }, 500);
+        });
     },
 
     watch: {
@@ -283,7 +294,7 @@ export default defineComponent({
     methods: {
         async updateItems(forceRerender: boolean = false) {
             this.itemsLoading = true;
-            itemsStore.fetchItemCoordinatesForFloor(this.floor as number).then((resp: any) => {
+            return itemsStore.fetchItemCoordinatesForFloor(this.floor as number).then((resp: any) => {
                 this.items = resp.items;
                 this.itemsLoading = false;
 

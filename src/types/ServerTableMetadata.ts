@@ -31,4 +31,5 @@ export type ServerTableMetadata = {
     preventCreate?: boolean;                /** Prevent creating new items. */
     preventEdit?: boolean;                  /** Prevent editing items. */
     preventDelete?: boolean;                /** Prevent deleting items. */
+    alwaysShowMapButton?: boolean;          /** Always show the map button. */
 }

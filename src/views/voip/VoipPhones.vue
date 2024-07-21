@@ -89,6 +89,7 @@ export default {
                 {key: 'updated_at', title: 'Updated at'},
             ],
             fetchFunction: itemsStore.fetchPhonesPage,
+            alwaysShowMapButton: true,
         },
         templatesTable: {
             headers: [
