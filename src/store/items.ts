@@ -54,8 +54,20 @@ export const useItemsStore = defineStore("item", {
          * @param search Search string to filter by.
          * @param availableOnly Whether to only fetch available radios.
          */
-        async fetchRadiosPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
-            return APIUtils.fetchPage('/radios/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
+        async fetchRadiosPage(
+            page: number,
+            itemsPerPage: number,
+            sortBy: any[],
+            search: string,
+            availableOnly: boolean = false
+        ) {
+            return APIUtils.fetchPage(
+                '/radios/'+(availableOnly ? 'available/' : ''),
+                page,
+                itemsPerPage,
+                sortBy,
+                search
+            );
         },
 
         /**
@@ -153,7 +165,13 @@ export const useItemsStore = defineStore("item", {
          * @param description Description of the radio template.
          * @return API response. Created structure on success.
          */
-        async createRadioTemplate(name: string, ownerId: number, codingId: number, priv: boolean = false, description: string = '') {
+        async createRadioTemplate(
+            name: string,
+            ownerId: number,
+            codingId: number,
+            priv: boolean = false,
+            description: string = ''
+        ) {
             return APIUtils.post('/radio_templates/', {
                 name: name,
                 owner_id: ownerId,
@@ -173,7 +191,14 @@ export const useItemsStore = defineStore("item", {
          * @param priv Whether the radio device template is private.
          * @param description Description of the radio device template.
          */
-        async updateRadioTemplate(templateId: number, name: string, ownerId: number, codingId: number, priv: boolean = false, description: string = '') {
+        async updateRadioTemplate(
+            templateId: number,
+            name: string,
+            ownerId: number,
+            codingId: number,
+            priv: boolean = false,
+            description: string = ''
+        ) {
             return APIUtils.patch('/radio_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
@@ -212,8 +237,20 @@ export const useItemsStore = defineStore("item", {
          * @param search Search string to filter by.
          * @param availableOnly Whether to only fetch available radio accessories.
          */
-        async fetchRadioAccessoriesPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
-            return APIUtils.fetchPage('/radio_accessories/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
+        async fetchRadioAccessoriesPage(
+            page: number,
+            itemsPerPage: number,
+            sortBy: any[],
+            search: string,
+            availableOnly: boolean = false
+        ) {
+            return APIUtils.fetchPage(
+                '/radio_accessories/'+(availableOnly ? 'available/' : ''),
+                page,
+                itemsPerPage,
+                sortBy,
+                search
+            );
         },
 
         /**
@@ -224,7 +261,12 @@ export const useItemsStore = defineStore("item", {
          * @param notes Notes for the radio accessory.
          * @param amount Number of radio accessories to create.
          */
-        async createRadioAccessories(templateId: number, serialnumber: string = '', notes: string = '', amount: number = 1) {
+        async createRadioAccessories(
+            templateId: number,
+            serialnumber: string = '',
+            notes: string = '',
+            amount: number = 1
+        ) {
             return APIUtils.post('/radio_accessories/bulk/'+amount+'/', {
                 template_id: templateId,
                 serialnumber: serialnumber,
@@ -240,7 +282,12 @@ export const useItemsStore = defineStore("item", {
          * @param serialnumber Serial number of the radio accessory.
          * @param notes Notes for the radio accessory.
          */
-        async updateRadioAccessory(radioAccessoryId: number, templateId: number, serialnumber: string = '', notes: string = '') {
+        async updateRadioAccessory(
+            radioAccessoryId: number,
+            templateId: number,
+            serialnumber: string = '',
+            notes: string = ''
+        ) {
             return APIUtils.patch('/radio_accessories/' + radioAccessoryId + '/', {
                 template_id: templateId,
                 serialnumber: serialnumber,
@@ -290,7 +337,13 @@ export const useItemsStore = defineStore("item", {
          * @param allow_quickadd Whether to allow quick adding of radio accessories.
          * @return API response. Created structure on success.
          */
-        async createRadioAccessoryTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '', allow_quickadd: boolean = false) {
+        async createRadioAccessoryTemplate(
+            name: string,
+            ownerId: number,
+            priv: boolean = false,
+            description: string = '',
+            allow_quickadd: boolean = false
+        ) {
             return APIUtils.post('/radio_accessory_templates/', {
                 name: name,
                 owner_id: ownerId,
@@ -310,7 +363,14 @@ export const useItemsStore = defineStore("item", {
          * @param description Description of the radio accessory template.
          * @param allow_quickadd Whether to allow quick adding of radio accessories.
          */
-        async updateRadioAccessoryTemplate(templateId: number, name: string, ownerId: number, priv: boolean = false, description: string = '', allow_quickadd: boolean = false) {
+        async updateRadioAccessoryTemplate(
+            templateId: number,
+            name: string,
+            ownerId: number,
+            priv: boolean = false,
+            description: string = '',
+            allow_quickadd: boolean = false
+        ) {
             return APIUtils.patch('/radio_accessory_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
@@ -349,8 +409,20 @@ export const useItemsStore = defineStore("item", {
          * @param search Search string to filter by.
          * @param availableOnly Whether to only fetch available pagers.
          */
-        async fetchPagersPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
-            return APIUtils.fetchPage('/pagers/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
+        async fetchPagersPage(
+            page: number,
+            itemsPerPage: number,
+            sortBy: any[],
+            search: string,
+            availableOnly: boolean = false
+        ) {
+            return APIUtils.fetchPage(
+                '/pagers/'+(availableOnly ? 'available/' : ''),
+                page,
+                itemsPerPage,
+                sortBy,
+                search
+            );
         },
 
         /**
@@ -441,7 +513,12 @@ export const useItemsStore = defineStore("item", {
          * @param description Description of the pager template.
          * @return API response. Created structure on success.
          */
-        async createPagerTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
+        async createPagerTemplate(
+            name: string,
+            ownerId: number,
+            priv: boolean = false,
+            description: string = ''
+        ) {
             return APIUtils.post('/pager_templates/', {
                 name: name,
                 owner_id: ownerId,
@@ -459,7 +536,13 @@ export const useItemsStore = defineStore("item", {
          * @param priv Whether the pager template is private.
          * @param description Description of the pager template.
          */
-        async updatePagerTemplate(templateId: number, name: string, ownerId: number, priv: boolean = false, description: string = '') {
+        async updatePagerTemplate(
+            templateId: number,
+            name: string,
+            ownerId: number,
+            priv: boolean = false,
+            description: string = ''
+        ) {
             return APIUtils.patch('/pager_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
@@ -497,8 +580,20 @@ export const useItemsStore = defineStore("item", {
          * @param search Search string to filter by.
          * @param availableOnly Whether to only fetch available phones.
          */
-        async fetchPhonesPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
-            return APIUtils.fetchPage('/phones/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
+        async fetchPhonesPage(
+            page: number,
+            itemsPerPage: number,
+            sortBy: any[],
+            search: string,
+            availableOnly: boolean = false
+        ) {
+            return APIUtils.fetchPage(
+                '/phones/'+(availableOnly ? 'available/' : ''),
+                page,
+                itemsPerPage,
+                sortBy,
+                search
+            );
         },
 
         /**
@@ -624,7 +719,12 @@ export const useItemsStore = defineStore("item", {
          * @param description Description of the phone template.
          * @return API response. Created structure on success.
          */
-        async createPhoneTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
+        async createPhoneTemplate(
+            name: string,
+            ownerId: number,
+            priv: boolean = false,
+            description: string = ''
+        ) {
             return APIUtils.post('/phone_templates/', {
                 name: name,
                 owner_id: ownerId,
@@ -642,7 +742,13 @@ export const useItemsStore = defineStore("item", {
          * @param priv Whether the phone template is private.
          * @param description Description of the phone template.
          */
-        async updatePhoneTemplate(templateId: number, name: string, ownerId: number, priv: boolean = false, description: string = '') {
+        async updatePhoneTemplate(
+            templateId: number,
+            name: string,
+            ownerId: number,
+            priv: boolean = false,
+            description: string = ''
+        ) {
             return APIUtils.patch('/phone_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
@@ -680,8 +786,20 @@ export const useItemsStore = defineStore("item", {
          * @param search Search string to filter by.
          * @param availableOnly Whether to only fetch available callboxes.
          */
-        async fetchCallboxesPage(page: number, itemsPerPage: number, sortBy: any[], search: string, availableOnly: boolean = false) {
-            return APIUtils.fetchPage('/callboxes/'+(availableOnly ? 'available/' : ''), page, itemsPerPage, sortBy, search);
+        async fetchCallboxesPage(
+            page: number,
+            itemsPerPage: number,
+            sortBy: any[],
+            search: string,
+            availableOnly: boolean = false
+        ) {
+            return APIUtils.fetchPage(
+                '/callboxes/'+(availableOnly ? 'available/' : ''),
+                page,
+                itemsPerPage,
+                sortBy,
+                search
+            );
         },
 
         /**
@@ -838,7 +956,12 @@ export const useItemsStore = defineStore("item", {
          * @param description Description of the callbox template.
          * @return API response. Created structure on success.
          */
-        async createCallboxTemplate(name: string, ownerId: number, priv: boolean = false, description: string = '') {
+        async createCallboxTemplate(
+            name: string,
+            ownerId: number,
+            priv: boolean = false,
+            description: string = ''
+        ) {
             return APIUtils.post('/callbox_templates/', {
                 name: name,
                 owner_id: ownerId,
@@ -856,7 +979,13 @@ export const useItemsStore = defineStore("item", {
          * @param priv Whether the callbox template is private.
          * @param description Description of the callbox template.
          */
-        async updateCallboxTemplate(templateId: number, name: string, ownerId: number, priv: boolean = false, description: string = '') {
+        async updateCallboxTemplate(
+            templateId: number,
+            name: string,
+            ownerId: number,
+            priv: boolean = false,
+            description: string = ''
+        ) {
             return APIUtils.patch('/callbox_templates/' + templateId + '/', {
                 name: name,
                 owner_id: ownerId,
@@ -965,7 +1094,6 @@ export const useItemsStore = defineStore("item", {
             if (isNaN(floor) || floor < 0 || floor > 99) {
                 return [];
             }
-
             return APIUtils.fetchPage(`/item_coordinates/floor/${floor}`, 1, 9999, [], '');
         }
     },
