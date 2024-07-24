@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.X.X (YYYY-MM-DD)
+## Version 1.5.0 (2024-07-24)
 
 - [Feature] Integrate item coordinates in CRUD forms for Phones, Callboxes, RadioDevices, and Pagers
 - [Feature] Add button to show / highlight items on deployment map from ItemOverview pages
