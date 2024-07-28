@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 1.5.1 (2024-07-28)
+
+- [Feature] Make main navigation drawer collapsible (default on mobile)
+- [Feature] Improve mobile layout
+- [Maintenance] Update Python dependencies
+- [Maintenance] Update JavaScript dependencies
+
+
 ## Version 1.5.0 (2024-07-24)
 
 - [Feature] Integrate item coordinates in CRUD forms for Phones, Callboxes, RadioDevices, and Pagers
