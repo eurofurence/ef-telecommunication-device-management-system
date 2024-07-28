@@ -35,8 +35,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         </v-row>
         <v-row>
             <v-col>
-                <div class="d-flex justify-center">
-                    <v-card width="400" class="ma-3">
+                <div class="d-flex justify-center flex-wrap">
+                    <v-card width="400" min-width="350" class="ma-3">
                         <v-card-title>Items</v-card-title>
 
                         <v-card-text v-if="!statisticsLodaded">
@@ -111,7 +111,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         </v-card-text>
                     </v-card>
 
-                    <v-card width="400" class="ma-3">
+                    <v-card width="400" min-width="350" class="ma-3">
                         <v-card-title>Users</v-card-title>
 
                         <v-card-text v-if="!statisticsLodaded">
