@@ -25,52 +25,104 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         class="mainnav"
     >
         <v-list density="compact" nav open-strategy="multiple" slim>
-            <v-list-item prepend-icon="mdi-home-city" title="Overview" value="overview" to="/overview"></v-list-item>
-            <v-list-item prepend-icon="mdi-account" title="My Account" value="account" to="/profile"></v-list-item>
-            <v-list-item prepend-icon="mdi-chart-box-outline" title="Inventory" value="inventory" to="/inventory"></v-list-item>
+            <v-list-item prepend-icon="mdi-home-city" title="Overview" value="overview" to="/overview">
+                <v-tooltip text="Overview" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+            </v-list-item>
+            <v-list-item prepend-icon="mdi-account" title="My Account" value="account" to="/profile">
+                <v-tooltip text="My Account" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+            </v-list-item>
+            <v-list-item prepend-icon="mdi-chart-box-outline" title="Inventory" value="inventory" to="/inventory">
+                <v-tooltip text="Inventory" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+            </v-list-item>
             <v-list-group value="Deployment Map">
                 <template v-slot:activator="{ props }">
-                    <v-list-item v-bind="props" prepend-icon="mdi-map" title="Deployment Map"></v-list-item>
+                    <v-list-item v-bind="props" prepend-icon="mdi-map" title="Deployment Map">
+                        <v-tooltip text="Deployment Map" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                    </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-numeric-0" title="Ground Floor" value="deployment-map-0" to="/deployment-map/0"></v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-1" title="First Floor" value="deployment-map-1" to="/deployment-map/1"></v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-2" title="Second Floor" value="deployment-map-2" to="/deployment-map/2"></v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-3" title="Third Floor" value="deployment-map-3" to="/deployment-map/3"></v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-4" title="Fourth Floor" value="deployment-map-4" to="/deployment-map/4"></v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-0" title="Ground Floor" value="deployment-map-0" to="/deployment-map/0">
+                    <v-tooltip text="Ground Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-1" title="First Floor" value="deployment-map-1" to="/deployment-map/1">
+                    <v-tooltip text="First Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-2" title="Second Floor" value="deployment-map-2" to="/deployment-map/2">
+                    <v-tooltip text="Second Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-3" title="Third Floor" value="deployment-map-3" to="/deployment-map/3">
+                    <v-tooltip text="Third Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-numeric-4" title="Fourth Floor" value="deployment-map-4" to="/deployment-map/4">
+                    <v-tooltip text="Fourth Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
             </v-list-group>
             <v-list-group value="Bindings">
                 <template v-slot:activator="{ props }">
-                    <v-list-item v-bind="props" prepend-icon="mdi-basket-fill" title="Bindings"></v-list-item>
+                    <v-list-item v-bind="props" prepend-icon="mdi-basket-fill" title="Bindings">
+                        <v-tooltip text="Bindings" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                    </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-basket-outline" title="Overview" value="bindings-overview" to="/bindings/overview"></v-list-item>
-                <v-list-item prepend-icon="mdi-basket-fill" title="Pre-Orders" value="bindings-preorders" to="/bindings/preorders"></v-list-item>
-                <v-list-item prepend-icon="mdi-basket-plus-outline" title="Hand out" value="bindings-issue" to="/bindings/issue"></v-list-item>
-                <v-list-item prepend-icon="mdi-basket-minus-outline" title="Return" value="bindings-return" to="/bindings/return"></v-list-item>
+                <v-list-item prepend-icon="mdi-basket-outline" title="Overview" value="bindings-overview" to="/bindings/overview">
+                    <v-tooltip text="Bindings Overview" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-basket-fill" title="Pre-Orders" value="bindings-preorders" to="/bindings/preorders">
+                    <v-tooltip text="Pre-Orders" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-basket-plus-outline" title="Hand out" value="bindings-issue" to="/bindings/issue">
+                    <v-tooltip text="Hand out" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-basket-minus-outline" title="Return" value="bindings-return" to="/bindings/return">
+                    <v-tooltip text="Return" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
             </v-list-group>
             <v-list-group value="People">
                 <template v-slot:activator="{ props }">
-                    <v-list-item v-bind="props" prepend-icon="mdi-account-circle" title="People"></v-list-item>
+                    <v-list-item v-bind="props" prepend-icon="mdi-account-circle" title="People">
+                        <v-tooltip text="People" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                    </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users" to="/users"></v-list-item>
-                <v-list-item prepend-icon="mdi-account-arrow-right" title="Item Owners" value="itemowners" to="/itemowners"></v-list-item>
+                <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users" to="/users">
+                    <v-tooltip text="Users" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-account-arrow-right" title="Item Owners" value="itemowners" to="/itemowners">
+                    <v-tooltip text="Item Owners" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
             </v-list-group>
             <v-list-group value="Radios">
                 <template v-slot:activator="{ props }">
-                    <v-list-item v-bind="props" prepend-icon="mdi-radio-tower" title="Radios"></v-list-item>
+                    <v-list-item v-bind="props" prepend-icon="mdi-radio-tower" title="Radios">
+                        <v-tooltip text="Radios" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                    </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-cellphone-basic" title="Devices" value="radio-radios" to="/radio/devices"></v-list-item>
-                <v-list-item prepend-icon="mdi-headset" title="Accessories" value="radio-accessories" to="/radio/accessories"></v-list-item>
-                <v-list-item prepend-icon="mdi-bell-ring-outline" title="Pagers" value="radio-pagers" to="/radio/pagers"></v-list-item>
-                <v-list-item prepend-icon="mdi-sim" title="Codings" value="radio-codings" to="/radio/codings"></v-list-item>
+                <v-list-item prepend-icon="mdi-cellphone-basic" title="Devices" value="radio-radios" to="/radio/devices">
+                    <v-tooltip text="Radio Devices" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-headset" title="Accessories" value="radio-accessories" to="/radio/accessories">
+                    <v-tooltip text="Radio Accessories" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-bell-ring-outline" title="Pagers" value="radio-pagers" to="/radio/pagers">
+                    <v-tooltip text="Pagers" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-sim" title="Codings" value="radio-codings" to="/radio/codings">
+                    <v-tooltip text="Radio Codings" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
             </v-list-group>
             <v-list-group value="VoIP">
                 <template v-slot:activator="{ props }">
-                    <v-list-item v-bind="props" prepend-icon="mdi-phone-voip" title="VoIP"></v-list-item>
+                    <v-list-item v-bind="props" prepend-icon="mdi-phone-voip" title="VoIP">
+                        <v-tooltip text="VoIP" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                    </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-phone" title="Phones" value="voip-phones" to="/voip/phones"></v-list-item>
-                <v-list-item prepend-icon="mdi-webcam" title="Callboxes" value="voip-callboxes" to="/voip/callboxes"></v-list-item>
+                <v-list-item prepend-icon="mdi-phone" title="Phones" value="voip-phones" to="/voip/phones">
+                    <v-tooltip text="Phones" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-webcam" title="Callboxes" value="voip-callboxes" to="/voip/callboxes">
+                    <v-tooltip text="Callboxes" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
             </v-list-group>
-            <v-list-item prepend-icon="mdi-clipboard-text-search-outline" title="Event Log" value="eventlog" to="/eventlog"></v-list-item>
+            <v-list-item prepend-icon="mdi-clipboard-text-search-outline" title="Event Log" value="eventlog" to="/eventlog">
+                <v-tooltip text="Event Log" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+            </v-list-item>
         </v-list>
 
         <template v-slot:append>
