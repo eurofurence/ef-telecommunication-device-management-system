@@ -19,7 +19,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 <template>
     <v-navigation-drawer
         permanent
+        :rail="collapsed"
+        :rail-width="railWidth"
         location="left"
+        class="mainnav"
     >
         <v-list density="compact" nav open-strategy="multiple" slim>
             <v-list-item prepend-icon="mdi-home-city" title="Overview" value="overview" to="/overview"></v-list-item>
@@ -71,13 +74,57 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         </v-list>
 
         <template v-slot:append>
-            <p class="text-center text-caption font-weight-light">
-                EF-TDMS&nbsp;v{{ app_version }}
-            </p>
+            <div class="d-flex align-content-end">
+                <v-sheet v-if="!collapsed" class="flex-grow-0" :width="railWidth"></v-sheet>
+                <v-sheet v-if="!collapsed" class="flex-grow-1 align-content-center">
+                    <p class="text-center text-caption font-weight-light">
+                        EF-TDMS&nbsp;v{{ appVersion }}
+                    </p>
+                </v-sheet>
+                <v-sheet class="flex-grow-0 text-center" :width="railWidth">
+                    <v-btn
+                        variant="plain"
+                        @click="collapsed = !collapsed"
+                        :min-width="railWidth"
+                        :max-width="railWidth"
+                        slim
+                    >
+                        <v-icon :icon="collapsed ? 'mdi-arrow-expand-right' : 'mdi-arrow-collapse-left'"></v-icon>
+                        <v-tooltip
+                            activator="parent"
+                            location="top"
+                            :text="collapsed ? 'Expand' : 'Collapse'"
+                        ></v-tooltip>
+                    </v-btn>
+                </v-sheet>
+            </div>
         </template>
     </v-navigation-drawer>
 </template>
 
+<style lang="scss">
+.mainnav.v-navigation-drawer--rail .v-list-item {
+    padding-inline-start: 8px !important;
+}
+</style>
+
 <script lang="ts" setup>
-const app_version = import.meta.env.APP_VERSION;
+const appVersion = import.meta.env.APP_VERSION;
+const railWidth = 56;
+</script>
+
+<script lang="ts">
+import {defineComponent} from "vue";
+
+export default defineComponent({
+    name: 'AppMenu',
+
+    mounted() {
+        this.collapsed = this.$vuetify.display.mdAndDown;
+    },
+
+    data: () => ({
+        collapsed: false,
+    }),
+})
 </script>
