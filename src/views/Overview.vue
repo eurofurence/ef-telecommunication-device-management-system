@@ -192,7 +192,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     size="x-large"
                     color="success"
                     prepend-icon="mdi-plus"
-                    class="mx-4"
+                    class="ma-md-4 ma-2"
                     @click="$router.push('/bindings/issue')"
                 >
                     Issue Items
@@ -201,7 +201,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     size="x-large"
                     color="error"
                     prepend-icon="mdi-trash-can-outline"
-                    class="mx-4"
+                    class="ma-md-4 ma-2"
                     @click="$router.push('/bindings/return')"
                 >
                     Return Items
