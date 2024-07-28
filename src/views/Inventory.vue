@@ -186,7 +186,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         </v-row>
         <v-row class="mb-5">
             <v-col>
-                <div class="d-flex justify-center ga-4 mb-n4">
+                <div class="d-flex flex-row flex-wrap justify-center ga-4 mb-n4">
                     <v-tooltip
                         v-for="x in chartItemTypesFilter as any"
                         :text="`${x.active ? 'Hide' : 'Show'} ${x.type.shortLabel}`"
@@ -198,6 +198,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                 v-model="x.active"
                                 :label="x.type.label"
                                 :color="x.type.color"
+                                density="compact"
+                                hide-details
                             ></v-switch>
                         </template>
                     </v-tooltip>
