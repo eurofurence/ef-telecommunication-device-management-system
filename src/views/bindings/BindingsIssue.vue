@@ -29,6 +29,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     v-model="currentStep"
                     :items="['User', 'Items', 'Review', 'Binding']"
                     alt-labels
+                    class="binding-stepper"
                 >
                     <template v-slot:item.1>
                         <v-card title="Select User" flat>
@@ -71,8 +72,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                     @update:model-value="($refs.itemSelector as InstanceType<typeof ServerItemSelector>).clear(); onItemSelect(null);"
                                 >
                                     <v-btn v-for="type in ItemType.getAll()" :value="type">
-                                        <v-icon start>{{ type.icon }}</v-icon>
-                                        <span class="hidden-sm-and-down">{{ type.shortLabel }}</span>
+                                        <v-icon>{{ type.icon }}</v-icon>
+                                        <span class="hidden-sm-and-down ml-2">{{ type.shortLabel }}</span>
                                     </v-btn>
                                 </v-btn-toggle>
                                 <ServerItemSelector
@@ -182,35 +183,37 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
                     <template v-slot:item.4>
                         <v-card title="Create Binding" flat>
-                            <div v-if="bindingInProgress">
-                                <v-alert
-                                    type="info"
-                                    text="Binding items to user. Please wait..."
-                                >
-                                    <v-progress-linear
-                                        class="mt-3"
-                                        color="primary"
-                                        indeterminate
-                                    ></v-progress-linear>
-                                </v-alert>
-                            </div>
-                            <div v-if="!bindingInProgress">
-                                <div v-if="bindingError">
+                            <v-card-item>
+                                <div v-if="bindingInProgress">
                                     <v-alert
-                                        v-if="bindingError"
-                                        type="error"
-                                        title="Error"
-                                        :text="bindingError"
-                                    ></v-alert>
+                                        type="info"
+                                        text="Binding items to user. Please wait..."
+                                    >
+                                        <v-progress-linear
+                                            class="mt-3"
+                                            color="primary"
+                                            indeterminate
+                                        ></v-progress-linear>
+                                    </v-alert>
                                 </div>
-                                <div v-if="!bindingError">
-                                    <v-alert
-                                        type="success"
-                                        title="Binding created"
-                                        :text="'Successfully bound ' + createdBindings.length + ' items to ' + (selectedUser as any).pretty_name + '.'"
-                                    ></v-alert>
+                                <div v-if="!bindingInProgress">
+                                    <div v-if="bindingError">
+                                        <v-alert
+                                            v-if="bindingError"
+                                            type="error"
+                                            title="Error"
+                                            :text="bindingError"
+                                        ></v-alert>
+                                    </div>
+                                    <div v-if="!bindingError">
+                                        <v-alert
+                                            type="success"
+                                            title="Binding created"
+                                            :text="'Successfully bound ' + createdBindings.length + ' items to ' + (selectedUser as any).pretty_name + '.'"
+                                        ></v-alert>
+                                    </div>
                                 </div>
-                            </div>
+                            </v-card-item>
                         </v-card>
                     </template>
 

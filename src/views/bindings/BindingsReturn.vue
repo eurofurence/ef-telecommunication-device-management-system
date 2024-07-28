@@ -29,6 +29,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     v-model="currentStep"
                     :items="['User', 'Items', 'Review', 'Unbinding']"
                     alt-labels
+                    class="binding-stepper"
                 >
                     <template v-slot:item.1>
                         <v-card title="Select User" flat>
@@ -176,35 +177,37 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
                     <template v-slot:item.4>
                         <v-card title="Unbinding Items" flat>
-                            <div v-if="unbindingInProgress">
-                                <v-alert
-                                    type="info"
-                                    text="Unbinding items from user. Please wait..."
-                                >
-                                    <v-progress-linear
-                                        class="mt-3"
-                                        color="primary"
-                                        indeterminate
-                                    ></v-progress-linear>
-                                </v-alert>
-                            </div>
-                            <div v-if="!unbindingInProgress">
-                                <div v-if="unbindingError">
+                            <v-card-item>
+                                <div v-if="unbindingInProgress">
                                     <v-alert
-                                        v-if="unbindingError"
-                                        type="error"
-                                        title="Error"
-                                        :text="unbindingError"
-                                    ></v-alert>
+                                        type="info"
+                                        text="Unbinding items from user. Please wait..."
+                                    >
+                                        <v-progress-linear
+                                            class="mt-3"
+                                            color="primary"
+                                            indeterminate
+                                        ></v-progress-linear>
+                                    </v-alert>
                                 </div>
-                                <div v-if="!unbindingError">
-                                    <v-alert
-                                        type="success"
-                                        title="Items unbound"
-                                        :text="'Successfully unbound ' + bindingsToRemove.length + ' items from ' + (selectedUser as any).pretty_name + '.'"
-                                    ></v-alert>
+                                <div v-if="!unbindingInProgress">
+                                    <div v-if="unbindingError">
+                                        <v-alert
+                                            v-if="unbindingError"
+                                            type="error"
+                                            title="Error"
+                                            :text="unbindingError"
+                                        ></v-alert>
+                                    </div>
+                                    <div v-if="!unbindingError">
+                                        <v-alert
+                                            type="success"
+                                            title="Items unbound"
+                                            :text="'Successfully unbound ' + bindingsToRemove.length + ' items from ' + (selectedUser as any).pretty_name + '.'"
+                                        ></v-alert>
+                                    </div>
                                 </div>
-                            </div>
+                            </v-card-item>
                         </v-card>
                     </template>
 

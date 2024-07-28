@@ -28,4 +28,23 @@ html {
 .v-container.main-container-boxed {
     max-width: 1400px;
 }
+
+@media (max-width: 960px) {
+    .binding-stepper .v-window {
+        margin: 10px;
+    }
+    .binding-stepper .v-stepper-item {
+        padding: 16px;
+        flex-basis: 100px !important;
+    }
+    .v-stepper-header hr.v-divider {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .binding-stepper .v-window {
+        margin: 4px;
+    }
+}
 </style>
