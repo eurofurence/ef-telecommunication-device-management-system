@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 1.5.2 (2024-08-07)
+
+- [Maintenance] Update Python dependencies
+   - Fix CVE-2024-42005
+   - Fix CVE-2024-41991
+   - Fix CVE-2024-41990
+   - Fix CVE-2024-41989
+- [Maintenance] Update JavaScript dependencies
+
+
 ## Version 1.5.1 (2024-07-28)
 
 - [Feature] Make main navigation drawer collapsible (default on mobile)
