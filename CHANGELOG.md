@@ -1,7 +1,9 @@
 # Changelog
 
-## Version X.X.X (YYYY-MM-DD)
+## Version 1.6.0 (2024-08-17)
 
+- [Feature] Django management command to synchronize local user data with the Eurofurence registration system
+- [Misc] Make EF registration ID optional within `User` forms
 - [Maintenance] Update Python dependencies
 - [Maintenance] Update JavaScript dependencies
 
