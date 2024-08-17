@@ -1,5 +1,11 @@
 # Changelog
 
+## Version X.X.X (YYYY-MM-DD)
+
+- [Maintenance] Update Python dependencies
+- [Maintenance] Update JavaScript dependencies
+
+
 ## Version 1.5.2 (2024-08-07)
 
 - [Maintenance] Update Python dependencies
