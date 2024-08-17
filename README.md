@@ -40,6 +40,34 @@ convention.
    - `docker compose exec -it backend python manage.py changepassword admin`
 
 
+## Data Synchronization
+
+The EF-TDMS can synchronize its local user database with the Eurofurence
+registration system via its API. Users are identified by their EF registration
+ID. New users are automatically created during synchronization. Existing users
+are checked for changes and either skipped (without `--force` flag) or updated
+(with `--force` flag).
+
+To synchronize the user database execute the following steps:
+
+1. Login to the [Eurofurence Identity Provider (IDP)](https://identity.eurofurence.org/)
+2. Access the using the `My EF Registration` button within the IDP
+3. Extract the JSON web token (JWT) from your Cookies
+4. Start the synchronization process with the following command:
+   - `docker compose exec -it backend python manage.py syncusers "https://reglive.eurofurence.org/CHANGE_ME/attsrv/api/rest/v1/" "<JWT>"`
+5. Wait for the synchronization process to finish. The total number of processed
+   users is displayed at the end of the process.
+
+### Changes / Conflicts
+
+If a user with the same registration ID exists in the local user database of the
+EF-TDMS, but the user data differs from the data in the Eurofurence registration
+system, a warning is displayed. If the user data should be updated, append the
+`--force` flag to the synchronization command.
+
+Example: `docker compose exec -it backend python manage.py syncusers "https://reglive.eurofurence.org/CHANGE_ME/attsrv/api/rest/v1/" "<JWT>" --force`
+
+
 ## License
 
 Eurofurence Telecommunication Device Management System (EF-TDMS)
