@@ -35,7 +35,7 @@ class User(AbstractUser):
         help_text="Nickname of the user"
     )
     ef_reg_id = models.PositiveIntegerField(
-        blank=False,
+        blank=True,
         null=True,
         unique=True,
         help_text="ID of the user in the EF reg database"

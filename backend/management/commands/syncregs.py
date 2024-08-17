@@ -140,7 +140,7 @@ class Command(BaseCommand):
 
         # Check status
         if r.status_code != 200:
-            raise Exception(f"Request to {apiurl} for page {page} failed with status code {r.status_code}")
+            raise Exception(f"Request to {apiurl} for page {page} failed with status code HTTP {r.status_code}")
 
         data = r.json()
         if 'attendees' not in data:
