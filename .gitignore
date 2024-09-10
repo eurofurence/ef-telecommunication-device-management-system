@@ -2,6 +2,7 @@
 .iml
 
 **/deploymentmap/*.svg
+docker/web/provosion.htpasswd
 
 
 ### Poetry .gitignore START

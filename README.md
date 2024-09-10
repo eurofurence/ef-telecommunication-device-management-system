@@ -68,6 +68,15 @@ system, a warning is displayed. If the user data should be updated, append the
 Example: `docker compose exec -it backend python manage.py syncusers "https://reglive.eurofurence.org/CHANGE_ME/attsrv/api/rest/v1/" "<JWT>" --force`
 
 
+## Phone Provisioning
+
+Files for zero-touch provisioning of VoIP phones can be placed in the
+`provision` folder. The files are served via the `/provision` endpoint.
+
+The endpoint is protected by HTTP basic auth. The credentials can be set in the
+`docker/web/provision.htpasswd` file.
+
+
 ## License
 
 Eurofurence Telecommunication Device Management System (EF-TDMS)

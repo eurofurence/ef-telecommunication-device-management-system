@@ -18,6 +18,13 @@ server {
         alias /usr/share/nginx/html/static;
     }
 
+    location /provision {
+        alias /usr/share/nginx/html/provision;
+
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/provision.htpasswd;
+    }
+
     location ~ ^/(admin|api) {
         proxy_pass http://backend;
 
