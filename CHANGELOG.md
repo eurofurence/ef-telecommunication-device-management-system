@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 1.6.1 (2024-09-10)
+
+- [Feature] Create protected directory to serve VoIP provisioning files
+- [Maintenance] Update Python dependencies
+- [Maintenance] Update JavaScript dependencies
+
+
 ## Version 1.6.0 (2024-08-17)
 
 - [Feature] Django management command to synchronize local user data with the Eurofurence registration system

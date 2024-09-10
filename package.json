@@ -1,6 +1,6 @@
 {
   "name": "ef-tdms-frontend",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "type": "module",
   "description": "Eurofurence Telecommunication Device Management System",
   "homepage": "https://github.com/eurofurence/ef-telecommunication-device-management-system",
