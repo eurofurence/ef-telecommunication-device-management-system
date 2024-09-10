@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - backend_static:/usr/share/nginx/html/static:ro
+      - ./provision:/usr/share/nginx/html/provision:ro
       - ./docker/web/provision.htpasswd:/etc/nginx/provision.htpasswd:ro
     ports:
       - "${EFTDMS_WEB_PORT}:8080/tcp"
