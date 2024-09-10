@@ -2,7 +2,7 @@
 .iml
 
 **/deploymentmap/*.svg
-docker/web/provosion.htpasswd
+docker/web/provision.htpasswd
 provision/
 
 
