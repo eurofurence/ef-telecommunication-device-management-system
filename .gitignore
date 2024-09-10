@@ -3,6 +3,7 @@
 
 **/deploymentmap/*.svg
 docker/web/provosion.htpasswd
+provision/
 
 
 ### Poetry .gitignore START
