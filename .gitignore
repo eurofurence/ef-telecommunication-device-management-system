@@ -1,7 +1,6 @@
 .idea/
 .iml
 
-**/deploymentmap/*.svg
 docker/web/provision.htpasswd
 provision/
 

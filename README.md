@@ -76,6 +76,38 @@ The endpoint is protected by HTTP basic auth. The credentials can be set in the
 `docker/web/provision.htpasswd` file.
 
 
+## Screenshots
+
+This section contains various screenshots of some of the features of the EF-TDMS.
+
+### Home Page
+![Screenshot: Home](docs/assets/screenshot_home.png)
+
+### Internal Overview
+![Screenshot: Overview](docs/assets/screenshot_overview.png)
+
+### Interactive Deployment Map
+![Screenshot: Deployment Map](docs/assets/screenshot_deploymentmap.png)
+
+### Item Handout Process
+![Screenshot: Item handout](docs/assets/screenshot_handout.png)
+
+### Item Return Process
+![Screenshot: Item return](docs/assets/screenshot_return.png)
+
+### Inventory Overview
+![Screenshot: Inventory](docs/assets/screenshot_inventory.png)
+
+### Radio Device Management
+![Screenshot: Radios](docs/assets/screenshot_radios.png)
+
+### VoIP Phone Editing
+![Screenshot: Phone Edit](docs/assets/screenshot_phone_edit.png)
+
+### Callbox Management
+![Screenshot: Callboxes](docs/assets/screenshot_callboxes.png)
+
+
 ## License
 
 Eurofurence Telecommunication Device Management System (EF-TDMS)
