@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 1.7.0 (2024-09-14)
+
+- [Feature] Add radio usage guide to home page
+- [Feature] Add on-site service information to home page
+- [Feature] Add contact information / support chat to home page
+- [Bugfix] Fix name of `provisioning.htpasswd.dist` file template
+- [Bugfix] Declare provision folder mounting in `docker-compose.yml`
+- [Docs] Create screenshots and add them to `README.md`
+
+
 ## Version 1.6.1 (2024-09-10)
 
 - [Feature] Create protected directory to serve VoIP provisioning files
