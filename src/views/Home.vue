@@ -26,7 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             <v-row class="d-flex align-center justify-center">
                 <v-col cols="auto">
                     <v-btn
-                        :href="radioHandoutUrl"
+                        href="https://t.me/EFTelecom"
                         target="_blank"
                         :min-width="buttonWidth"
                         size="x-large"
@@ -34,6 +34,25 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     >
                         <v-icon
                             icon="mdi-chat-question-outline"
+                            size="large"
+                            start
+                        />
+                        Support chat
+                    </v-btn>
+                </v-col>
+            </v-row>
+
+            <v-row class="d-flex align-center justify-center">
+                <v-col cols="auto">
+                    <v-btn
+                        :href="radioHandoutUrl"
+                        target="_blank"
+                        :min-width="buttonWidth"
+                        size="x-large"
+                        color="info"
+                    >
+                        <v-icon
+                            icon="mdi-radio-handheld"
                             size="large"
                             start
                         />
