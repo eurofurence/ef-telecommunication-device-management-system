@@ -56,29 +56,45 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                         </p>
                                         <v-list>
                                             <v-list-item
-                                                title="Room 031, Ground Floor"
-                                                subtitle="Tuesday (17.09.24)"
+                                                v-for="entry in radioDesks"
+                                                :title="entry.title"
+                                                :subtitle="entry.subtitle"
                                             >
                                                 <template v-slot:prepend>
                                                     <v-btn
                                                         color="primary"
-                                                        icon="mdi-map-marker"
                                                         density="comfortable"
                                                         class="mr-4"
-                                                    ></v-btn>
-                                                </template>
-                                            </v-list-item>
-                                            <v-list-item
-                                                title="Room 201, Second Floor"
-                                                subtitle="Wednesday (18.09.24) to Sunday (22.09.24)"
-                                            >
-                                                <template v-slot:prepend>
-                                                    <v-btn
-                                                        color="primary"
-                                                        icon="mdi-map-marker"
-                                                        density="comfortable"
-                                                        class="mr-4"
-                                                    ></v-btn>
+                                                        icon
+                                                    >
+                                                        <v-icon
+                                                            icon="mdi-map-marker"
+                                                            size="small"
+                                                        ></v-icon>
+                                                        <v-tooltip
+                                                            text="Show on map"
+                                                            activator="parent"
+                                                        ></v-tooltip>
+                                                        <v-overlay
+                                                            activator="parent"
+                                                            location-strategy="static"
+                                                            scroll-strategy="block"
+                                                            :close-on-content-click="true"
+                                                        >
+                                                            <v-sheet
+                                                                width="100vw"
+                                                                height="100vh"
+                                                                class="d-flex bg-transparent justify-center align-center"
+                                                            >
+                                                                <v-img
+                                                                    :src="entry.locationMap"
+                                                                    width="2000"
+                                                                    max-width="95vw"
+                                                                    max-height="95vh"
+                                                                ></v-img>
+                                                            </v-sheet>
+                                                        </v-overlay>
+                                                    </v-btn>
                                                 </template>
                                             </v-list-item>
                                         </v-list>
@@ -114,12 +130,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                             outside of these times, use the support station at the radio desk or
                                             contact us directly via <a :href="telegramContactUrl" target="_blank">Telegram</a>.
                                         </p>
-                                        <v-list slim>
+                                        <v-list density="compact" slim>
                                             <v-list-subheader>Tuesday (17.09.24), Room 031</v-list-subheader>
                                             <v-list-item title="16:00 - 17:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
                                             <v-list-item title="18:00 - 20:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
-
-                                            <v-divider></v-divider>
 
                                             <v-list-subheader>Tuesday (17.09.24), Room 201</v-list-subheader>
                                             <v-list-item title="13:00 - 14:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
@@ -139,12 +153,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                         <p class="mt-3">
                                             Radio return is possible during the following times:
                                         </p>
-                                        <v-list slim>
+                                        <v-list density="compact" slim>
                                             <v-list-subheader>Saturday (21.09.24), Room 201</v-list-subheader>
                                             <v-list-item title="15:00 - 16:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
                                             <v-list-item title="21:00 - 22:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
-
-                                            <v-divider></v-divider>
 
                                             <v-list-subheader>Sunday (22.09.24), Room 201</v-list-subheader>
                                             <v-list-item title="09:00 - 11:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
@@ -245,4 +257,17 @@ const radioHandoutUrl = new URL('@/assets/radio-handout.pdf', import.meta.url).h
 const telegramContactUrl = new URL('https://t.me/EFTelecom').href;
 
 const dialogOnSiteInfo = ref(false);
+
+const radioDesks = [
+    {
+        title: "Room 031, Ground Floor",
+        subtitle: "Tuesday (17.09.24)",
+        locationMap: new URL("@/assets/Radiodesk_Location_MoTue.png", import.meta.url).href,
+    },
+    {
+        title: "Room 201, Second Floor",
+        subtitle: "Wednesday (18.09.24) to Sunday (22.09.24)",
+        locationMap: new URL("@/assets/Radiodesk_Location_WeSu.png", import.meta.url).href,
+    }
+];
 </script>
