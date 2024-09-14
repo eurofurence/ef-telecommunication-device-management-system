@@ -21,14 +21,13 @@ convention.
 
 1. Clone the repository
 2. Copy the `.env.dist` file to `.env` and adjust the settings
-3. Place map assets into `src/assets/deploymentmap/`
-4. Create empty SQLite database file
+3. Create empty SQLite database file
    - `touch db.sqlite3`
    - `chown 1000:1000 db.sqlite3`
-5. Build with `docker compose build`
-6. Run with `docker compose up -d`
-7. Setup default permission groups: `docker compose exec -it backend python manage.py setuppermissions`
-8. Create Django superuser with `docker compose exec -it backend python manage.py createsuperuser`
+4. Build with `docker compose build`
+5. Run with `docker compose up -d`
+6. Setup default permission groups: `docker compose exec -it backend python manage.py setuppermissions`
+7. Create Django superuser with `docker compose exec -it backend python manage.py createsuperuser`
 
 
 ### Deploy a test installation using fixtures
