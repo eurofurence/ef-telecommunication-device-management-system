@@ -26,8 +26,26 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             <v-row class="d-flex align-center justify-center">
                 <v-col cols="auto">
                     <v-btn
+                        :href="radioHandoutUrl"
+                        target="_blank"
+                        :min-width="buttonWidth"
+                        size="x-large"
+                        color="info"
+                    >
+                        <v-icon
+                            icon="mdi-chat-question-outline"
+                            size="large"
+                            start
+                        />
+                        Radio usage guide
+                    </v-btn>
+                </v-col>
+            </v-row>
+            <v-row class="d-flex align-center justify-center">
+                <v-col cols="auto">
+                    <v-btn
                         to="/login"
-                        min-width="228"
+                        :min-width="buttonWidth"
                         size="x-large"
                         color="#e20074"
                     >
@@ -43,3 +61,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         </v-responsive>
     </v-container>
 </template>
+
+<script setup>
+const buttonWidth = 320;
+const radioHandoutUrl = new URL('@/assets/radio-handout.pdf', import.meta.url).href;
+</script>
