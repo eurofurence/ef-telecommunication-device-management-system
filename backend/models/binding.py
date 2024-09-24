@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django_currentuser.middleware import get_current_user
 
 from backend.models import Item
 from backend.models import User
@@ -89,7 +90,7 @@ def item_binding_post_save(instance, created, **kwargs):
     else:
         action = EventLogEntry.Action.UPDATE_ITEM_BINDING
 
-    EventLogEntry.log(instance.bound_by, action, {
+    EventLogEntry.log(get_current_user(), action, {
         "id": instance.id,
         "item": {
             "id": instance.item.id,
@@ -111,7 +112,7 @@ def item_binding_post_delete(instance, **kwargs):
     :param kwargs: Additional arguments
     :return: None
     """
-    EventLogEntry.log(instance.bound_by, EventLogEntry.Action.DELETE_ITEM_BINDING, {
+    EventLogEntry.log(get_current_user(), EventLogEntry.Action.DELETE_ITEM_BINDING, {
         "id": instance.id,
         "item": {
             "id": instance.item.id,
