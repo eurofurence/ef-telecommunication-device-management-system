@@ -1,5 +1,10 @@
 # Changelog
 
+## Version X.X.X (XXXX-XX-XX)
+
+- [Bugfix] Event log: Binding deletion user always same as binding creation user
+
+
 ## Version 1.7.0 (2024-09-14)
 
 - [Feature] Add radio usage guide to home page
