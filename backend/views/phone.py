@@ -27,6 +27,14 @@ class PhoneTemplateViewSet(AbstractItemTemplateViewSet):
     """
     queryset = PhoneTemplate.objects.all()
     serializer_class = PhoneTemplateSerializer
+    ordering_fields = [
+        'id',
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname',
+        'private'
+    ]
     search_fields = [
         'name',
         'description',
@@ -41,6 +49,16 @@ class PhoneViewSet(AbstractItemViewSet):
     """
     queryset = Phone.objects.all()
     serializer_class = PhoneSerializer
+    ordering_fields = [
+        'id',
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'private',
+        'extension',
+        'location'
+    ]
     search_fields = [
         'template__name',
         'template__description',

@@ -48,8 +48,21 @@ class ItemBindingViewSet(
     serializer_class = ItemBindingSerializer
     permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
-    ordering_fields = '__all__'
     ordering = ['id']
+    ordering_fields = [
+        'id',
+        'item__template__name',
+        'item__template__description',
+        'item__template__owner__name',
+        'item__template__owner__shortname',
+        'item__serialnumber',
+        'user__nickname',
+        'user__ef_reg_id',
+        'user__ef_security_collar_id',
+        'bound_by__nickname',
+        'bound_by__ef_reg_id',
+        'bound_by__ef_security_collar_id'
+    ]
     search_fields = [
         'item__template__name',
         'item__template__description',

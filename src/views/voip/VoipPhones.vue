@@ -77,7 +77,7 @@ export default {
                 {key: 'notes', title: 'Notes', align: 'start', sortable: false},
                 {key: 'location', title: 'Location', align: 'start', sortable: true},
                 {key: 'template.owner.shortname', title: 'Owner', align: 'start', sortable: true},
-                {key: 'handed_out', title: 'Status', align: 'start', sortable: true},
+                {key: 'handed_out', title: 'Status', align: 'start', sortable: false},
             ],
             expandedRowProps: [
                 {key: 'template.owner.name', title: 'Owner'},

@@ -45,8 +45,15 @@ class OrderViewSet(
     serializer_class = OrderSerializer
     permission_classes = [FullDjangoModelPermissions]
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
-    ordering_fields = '__all__'
     ordering = ['id']
+    ordering_fields = [
+        'id',
+        'user__nickname',
+        'user__ef_reg_id',
+        'user__ef_security_collar_id',
+        'title',
+        'type'
+    ]
     search_fields = [
         'user__username',
         '=user__ef_reg_id',

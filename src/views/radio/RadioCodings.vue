@@ -59,7 +59,7 @@ export default {
             headers: [
                 {key: 'id', title: 'ID', align: 'start', sortable: true},
                 {key: 'name', title: 'Name', align: 'start', sortable: true},
-                {key: 'color', title: 'Color', align: 'start', sortable: true},
+                {key: 'color', title: 'Color', align: 'start', sortable: false},
                 {key: 'description', title: 'Description', align: 'start', sortable: true},
             ],
             fetchFunction: itemsStore.fetchRadioCodingsPage,
