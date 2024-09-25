@@ -2,6 +2,7 @@
 
 ## Version X.X.X (XXXX-XX-XX)
 
+- [Feature] Allow to search for radios by their codings name during hand out and inside the device overview table
 - [Bugfix] Event log: Binding deletion user always same as binding creation user
 
 
