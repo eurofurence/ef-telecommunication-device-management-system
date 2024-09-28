@@ -36,7 +36,26 @@ export class APIUtils {
         let ordering = '';
 
         sortBy.forEach((item: any) => {
-            ordering += (item.order === 'asc') ? item.key : '-' + item.key;
+            if (!item || item.key === undefined) {
+                return;
+            }
+
+            // Translate JS dot notation to Django double underscore notation
+            let key = item.key.replaceAll('.', '__');
+
+            // Special case for radio coding objects and others
+            if (key === 'template__coding') {
+                key = 'template__radiodevicetemplate__coding__name';
+            } else if (key === 'coding') {
+                key = 'coding__name';
+            } else if (key === 'user__pretty_name') {
+                key = 'user__nickname';
+            } else if (key === 'bound_by__pretty_name') {
+                key = 'bound_by__nickname';
+            }
+
+            // Add the ordering to the query string
+            ordering += (item.order === 'asc') ? key : '-' + key;
         });
 
         return ordering;

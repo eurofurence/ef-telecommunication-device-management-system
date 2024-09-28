@@ -44,7 +44,7 @@ export default {
                 {key: 'id', title: 'User-ID', align: 'start', sortable: true},
                 {key: 'ef_reg_id', title: 'Reg-ID', align: 'start', sortable: true},
                 {key: 'nickname', title: 'Nickname', align: 'start', sortable: true},
-                {key: 'email', title: 'E-Mail', align: 'start', sortable: false},
+                {key: 'email', title: 'E-Mail', align: 'start', sortable: true},
                 {key: 'ef_security_collar_id', title: 'Collar-ID', align: 'start', sortable: true},
                 {key: 'last_login', title: 'Last login', align: 'start', sortable: false},
             ],

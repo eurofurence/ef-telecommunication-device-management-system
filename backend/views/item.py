@@ -18,6 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from abc import ABC
 
+import django_filters
+from django_filters.filterset import FilterSet
+from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework import filters
 
@@ -41,29 +44,23 @@ class AbstractItemTemplateViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
     ordering = ['id']
 
 
+class AbstractItemFilter(FilterSet):
+    private = django_filters.BooleanFilter(field_name='template__private', lookup_expr='exact')
+    available = django_filters.BooleanFilter(field_name='itembinding', lookup_expr='isnull')
+
+    class Meta:
+        model = Item
+        fields = ['available', 'private']
+
 class AbstractItemViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
     """
     API endpoint that allows items to be viewed or edited.
     """
     permission_classes = [FullDjangoModelPermissions]
-    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend]
     ordering_fields = '__all__'
     ordering = ['id']
-
-    @action(detail=False, methods=['get'])
-    def available(self, request):
-        available_items = self.filter_queryset(self.queryset.filter(
-            itembinding__isnull=True,
-            template__private=False
-        ))
-        page = self.paginate_queryset(available_items)
-
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(available_items, many=True)
-        return Response(serializer.data)
+    filterset_class = AbstractItemFilter
 
 
 class ItemMetadataViewSet(viewsets.ReadOnlyModelViewSet):

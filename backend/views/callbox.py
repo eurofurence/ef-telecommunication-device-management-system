@@ -27,6 +27,14 @@ class CallboxTemplateViewSet(AbstractItemTemplateViewSet):
     """
     queryset = CallboxTemplate.objects.all()
     serializer_class = CallboxTemplateSerializer
+    ordering_fields = [
+        'id',
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname',
+        'private'
+    ]
     search_fields = [
         'name',
         'description',
@@ -41,6 +49,17 @@ class CallboxViewSet(AbstractItemViewSet):
     """
     queryset = Callbox.objects.all()
     serializer_class = CallboxSerializer
+    ordering_fields = [
+        'id',
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'private',
+        'extension',
+        'location',
+        'has_camera'
+    ]
     search_fields = [
         'template__name',
         'template__description',

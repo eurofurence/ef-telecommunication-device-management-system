@@ -2,7 +2,12 @@
 
 ## Version X.X.X (XXXX-XX-XX)
 
+- [Feature] Allow to search for radios by their codings name during hand out and inside the device overview table
+- [Feature] Allow to filter items by their status ('Available', 'Handed out', 'Private')
+- [Feature] Prepare backend for advanced filter options
+- [Bugfix] Fix sorting of nested columns in item overview tables
 - [Bugfix] Event log: Binding deletion user always same as binding creation user
+- [Misc] Optimize frontend item table refresh logic
 
 
 ## Version 1.7.0 (2024-09-14)

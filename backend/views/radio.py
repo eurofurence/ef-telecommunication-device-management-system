@@ -52,6 +52,15 @@ class RadioDeviceTemplateViewSet(AbstractItemTemplateViewSet):
     """
     queryset = RadioDeviceTemplate.objects.all()
     serializer_class = RadioDeviceTemplateSerializer
+    ordering_fields = [
+        'id',
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname',
+        'private',
+        'coding__name'
+    ]
     search_fields = [
         'name',
         'description',
@@ -66,12 +75,22 @@ class RadioDeviceViewSet(AbstractItemViewSet):
     """
     queryset = RadioDevice.objects.all()
     serializer_class = RadioDeviceSerializer
+    ordering_fields = [
+        'id',
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'template__radiodevicetemplate__coding__name',
+        'serialnumber',
+        'callsign'
+    ]
     search_fields = [
         'template__name',
         'template__description',
         'template__owner__name',
         '=template__owner__shortname',
-        # 'template__coding__name', TODO: This currently does not work together with django-polymorphic
+        'template__radiodevicetemplate__coding__name',
         'notes',
         'serialnumber',
         'created_at',
@@ -86,6 +105,15 @@ class RadioAccessoryTemplateViewSet(AbstractItemTemplateViewSet):
     """
     queryset = RadioAccessoryTemplate.objects.all()
     serializer_class = RadioAccessoryTemplateSerializer
+    ordering_fields = [
+        'id',
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname',
+        'private',
+        'allow_quickadd'
+    ]
     search_fields = [
         'name',
         'description',
@@ -101,6 +129,14 @@ class RadioAccessoryViewSet(BulkCreateMixin, AbstractItemViewSet):
     """
     queryset = RadioAccessory.objects.all()
     serializer_class = RadioAccessorySerializer
+    ordering_fields = [
+        'id',
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'serialnumber'
+    ]
     search_fields = [
         'template__name',
         'template__description',
@@ -119,6 +155,14 @@ class PagerTemplateViewSet(AbstractItemTemplateViewSet):
     """
     queryset = PagerTemplate.objects.all()
     serializer_class = PagerTemplateSerializer
+    ordering_fields = [
+        'id',
+        'name',
+        'description',
+        'owner__name',
+        'owner__shortname',
+        'private'
+    ]
     search_fields = [
         'name',
         'description',
@@ -133,6 +177,14 @@ class PagerViewSet(AbstractItemViewSet):
     """
     queryset = Pager.objects.all()
     serializer_class = PagerSerializer
+    ordering_fields = [
+        'id',
+        'template__name',
+        'template__description',
+        'template__owner__name',
+        'template__owner__shortname',
+        'serialnumber'
+    ]
     search_fields = [
         'template__name',
         'template__description',

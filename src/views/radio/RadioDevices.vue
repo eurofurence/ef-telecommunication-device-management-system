@@ -78,7 +78,7 @@ export default {
                 {key: 'callsign', title: 'Callsign', align: 'start', sortable: true},
                 {key: 'serialnumber', title: 'S/N', align: 'start', sortable: true},
                 {key: 'notes', title: 'Notes', align: 'start', sortable: false},
-                {key: 'handed_out', title: 'Status', align: 'start', sortable: true},
+                {key: 'handed_out', title: 'Status', align: 'start', sortable: false},
             ],
             expandedRowProps: [
                 {key: 'template.owner.name', title: 'Owner'},
