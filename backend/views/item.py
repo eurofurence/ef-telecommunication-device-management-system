@@ -62,21 +62,6 @@ class AbstractItemViewSet(ABC, BulkDeleteMixin, viewsets.ModelViewSet):
     ordering = ['id']
     filterset_class = AbstractItemFilter
 
-    @action(detail=False, methods=['get'])
-    def available(self, request):
-        available_items = self.filter_queryset(self.queryset.filter(
-            itembinding__isnull=True,
-            template__private=False
-        ))
-        page = self.paginate_queryset(available_items)
-
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(available_items, many=True)
-        return Response(serializer.data)
-
 
 class ItemMetadataViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Item.objects.all()

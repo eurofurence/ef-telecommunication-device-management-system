@@ -53,7 +53,6 @@ export const useItemsStore = defineStore("item", {
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
          * @param additionalParams Additional GET parameters to append.
-         * @param availableOnly Whether to only fetch available radios.
          */
         async fetchRadiosPage(
             page: number,
@@ -61,10 +60,9 @@ export const useItemsStore = defineStore("item", {
             sortBy: any[],
             search: string,
             additionalParams: string[] = [],
-            availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
-                '/radios/'+(availableOnly ? 'available/' : ''),
+                '/radios/',
                 page,
                 itemsPerPage,
                 sortBy,
@@ -239,7 +237,6 @@ export const useItemsStore = defineStore("item", {
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
          * @param additionalParams Additional GET parameters to append.
-         * @param availableOnly Whether to only fetch available radio accessories.
          */
         async fetchRadioAccessoriesPage(
             page: number,
@@ -247,10 +244,9 @@ export const useItemsStore = defineStore("item", {
             sortBy: any[],
             search: string,
             additionalParams: string[] = [],
-            availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
-                '/radio_accessories/'+(availableOnly ? 'available/' : ''),
+                '/radio_accessories/',
                 page,
                 itemsPerPage,
                 sortBy,
@@ -414,7 +410,6 @@ export const useItemsStore = defineStore("item", {
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
          * @param additionalParams Additional GET parameters to append.
-         * @param availableOnly Whether to only fetch available pagers.
          */
         async fetchPagersPage(
             page: number,
@@ -422,10 +417,9 @@ export const useItemsStore = defineStore("item", {
             sortBy: any[],
             search: string,
             additionalParams: string[] = [],
-            availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
-                '/pagers/'+(availableOnly ? 'available/' : ''),
+                '/pagers/',
                 page,
                 itemsPerPage,
                 sortBy,
@@ -588,7 +582,6 @@ export const useItemsStore = defineStore("item", {
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
          * @param additionalParams Additional GET parameters to append.
-         * @param availableOnly Whether to only fetch available phones.
          */
         async fetchPhonesPage(
             page: number,
@@ -596,10 +589,9 @@ export const useItemsStore = defineStore("item", {
             sortBy: any[],
             search: string,
             additionalParams: string[] = [],
-            availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
-                '/phones/'+(availableOnly ? 'available/' : ''),
+                '/phones/',
                 page,
                 itemsPerPage,
                 sortBy,
@@ -798,7 +790,6 @@ export const useItemsStore = defineStore("item", {
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
          * @param additionalParams Additional GET parameters to append.
-         * @param availableOnly Whether to only fetch available callboxes.
          */
         async fetchCallboxesPage(
             page: number,
@@ -806,10 +797,9 @@ export const useItemsStore = defineStore("item", {
             sortBy: any[],
             search: string,
             additionalParams: string[] = [],
-            availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
-                '/callboxes/'+(availableOnly ? 'available/' : ''),
+                '/callboxes/',
                 page,
                 itemsPerPage,
                 sortBy,
