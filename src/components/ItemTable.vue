@@ -327,7 +327,11 @@ export default defineComponent({
         },
 
         reload() {
-            this.tableKey++;
+            let oldSearch = this.search;
+            this.search = String(Date.now());
+            this.$nextTick(() => {
+                this.search = oldSearch;
+            });
         },
 
         deselectItemsByKey(keys: number[]) {
