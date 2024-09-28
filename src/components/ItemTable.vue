@@ -47,6 +47,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         ></v-text-field>
                     </v-sheet>
                 </div>
+                <div v-if="tableHasStatusColumn" class="flex-align-end flex-shrink-1 ml-2">
+                    <v-select
+                        v-model="filters.status"
+                        @update:model-value="reload"
+                        :items="['All', 'Available', 'Handed out', 'Private']"
+                        label="Status"
+                        hide-details
+                    ></v-select>
+                </div>
                 <div class="flex-align-end flex-shrink-1 ml-2">
                     <v-btn
                         v-if="selected.length > 0"
@@ -273,6 +282,23 @@ export default defineComponent({
     computed: {
         PropUtils() {
             return PropUtils
+        },
+
+        filterArgs() {
+            switch (this.filters.status) {
+                case 'Handed out':
+                    return ['available=false', 'private=false'];
+                case 'Available':
+                    return ['available=true', 'private=false'];
+                case 'Private':
+                    return ['private=true'];
+                default:
+                    return [];
+            }
+        },
+
+        tableHasStatusColumn() {
+            return this.headers.some((header: TableHeader) => header.key === 'handed_out');
         }
     },
 
@@ -297,6 +323,9 @@ export default defineComponent({
         selected: [] as any[],
         search: '',
         searchDebounceTimeout: null as any,
+        filters: {
+            status: 'All',
+        },
     }),
 
     created() {
@@ -318,7 +347,7 @@ export default defineComponent({
                 clearTimeout(this.searchDebounceTimeout);
             }
             this.searchDebounceTimeout = setTimeout(async () => {
-                this.fetchFunction(page, itemsPerPage, sortBy, search).then(({items, total}: {items: any[], total: number}) => {
+                this.fetchFunction(page, itemsPerPage, sortBy, search, this.filterArgs).then(({items, total}: {items: any[], total: number}) => {
                     this.serverItems = items;
                     this.totalItems = total;
                     this.loading = false;

@@ -52,6 +52,7 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param additionalParams Additional GET parameters to append.
          * @param availableOnly Whether to only fetch available radios.
          */
         async fetchRadiosPage(
@@ -59,6 +60,7 @@ export const useItemsStore = defineStore("item", {
             itemsPerPage: number,
             sortBy: any[],
             search: string,
+            additionalParams: string[] = [],
             availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
@@ -66,7 +68,8 @@ export const useItemsStore = defineStore("item", {
                 page,
                 itemsPerPage,
                 sortBy,
-                search
+                search,
+                additionalParams
             );
         },
 
@@ -235,6 +238,7 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param additionalParams Additional GET parameters to append.
          * @param availableOnly Whether to only fetch available radio accessories.
          */
         async fetchRadioAccessoriesPage(
@@ -242,6 +246,7 @@ export const useItemsStore = defineStore("item", {
             itemsPerPage: number,
             sortBy: any[],
             search: string,
+            additionalParams: string[] = [],
             availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
@@ -249,7 +254,8 @@ export const useItemsStore = defineStore("item", {
                 page,
                 itemsPerPage,
                 sortBy,
-                search
+                search,
+                additionalParams
             );
         },
 
@@ -407,6 +413,7 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param additionalParams Additional GET parameters to append.
          * @param availableOnly Whether to only fetch available pagers.
          */
         async fetchPagersPage(
@@ -414,6 +421,7 @@ export const useItemsStore = defineStore("item", {
             itemsPerPage: number,
             sortBy: any[],
             search: string,
+            additionalParams: string[] = [],
             availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
@@ -421,7 +429,8 @@ export const useItemsStore = defineStore("item", {
                 page,
                 itemsPerPage,
                 sortBy,
-                search
+                search,
+                additionalParams
             );
         },
 
@@ -578,6 +587,7 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param additionalParams Additional GET parameters to append.
          * @param availableOnly Whether to only fetch available phones.
          */
         async fetchPhonesPage(
@@ -585,6 +595,7 @@ export const useItemsStore = defineStore("item", {
             itemsPerPage: number,
             sortBy: any[],
             search: string,
+            additionalParams: string[] = [],
             availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
@@ -592,7 +603,8 @@ export const useItemsStore = defineStore("item", {
                 page,
                 itemsPerPage,
                 sortBy,
-                search
+                search,
+                additionalParams
             );
         },
 
@@ -716,6 +728,7 @@ export const useItemsStore = defineStore("item", {
          *
          * @param name Name of the phone template.
          * @param ownerId ID of the owner of the phone template.
+         * @param priv Whether the phone template is private.
          * @param description Description of the phone template.
          * @return API response. Created structure on success.
          */
@@ -784,6 +797,7 @@ export const useItemsStore = defineStore("item", {
          * @param itemsPerPage Number of items per page.
          * @param sortBy Field to sort by.
          * @param search Search string to filter by.
+         * @param additionalParams Additional GET parameters to append.
          * @param availableOnly Whether to only fetch available callboxes.
          */
         async fetchCallboxesPage(
@@ -791,6 +805,7 @@ export const useItemsStore = defineStore("item", {
             itemsPerPage: number,
             sortBy: any[],
             search: string,
+            additionalParams: string[] = [],
             availableOnly: boolean = false
         ) {
             return APIUtils.fetchPage(
@@ -798,7 +813,8 @@ export const useItemsStore = defineStore("item", {
                 page,
                 itemsPerPage,
                 sortBy,
-                search
+                search,
+                additionalParams
             );
         },
 

@@ -140,7 +140,7 @@ export default defineComponent({
             }
             this.searchDebounceTimeout = setTimeout(async () => {
                 // Execute search API call
-                let itemPage = await this.fetchFunction(1, this.searchPageSize, [this.itemTitleKey], query, this.availableOnly);
+                let itemPage = await this.fetchFunction(1, this.searchPageSize, [this.itemTitleKey], query, [], this.availableOnly);
                 this.items = itemPage.items.filter((item: any) => !this.itemIdsToExclude.includes(item.id))
                 this.searchHasMore = itemPage.total > this.searchPageSize;
                 this.loading = false;
