@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from backend.views.provision import ProvisionMetadataView, ProvisionConfigView, ProvisionPhonebookView
 
 """
 URL configuration for backend project.
@@ -80,6 +81,10 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/statistics/', StatisticsView.as_view(), name='item_binding_statistics'),
     path('api/current_user/', CurrentUserProfileView.as_view(), name='current_user_profile'),
+
+    path('api/provision/', ProvisionMetadataView.as_view(), name='provision_metadata'),
+    path('api/provision/config/<str:mac>/', ProvisionConfigView.as_view(), name='provision_config'),
+    path('api/provision/phonebook/<str:name>/', ProvisionPhonebookView.as_view(), name='provision_phonebook'),
 
     # Admin UI
     path('admin/', admin.site.urls),
