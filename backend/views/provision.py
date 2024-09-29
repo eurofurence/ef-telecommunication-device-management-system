@@ -24,7 +24,7 @@ from rest_framework.response import Response
 
 from backend.lib.porvision import provision_generate_config_metadata, provision_generate_firmware_metadata, \
     provision_generate_phonebook_metadata, provision_generate_wallpaper_metadata, provision_retrieve_config, \
-    provision_retrieve_phonebook
+    provision_retrieve_phonebook, provision_retrieve_wallpaper_base64
 from backend.settings import PROVISION_CONFIG_DIR
 
 
@@ -67,6 +67,19 @@ class ProvisionPhonebookView(views.APIView):
 
     def get(self, request, name):
         data = provision_retrieve_phonebook(name)
+        if data is not None:
+            return Response(data, status=200)
+        else:
+            return Response(status=404)
+
+class ProvisionWallpaperView(views.APIView):
+    """
+    API endpoint that allows the wallpaper to be retrieved
+    """
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        data = provision_retrieve_wallpaper_base64()
         if data is not None:
             return Response(data, status=200)
         else:

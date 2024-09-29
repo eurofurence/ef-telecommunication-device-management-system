@@ -51,5 +51,12 @@ export const useProvisionStore = defineStore("provision", {
             return APIUtils.get(`/provision/phonebook/${name}/`);
         },
 
+        /**
+         * Fetches the wallpaper as a base64-encoded jpg image.
+         * @return Base64-encoded jpg image.
+         */
+        async fetchWallpaper() {
+            return APIUtils.get('/provision/wallpaper/');
+        },
     },
 })

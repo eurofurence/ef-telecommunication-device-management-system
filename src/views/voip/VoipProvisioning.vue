@@ -179,7 +179,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                             <template v-slot:append>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="console.error('Yoink!')"
+                                                    @click="showWallpaper"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -255,6 +255,44 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             </v-card>
         </template>
     </v-dialog>
+
+    <v-dialog
+        v-model="wallpaperInspectionDialog.show"
+        max-width="480"
+    >
+        <template v-slot:default="{ isActive }">
+            <v-card
+                :title="wallpaperInspectionDialog.title"
+                :subtitle="wallpaperInspectionDialog.subtitle"
+            >
+                <template v-slot:append>
+                    <v-btn
+                        @click="wallpaperInspectionDialog.show = false"
+                        icon="mdi-close"
+                        variant="elevated"
+                        elevation="3"
+                        class="position-fixed mt-n16"
+                        style="z-index: 999;"
+                    ></v-btn>
+                </template>
+
+                <v-card-text>
+                    <div v-if="wallpaperInspectionDialog.loading" class="d-flex justify-center">
+                        <v-progress-circular
+                            indeterminate
+                            color="muted"
+                            size="64"
+                            class="ma-5"
+                        ></v-progress-circular>
+                    </div>
+
+                    <div v-if="!wallpaperInspectionDialog.loading">
+                        <img :src="`data:image/jpg;base64,${wallpaperInspectionDialog.wallpaperBase64}`"></img>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </template>
+    </v-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -282,6 +320,13 @@ export default defineComponent({
                 title: "",
                 subtitle: "",
                 xml: ""
+            },
+            wallpaperInspectionDialog: {
+                show: false,
+                loading: true,
+                title: "",
+                subtitle: "",
+                wallpaperBase64: ""
             }
         }
     },
@@ -321,6 +366,18 @@ export default defineComponent({
             provisionStore.fetchPhonebook(name).then((resp) => {
                 this.xmlInspectionDialog.xml = resp.data;
                 this.xmlInspectionDialog.loading = false;
+            });
+        },
+
+        showWallpaper() {
+            this.wallpaperInspectionDialog.title = `Wallpaper`;
+            this.wallpaperInspectionDialog.subtitle = 'File: wallpaper.jpg';
+            this.wallpaperInspectionDialog.loading = true;
+            this.wallpaperInspectionDialog.show = true;
+
+            provisionStore.fetchWallpaper().then((resp) => {
+                this.wallpaperInspectionDialog.wallpaperBase64 = resp.data;
+                this.wallpaperInspectionDialog.loading = false;
             });
         }
     }

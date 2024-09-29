@@ -15,9 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
+import base64
 import os
 import xml.etree.ElementTree as ET
+from encodings.base64_codec import base64_encode
 
 from backend.settings import PROVISION_CONFIG_DIR, PROVISION_FIRMWARE_DIR, PROVISION_PHONEBOOK_DIR, PROVISION_DIR
 
@@ -172,3 +173,16 @@ def provision_retrieve_phonebook(name: str) -> str | None:
     # Read and return the file
     with open(os.path.join(PROVISION_PHONEBOOK_DIR, f"{name}.xml"), 'r') as f:
         return f.read()
+
+def provision_retrieve_wallpaper_base64() -> str | None:
+    """
+    Retrieves the wallpaper file as base64 encoded string
+    :return str: base64 encoded string of the wallpaper file or None if the file does not exist
+    """
+    # Check if wallpaper.jpg exists
+    if not os.path.exists(os.path.join(PROVISION_DIR, 'wallpaper.jpg')):
+        return None
+
+    # Read and return the file
+    with open(os.path.join(PROVISION_DIR, 'wallpaper.jpg'), 'rb') as f:
+        return base64.b64encode(f.read()).decode('utf-8')
