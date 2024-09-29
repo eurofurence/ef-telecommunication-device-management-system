@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import base64
 import os
 import xml.etree.ElementTree as ET
-from encodings.base64_codec import base64_encode
 
 from backend.settings import PROVISION_CONFIG_DIR, PROVISION_FIRMWARE_DIR, PROVISION_PHONEBOOK_DIR, PROVISION_DIR
 
@@ -28,6 +27,10 @@ def provision_generate_config_metadata() -> list[dict]:
     Generates metadata object for all provision config files
     :return dict: of metadata objects for all provision config files
     """
+
+    # Handle non-existing paths
+    if not os.path.exists(PROVISION_CONFIG_DIR):
+        return []
 
     # List all files in the provision config directory and build metadata object
     files = os.listdir(PROVISION_CONFIG_DIR)
@@ -76,6 +79,10 @@ def provision_generate_phonebook_metadata() -> list[dict]:
     :return dict: of metadata objects for all provision phonebook files
     """
 
+    # Handle non-existing paths
+    if not os.path.exists(PROVISION_PHONEBOOK_DIR):
+        return []
+
     files = os.listdir(PROVISION_PHONEBOOK_DIR)
     ret = []
 
@@ -110,6 +117,10 @@ def provision_generate_firmware_metadata() -> list[dict]:
     Generates metadata object for all provision firmware files
     :return dict: of metadata objects for all provision firmware files
     """
+
+    # Handle non-existing paths
+    if not os.path.exists(PROVISION_FIRMWARE_DIR):
+        return []
 
     files = os.listdir(PROVISION_FIRMWARE_DIR)
     ret = []

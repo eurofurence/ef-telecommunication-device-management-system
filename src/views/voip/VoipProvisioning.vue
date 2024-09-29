@@ -76,6 +76,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                             </template>
                                         </v-list-item>
+                                        <v-list-item
+                                            v-if="provisionMetadata.config.length === 0"
+                                            title="No phone configurations found"
+                                            class="mb-1"
+                                            disabled
+                                        ></v-list-item>
                                     </v-list>
                                 </v-card>
                             </v-col>
@@ -107,6 +113,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                             </template>
                                         </v-list-item>
+                                        <v-list-item
+                                            v-if="provisionMetadata.firmware.length === 0"
+                                            title="No firmware files found"
+                                            class="mb-1"
+                                            disabled
+                                        ></v-list-item>
                                     </v-list>
                                 </v-card>
 
@@ -161,6 +173,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                             </template>
                                         </v-list-item>
+                                        <v-list-item
+                                            v-if="provisionMetadata.phonebook.length === 0"
+                                            title="No phonebooks found"
+                                            class="mb-1"
+                                            disabled
+                                        ></v-list-item>
                                     </v-list>
                                 </v-card>
 
@@ -206,6 +224,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                         <v-list-item
                                             v-if="!provisionMetadata.wallpaper"
                                             title="No wallpaper found"
+                                            class="mb-1"
+                                            disabled
                                         ></v-list-item>
                                     </v-list>
                                 </v-card>
