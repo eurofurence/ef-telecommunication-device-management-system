@@ -40,7 +40,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                             <template v-slot:append>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="showPhoneConfig(cfg.mac)"
+                                                    @click="showPhoneConfig(cfg.mac, cfg.accountname)"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -125,7 +125,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                             <template v-slot:append>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="console.error('Yoink!')"
+                                                    @click="showPhonebook(pb.filename.split('.')[0])"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -217,6 +217,44 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             </v-col>
         </v-row>
     </v-container>
+
+    <v-dialog
+        v-model="xmlInspectionDialog.show"
+        max-width="1200"
+    >
+        <template v-slot:default="{ isActive }">
+            <v-card
+                :title="xmlInspectionDialog.title"
+                :subtitle="xmlInspectionDialog.subtitle"
+            >
+                <template v-slot:append>
+                    <v-btn
+                        @click="xmlInspectionDialog.show = false"
+                        icon="mdi-close"
+                        variant="elevated"
+                        elevation="3"
+                        class="position-fixed mt-n16"
+                        style="z-index: 999;"
+                    ></v-btn>
+                </template>
+
+                <v-card-text>
+                    <div v-if="xmlInspectionDialog.loading" class="d-flex justify-center">
+                        <v-progress-circular
+                            indeterminate
+                            color="muted"
+                            size="64"
+                            class="ma-5"
+                        ></v-progress-circular>
+                    </div>
+
+                    <div v-if="!xmlInspectionDialog.loading">
+                        <highlightjs language="xml" :code="xmlInspectionDialog.xml"></highlightjs>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </template>
+    </v-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -227,6 +265,7 @@ import {FormatUtils} from "@/classes/util/FormatUtils";
 import {defineComponent} from "vue";
 import {useProvisionStore} from "@/store/provision";
 import {ProvisionMetadata} from "@/types/ProvisionMetadata";
+import {FormatUtils} from "@/classes/util/FormatUtils";
 
 const provisionStore = useProvisionStore();
 
@@ -237,6 +276,13 @@ export default defineComponent({
         return {
             loading: true,
             provisionMetadata: null as ProvisionMetadata | null,
+            xmlInspectionDialog: {
+                show: false,
+                loading: true,
+                title: "",
+                subtitle: "",
+                xml: ""
+            }
         }
     },
 
@@ -254,10 +300,27 @@ export default defineComponent({
     },
 
     methods: {
-        showPhoneConfig(mac: string) {
-            console.log(`Downloading phone config for MAC ${mac}`);
+        showPhoneConfig(mac: string, accountname: string) {
+            this.xmlInspectionDialog.title = `Phone config file: ${accountname}`;
+            this.xmlInspectionDialog.subtitle = `MAC: ${FormatUtils.formatMacAddress(mac)}`;
+            this.xmlInspectionDialog.loading = true;
+            this.xmlInspectionDialog.show = true;
+
             provisionStore.fetchPhoneConfig(mac).then((resp) => {
-                console.log(resp);
+                this.xmlInspectionDialog.xml = resp.data;
+                this.xmlInspectionDialog.loading = false;
+            });
+        },
+
+        showPhonebook(name: string) {
+            this.xmlInspectionDialog.title = `Phonebook: ${name}`;
+            this.xmlInspectionDialog.subtitle = '';
+            this.xmlInspectionDialog.loading = true;
+            this.xmlInspectionDialog.show = true;
+
+            provisionStore.fetchPhonebook(name).then((resp) => {
+                this.xmlInspectionDialog.xml = resp.data;
+                this.xmlInspectionDialog.loading = false;
             });
         }
     }
