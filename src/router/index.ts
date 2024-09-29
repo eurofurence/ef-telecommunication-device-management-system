@@ -157,6 +157,12 @@ const routes = [{
             meta: {requiresAuth: true},
         },
         {
+            path: 'voip/provisioning',
+            name: 'Provisioning',
+            component: () => import('@/views/voip/VoipProvisioning.vue'),
+            meta: {requiresAuth: true},
+        },
+        {
             path: 'eventlog',
             name: 'Event Log',
             component: () => import('@/views/EventLog.vue'),
