@@ -14,28 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import 'highlight.js/styles/atom-one-dark.css'
+import hljs from 'highlight.js/lib/core';
+import xml from 'highlight.js/lib/languages/xml';
+import hljsVuePlugin from "@highlightjs/vue-plugin";
 
-/**
- * plugins/index.ts
- *
- * Automatically included in `./src/main.ts`
- */
+hljs.registerLanguage('xml', xml);
 
-// Plugins
-import vuetify from './vuetify'
-import toast, { options as toastOptions } from './toast'
-import pinia from '../store'
-import router from '../router'
-import hljsVuePlugin from './highlightjs'
-
-// Types
-import type {App} from 'vue'
-
-export function registerPlugins(app: App) {
-    app
-        .use(vuetify)
-        .use(router)
-        .use(pinia)
-        .use(toast, toastOptions)
-        .use(hljsVuePlugin)
-}
+export default hljsVuePlugin;
