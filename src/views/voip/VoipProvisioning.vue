@@ -52,7 +52,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="console.error('Yoink!')"
+                                                    @click="showMpksDialog(cfg.mpk, cfg.accountname, cfg.mac)"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -137,7 +137,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="console.error('Yoink!')"
+                                                    @click="showPhonebookEntriesDialog(pb.entries, pb.filename)"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -293,6 +293,75 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             </v-card>
         </template>
     </v-dialog>
+
+    <v-dialog
+        v-model="phoneMpksDialog.show"
+        max-width="480"
+    >
+        <template v-slot:default="{ isActive }">
+            <v-card
+                :title="phoneMpksDialog.title"
+                :subtitle="phoneMpksDialog.subtitle"
+            >
+                <template v-slot:append>
+                    <v-btn
+                        @click="phoneMpksDialog.show = false"
+                        icon="mdi-close"
+                        variant="elevated"
+                        elevation="3"
+                        class="position-fixed mt-n16"
+                        style="z-index: 999;"
+                    ></v-btn>
+                </template>
+
+                <v-card-text>
+                    <v-list>
+                        <v-list-item
+                            v-for="(mpk, idx) in phoneMpksDialog.mpks"
+                            :title="`[MPK ${idx}] ${mpk.keyMode}: ${mpk.value} (${mpk.description})`"
+                            :subtitle="`Account ${mpk.account}`"
+                            class="mb-1"
+                        ></v-list-item>
+                    </v-list>
+                </v-card-text>
+            </v-card>
+        </template>
+    </v-dialog>
+
+    <v-dialog
+        v-model="phonebookEntriesDialog.show"
+        max-width="480"
+    >
+        <template v-slot:default="{ isActive }">
+            <v-card
+                :title="phonebookEntriesDialog.title"
+                :subtitle="phonebookEntriesDialog.subtitle"
+            >
+                <template v-slot:append>
+                    <v-btn
+                        @click="phonebookEntriesDialog.show = false"
+                        icon="mdi-close"
+                        variant="elevated"
+                        elevation="3"
+                        class="position-fixed mt-n16"
+                        style="z-index: 999;"
+                    ></v-btn>
+                </template>
+
+                <v-card-text>
+                    <v-list>
+                        <v-list-item
+                            v-for="entry in phonebookEntriesDialog.entries"
+                            :title="`${entry.firstname} ${entry.lastname ?? ''}`"
+                            :subtitle="entry.phone"
+                            class="mb-1"
+                        ></v-list-item>
+                    </v-list>
+                </v-card-text>
+            </v-card>
+        </template>
+    </v-dialog>
+
 </template>
 
 <script lang="ts" setup>
@@ -327,6 +396,18 @@ export default defineComponent({
                 title: "",
                 subtitle: "",
                 wallpaperBase64: ""
+            },
+            phoneMpksDialog: {
+                show: false,
+                title: "",
+                subtitle: "",
+                mpks: [] as any
+            },
+            phonebookEntriesDialog: {
+                show: false,
+                title: "",
+                subtitle: "",
+                entries: [] as any
             }
         }
     },
@@ -379,6 +460,20 @@ export default defineComponent({
                 this.wallpaperInspectionDialog.wallpaperBase64 = resp.data;
                 this.wallpaperInspectionDialog.loading = false;
             });
+        },
+
+        showMpksDialog(mpks: any, accountname: string, mac: string) {
+            this.phoneMpksDialog.title = 'Multi-Purpose-Keys (MPKs)';
+            this.phoneMpksDialog.subtitle = `${accountname} (${FormatUtils.formatMacAddress(mac)})`;
+            this.phoneMpksDialog.mpks = mpks;
+            this.phoneMpksDialog.show = true;
+        },
+
+        showPhonebookEntriesDialog(entries: any, filename: string) {
+            this.phonebookEntriesDialog.title = 'Phonebook Entries';
+            this.phonebookEntriesDialog.subtitle = `Phonebook: ${filename}`;
+            this.phonebookEntriesDialog.entries = entries;
+            this.phonebookEntriesDialog.show = true;
         }
     }
 })
