@@ -342,7 +342,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         <v-list-item
                             v-for="(mpk, idx) in phoneMpksDialog.mpks"
                             :title="`[MPK ${idx}] ${mpk.keyMode}: ${mpk.value} (${mpk.description})`"
-                            :subtitle="`Account ${mpk.account}`"
+                            :subtitle="`${mpk.account}`"
                             class="mb-1"
                         ></v-list-item>
                     </v-list>
