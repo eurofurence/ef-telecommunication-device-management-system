@@ -26,6 +26,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./db.sqlite3:/app/db.sqlite3
+      - ./provision:/app/provision:ro
       - backend_static:/mnt/backend_static
     expose:
       - "8000/tcp"

@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.8.1 (2024-09-30)
+
+- [Bugfix] Fix backend Docker container provisioning file access
+
+
 ## Version 1.8.0 (2024-09-30)
 
 - [Feature] Allow to search for radios by their codings name during hand out and inside the device overview table
