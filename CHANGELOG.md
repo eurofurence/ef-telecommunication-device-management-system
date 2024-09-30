@@ -6,7 +6,8 @@
 - [Feature] Allow to filter items by their status ('Available', 'Handed out', 'Private')
 - [Feature] Prepare backend for advanced filter options
 - [Feature] Read phone provisioning files from disk into backend and expose via API
-- [Feature] Expose phone provisioning files (configs, phonebooks, firmwares, wallpapers) in frontend
+- [Feature] Display phone provisioning files (configs, phonebooks, firmwares, wallpapers) in frontend
+- [Feature] Parse phone config files for key information (e.g., MPK mappings, ...)
 - [Bugfix] Fix sorting of nested columns in item overview tables
 - [Bugfix] Event log: Binding deletion user always same as binding creation user
 - [Misc] Optimize frontend item table refresh logic
