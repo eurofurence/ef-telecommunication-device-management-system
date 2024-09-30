@@ -28,3 +28,7 @@ BASE_DIR = environ.Path(__file__) - 3
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
+PROVISION_DIR = BASE_DIR.path('provision')
+PROVISION_CONFIG_DIR = PROVISION_DIR.path('cfg')
+PROVISION_FIRMWARE_DIR = PROVISION_DIR.path('fw')
+PROVISION_PHONEBOOK_DIR = PROVISION_DIR.path('phonebook')

@@ -119,6 +119,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 <v-list-item prepend-icon="mdi-webcam" title="Callboxes" value="voip-callboxes" to="/voip/callboxes">
                     <v-tooltip text="Callboxes" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
+                <v-list-item prepend-icon="mdi-database-cog-outline" title="Provisioning" value="voip-provisioning" to="/voip/provisioning">
+                    <v-tooltip text="Provisioning" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
             </v-list-group>
             <v-list-item prepend-icon="mdi-clipboard-text-search-outline" title="Event Log" value="eventlog" to="/eventlog">
                 <v-tooltip text="Event Log" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>

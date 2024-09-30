@@ -75,6 +75,15 @@ Files for zero-touch provisioning of VoIP phones can be placed in the
 The endpoint is protected by HTTP basic auth. The credentials can be set in the
 `docker/web/provision.htpasswd` file.
 
+Existing provisioning files can be accessed using the web frontend. To have the
+backend recognize and parse the files, the following directory structure must be
+obeyed:
+
+- `provision/cfg/` - Configuration files for the phones (e.g., `cfg000b8263d57e.xml`)
+- `provision/fw/` - Firmware files for the phones (e.g., `gxp2130fw.bin`)
+- `provision/phonebook/` - Phonebook files for the phones (e.g., `phonebook.xml`)
+- `provision/wallpaper.jpg` - Wallpaper file for the phones
+
 
 ## Screenshots
 
@@ -106,6 +115,10 @@ This section contains various screenshots of some of the features of the EF-TDMS
 
 ### Callbox Management
 ![Screenshot: Callboxes](docs/assets/screenshot_callboxes.png)
+
+### Zero-touch VoIP Phone Provisioning
+![Screenshot: Provisioning](docs/assets/screenshot_voip_provision.png)
+![Screenshot: Provisioning](docs/assets/screenshot_voip_provision_details.png)
 
 
 ## License
