@@ -141,7 +141,9 @@ export default defineComponent({
             this.searchDebounceTimeout = setTimeout(async () => {
                 // Execute search API call
                 let itemPage = await this.fetchFunction(1, this.searchPageSize, [this.itemTitleKey], query, this.availableOnly ? ['available=true'] : []);
-                this.items = itemPage.items.filter((item: any) => !this.itemIdsToExclude.includes(item.id))
+                this.items = itemPage.items
+                    .filter((item: any) => !this.itemIdsToExclude.includes(item.id))
+                    .sort((a: any, b: any) => a[this.itemTitleKey].localeCompare(b[this.itemTitleKey]));
                 this.searchHasMore = itemPage.total > this.searchPageSize;
                 this.loading = false;
             }, 500);

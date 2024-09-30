@@ -9,6 +9,7 @@
 - [Feature] Display phone provisioning files (configs, phonebooks, firmwares, wallpapers) in frontend
 - [Feature] Parse phone config files for key information (e.g., MPK mappings, ...)
 - [Bugfix] Fix sorting of nested columns in item overview tables
+- [Bugfix] Sort items in server-side search results lexicographically, based on their title
 - [Bugfix] Event log: Binding deletion user always same as binding creation user
 - [Misc] Optimize frontend item table refresh logic
 
