@@ -30,7 +30,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                     prepend-icon="mdi-file-code-outline"
                                     class="mb-4"
                                 >
-                                    <v-list>
+                                    <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
+                                    <v-list v-if="!loading">
                                         <v-list-item
                                             v-for="cfg in provisionMetadata.config"
                                             :title="`${cfg.accountname} (${FormatUtils.formatMacAddress(cfg.mac)})`"
@@ -91,7 +92,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                     prepend-icon="mdi-file-cog-outline"
                                     class="mb-4"
                                 >
-                                    <v-list>
+                                    <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
+                                    <v-list v-if="!loading">
                                         <v-list-item
                                             v-for="fw in provisionMetadata.firmware"
                                             :title="`${fw.filename}`"
@@ -112,7 +114,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                     prepend-icon="mdi-notebook-outline"
                                     class="mb-4"
                                 >
-                                    <v-list>
+                                    <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
+                                    <v-list v-if="!loading">
                                         <v-list-item
                                             v-for="pb in provisionMetadata.phonebook"
                                             :title="`${pb.filename}`"
@@ -172,7 +175,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                     prepend-icon="mdi-wallpaper"
                                     class="mb-4"
                                 >
-                                    <v-list>
+                                    <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
+                                    <v-list v-if="!loading">
                                         <v-list-item
                                             v-if="provisionMetadata.wallpaper"
                                             :title="`${provisionMetadata.wallpaper.filename}`"
@@ -418,14 +422,13 @@ export default defineComponent({
 
     mounted() {
         provisionStore.fetchProvisionMetadata().then((resp) => {
-            this.loading = false;
-
             // Sort data structures
             resp.data.config.sort((a: any, b: any) => a.extension - b.extension);
             resp.data.firmware.sort((a: any, b: any) => a.filename.localeCompare(b.filename));
             resp.data.phonebook.sort((a: any, b: any) => a.filename.localeCompare(b.filename));
 
             this.provisionMetadata = resp.data;
+            this.loading = false;
         });
     },
 
