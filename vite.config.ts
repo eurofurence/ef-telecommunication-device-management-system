@@ -33,6 +33,13 @@ export default defineConfig({
     'process.env': {},
     'import.meta.env.APP_VERSION': JSON.stringify(process.env.npm_package_version),
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
