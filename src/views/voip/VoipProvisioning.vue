@@ -19,210 +19,224 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 <template>
     <v-container>
         <v-row>
-            <v-col>
+            <v-col cols="auto" class="flex-grow-1 align-content-center">
                 <h2>VoIP Phone Provisioning</h2>
-                <div v-if="provisionMetadata">
-                    <v-container>
-                        <v-row>
-                            <v-col cols="12" lg="6" class="pa-0 pa-lg-3">
-                                <v-card
-                                    title="Phone Configurations"
-                                    prepend-icon="mdi-file-code-outline"
-                                    class="mb-4"
-                                >
-                                    <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
-                                    <v-list v-if="!loading">
-                                        <v-list-item
-                                            v-for="cfg in provisionMetadata.config"
-                                            :title="`${cfg.accountname} (${FormatUtils.formatMacAddress(cfg.mac)})`"
-                                            :subtitle="`${cfg.filename} (${FormatUtils.bytesToHumanReadableString(cfg.filesize)})`"
-                                            class="mb-1"
-                                        >
-                                            <template v-slot:append>
-                                                <v-btn
-                                                    color="primary"
-                                                    @click="showPhoneConfig(cfg.mac, cfg.accountname)"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-magnify</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        View
-                                                    </v-tooltip>
-                                                </v-btn>
-                                                <v-btn
-                                                    color="primary"
-                                                @click="showMpksDialog(cfg.mpk, cfg.accountname, cfg.mac)"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-gesture-tap-button</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        Multi-Purpose-Keys (MPKs)
-                                                    </v-tooltip>
-                                                </v-btn>
-                                                <v-btn
-                                                    color="primary"
-                                                    @click="downloadPhoneConfig(cfg.mac, cfg.filename)"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-download</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        Download
-                                                    </v-tooltip>
-                                                </v-btn>
-                                            </template>
-                                        </v-list-item>
-                                        <v-list-item
-                                            v-if="provisionMetadata.config.length === 0"
-                                            title="No phone configurations found"
-                                            class="mb-1"
-                                            disabled
-                                        ></v-list-item>
-                                    </v-list>
-                                </v-card>
-                            </v-col>
-                            <v-col cols="12" lg="6" class="pa-0 pa-lg-3">
-                                <v-card
-                                    title="Firmware Files"
-                                    prepend-icon="mdi-file-cog-outline"
-                                    class="mb-4"
-                                >
-                                    <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
-                                    <v-list v-if="!loading">
-                                        <v-list-item
-                                            v-for="fw in provisionMetadata.firmware"
-                                            :title="`${fw.filename}`"
-                                            :subtitle="`${FormatUtils.bytesToHumanReadableString(fw.filesize)}`"
-                                            class="mb-1"
-                                        ></v-list-item>
-                                        <v-list-item
-                                            v-if="provisionMetadata.firmware.length === 0"
-                                            title="No firmware files found"
-                                            class="mb-1"
-                                            disabled
-                                        ></v-list-item>
-                                    </v-list>
-                                </v-card>
+            </v-col>
+            <v-col cols="auto" class="text-right">
+                <v-btn
+                    color="grey-darken-1"
+                    icon
+                    density="comfortable"
+                    @click="refresh()"
+                >
+                    <v-icon>mdi-refresh</v-icon>
+                    <v-tooltip activator="parent">
+                        Refresh
+                    </v-tooltip>
+                </v-btn>
+            </v-col>
+        </v-row>
+        <v-row class="mt-0">
+            <v-col>
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" lg="6" class="pa-0 pa-lg-3">
+                            <v-card
+                                title="Phone Configurations"
+                                prepend-icon="mdi-file-code-outline"
+                                class="mb-4"
+                            >
+                                <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
+                                <v-list v-if="!loading">
+                                    <v-list-item
+                                        v-for="cfg in provisionMetadata.config"
+                                        :title="`${cfg.accountname} (${FormatUtils.formatMacAddress(cfg.mac)})`"
+                                        :subtitle="`${cfg.filename} (${FormatUtils.bytesToHumanReadableString(cfg.filesize)})`"
+                                        class="mb-1"
+                                    >
+                                        <template v-slot:append>
+                                            <v-btn
+                                                color="primary"
+                                                @click="showPhoneConfig(cfg.mac, cfg.accountname)"
+                                                density="comfortable"
+                                                variant="text"
+                                                icon
+                                            >
+                                                <v-icon>mdi-magnify</v-icon>
+                                                <v-tooltip activator="parent">
+                                                    View
+                                                </v-tooltip>
+                                            </v-btn>
+                                            <v-btn
+                                                color="primary"
+                                            @click="showMpksDialog(cfg.mpk, cfg.accountname, cfg.mac)"
+                                                density="comfortable"
+                                                variant="text"
+                                                icon
+                                            >
+                                                <v-icon>mdi-gesture-tap-button</v-icon>
+                                                <v-tooltip activator="parent">
+                                                    Multi-Purpose-Keys (MPKs)
+                                                </v-tooltip>
+                                            </v-btn>
+                                            <v-btn
+                                                color="primary"
+                                                @click="downloadPhoneConfig(cfg.mac, cfg.filename)"
+                                                density="comfortable"
+                                                variant="text"
+                                                icon
+                                            >
+                                                <v-icon>mdi-download</v-icon>
+                                                <v-tooltip activator="parent">
+                                                    Download
+                                                </v-tooltip>
+                                            </v-btn>
+                                        </template>
+                                    </v-list-item>
+                                    <v-list-item
+                                        v-if="provisionMetadata.config.length === 0"
+                                        title="No phone configurations found"
+                                        class="mb-1"
+                                        disabled
+                                    ></v-list-item>
+                                </v-list>
+                            </v-card>
+                        </v-col>
+                        <v-col cols="12" lg="6" class="pa-0 pa-lg-3">
+                            <v-card
+                                title="Firmware Files"
+                                prepend-icon="mdi-file-cog-outline"
+                                class="mb-4"
+                            >
+                                <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
+                                <v-list v-if="!loading">
+                                    <v-list-item
+                                        v-for="fw in provisionMetadata.firmware"
+                                        :title="`${fw.filename}`"
+                                        :subtitle="`${FormatUtils.bytesToHumanReadableString(fw.filesize)}`"
+                                        class="mb-1"
+                                    ></v-list-item>
+                                    <v-list-item
+                                        v-if="provisionMetadata.firmware.length === 0"
+                                        title="No firmware files found"
+                                        class="mb-1"
+                                        disabled
+                                    ></v-list-item>
+                                </v-list>
+                            </v-card>
 
-                                <v-card
-                                    title="Phonebooks"
-                                    prepend-icon="mdi-notebook-outline"
-                                    class="mb-4"
-                                >
-                                    <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
-                                    <v-list v-if="!loading">
-                                        <v-list-item
-                                            v-for="pb in provisionMetadata.phonebook"
-                                            :title="`${pb.filename}`"
-                                            :subtitle="`${pb.entries.length} entries (${FormatUtils.bytesToHumanReadableString(pb.filesize)})`"
-                                            class="mb-1"
-                                        >
-                                            <template v-slot:append>
-                                                <v-btn
-                                                    color="primary"
-                                                    @click="showPhonebook(pb.filename.split('.')[0])"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-magnify</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        View
-                                                    </v-tooltip>
-                                                </v-btn>
-                                                <v-btn
-                                                    color="primary"
-                                                    @click="showPhonebookEntriesDialog(pb.entries, pb.filename)"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-card-account-details-outline</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        Entries
-                                                    </v-tooltip>
-                                                </v-btn>
-                                                <v-btn
-                                                    color="primary"
-                                                    @click="downloadPhonebook(pb.filename)"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-download</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        Download
-                                                    </v-tooltip>
-                                                </v-btn>
-                                            </template>
-                                        </v-list-item>
-                                        <v-list-item
-                                            v-if="provisionMetadata.phonebook.length === 0"
-                                            title="No phonebooks found"
-                                            class="mb-1"
-                                            disabled
-                                        ></v-list-item>
-                                    </v-list>
-                                </v-card>
+                            <v-card
+                                title="Phonebooks"
+                                prepend-icon="mdi-notebook-outline"
+                                class="mb-4"
+                            >
+                                <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
+                                <v-list v-if="!loading">
+                                    <v-list-item
+                                        v-for="pb in provisionMetadata.phonebook"
+                                        :title="`${pb.filename}`"
+                                        :subtitle="`${pb.entries.length} entries (${FormatUtils.bytesToHumanReadableString(pb.filesize)})`"
+                                        class="mb-1"
+                                    >
+                                        <template v-slot:append>
+                                            <v-btn
+                                                color="primary"
+                                                @click="showPhonebook(pb.filename.split('.')[0])"
+                                                density="comfortable"
+                                                variant="text"
+                                                icon
+                                            >
+                                                <v-icon>mdi-magnify</v-icon>
+                                                <v-tooltip activator="parent">
+                                                    View
+                                                </v-tooltip>
+                                            </v-btn>
+                                            <v-btn
+                                                color="primary"
+                                                @click="showPhonebookEntriesDialog(pb.entries, pb.filename)"
+                                                density="comfortable"
+                                                variant="text"
+                                                icon
+                                            >
+                                                <v-icon>mdi-card-account-details-outline</v-icon>
+                                                <v-tooltip activator="parent">
+                                                    Entries
+                                                </v-tooltip>
+                                            </v-btn>
+                                            <v-btn
+                                                color="primary"
+                                                @click="downloadPhonebook(pb.filename)"
+                                                density="comfortable"
+                                                variant="text"
+                                                icon
+                                            >
+                                                <v-icon>mdi-download</v-icon>
+                                                <v-tooltip activator="parent">
+                                                    Download
+                                                </v-tooltip>
+                                            </v-btn>
+                                        </template>
+                                    </v-list-item>
+                                    <v-list-item
+                                        v-if="provisionMetadata.phonebook.length === 0"
+                                        title="No phonebooks found"
+                                        class="mb-1"
+                                        disabled
+                                    ></v-list-item>
+                                </v-list>
+                            </v-card>
 
-                                <v-card
-                                    title="Wallpapers"
-                                    prepend-icon="mdi-wallpaper"
-                                    class="mb-4"
-                                >
-                                    <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
-                                    <v-list v-if="!loading">
-                                        <v-list-item
-                                            v-if="provisionMetadata.wallpaper"
-                                            :title="`${provisionMetadata.wallpaper.filename}`"
-                                            :subtitle="`${FormatUtils.bytesToHumanReadableString(provisionMetadata.wallpaper.filesize)}`"
-                                            class="mb-1"
-                                        >
-                                            <template v-slot:append>
-                                                <v-btn
-                                                    color="primary"
-                                                    @click="showWallpaper"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-magnify</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        View
-                                                    </v-tooltip>
-                                                </v-btn>
-                                                <v-btn
-                                                    color="primary"
-                                                    @click="downloadWallpaper"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-download</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        Download
-                                                    </v-tooltip>
-                                                </v-btn>
-                                            </template>
-                                        </v-list-item>
-                                        <v-list-item
-                                            v-if="!provisionMetadata.wallpaper"
-                                            title="No wallpaper found"
-                                            class="mb-1"
-                                            disabled
-                                        ></v-list-item>
-                                    </v-list>
-                                </v-card>
-
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </div>
+                            <v-card
+                                title="Wallpapers"
+                                prepend-icon="mdi-wallpaper"
+                                class="mb-4"
+                            >
+                                <v-skeleton-loader v-if="loading" type="list-item"></v-skeleton-loader>
+                                <v-list v-if="!loading">
+                                    <v-list-item
+                                        v-if="provisionMetadata.wallpaper"
+                                        :title="`${provisionMetadata.wallpaper.filename}`"
+                                        :subtitle="`${FormatUtils.bytesToHumanReadableString(provisionMetadata.wallpaper.filesize)}`"
+                                        class="mb-1"
+                                    >
+                                        <template v-slot:append>
+                                            <v-btn
+                                                color="primary"
+                                                @click="showWallpaper"
+                                                density="comfortable"
+                                                variant="text"
+                                                icon
+                                            >
+                                                <v-icon>mdi-magnify</v-icon>
+                                                <v-tooltip activator="parent">
+                                                    View
+                                                </v-tooltip>
+                                            </v-btn>
+                                            <v-btn
+                                                color="primary"
+                                                @click="downloadWallpaper"
+                                                density="comfortable"
+                                                variant="text"
+                                                icon
+                                            >
+                                                <v-icon>mdi-download</v-icon>
+                                                <v-tooltip activator="parent">
+                                                    Download
+                                                </v-tooltip>
+                                            </v-btn>
+                                        </template>
+                                    </v-list-item>
+                                    <v-list-item
+                                        v-if="!provisionMetadata.wallpaper"
+                                        title="No wallpaper found"
+                                        class="mb-1"
+                                        disabled
+                                    ></v-list-item>
+                                </v-list>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-container>
             </v-col>
         </v-row>
     </v-container>
@@ -390,7 +404,7 @@ export default defineComponent({
     data() {
         return {
             loading: true,
-            provisionMetadata: null as ProvisionMetadata | null,
+            provisionMetadata: {} as ProvisionMetadata,
             xmlInspectionDialog: {
                 show: false,
                 loading: true,
@@ -421,18 +435,24 @@ export default defineComponent({
     },
 
     mounted() {
-        provisionStore.fetchProvisionMetadata().then((resp) => {
-            // Sort data structures
-            resp.data.config.sort((a: any, b: any) => a.extension - b.extension);
-            resp.data.firmware.sort((a: any, b: any) => a.filename.localeCompare(b.filename));
-            resp.data.phonebook.sort((a: any, b: any) => a.filename.localeCompare(b.filename));
-
-            this.provisionMetadata = resp.data;
-            this.loading = false;
-        });
+        this.refresh();
     },
 
     methods: {
+        refresh() {
+            this.loading = true;
+
+            provisionStore.fetchProvisionMetadata().then((resp) => {
+                // Sort data structures
+                resp.data.config.sort((a: any, b: any) => a.extension - b.extension);
+                resp.data.firmware.sort((a: any, b: any) => a.filename.localeCompare(b.filename));
+                resp.data.phonebook.sort((a: any, b: any) => a.filename.localeCompare(b.filename));
+
+                this.provisionMetadata = resp.data;
+                this.loading = false;
+            });
+        },
+
         showPhoneConfig(mac: string, accountname: string) {
             this.xmlInspectionDialog.title = `Phone config file: ${accountname}`;
             this.xmlInspectionDialog.subtitle = `MAC: ${FormatUtils.formatMacAddress(mac)}`;
