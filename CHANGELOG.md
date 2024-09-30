@@ -1,5 +1,10 @@
 # Changelog
 
+## Version X.Y.Z (YYYY-MM-DD)
+
+- [Bugfix] Remove duplicate "Account" label from phone MPK inspection dialog
+
+
 ## Version 1.8.1 (2024-09-30)
 
 - [Bugfix] Fix backend Docker container provisioning file access
