@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.8.2 (2024-09-30)
 
 - [Bugfix] Remove duplicate "Account" label from phone MPK inspection dialog
 
