@@ -16,8 +16,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import os
-
 from rest_framework import views
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
@@ -25,7 +23,6 @@ from rest_framework.response import Response
 from backend.lib.porvision import provision_generate_config_metadata, provision_generate_firmware_metadata, \
     provision_generate_phonebook_metadata, provision_generate_wallpaper_metadata, provision_retrieve_config, \
     provision_retrieve_phonebook, provision_retrieve_wallpaper_base64
-from backend.settings import PROVISION_CONFIG_DIR
 
 
 class ProvisionMetadataView(views.APIView):

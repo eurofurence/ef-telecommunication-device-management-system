@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <v-container>
         <v-row>
             <v-col>
-                <h1>VoIP Phone Provisioning</h1>
+                <h2>VoIP Phone Provisioning</h2>
                 <div v-if="provisionMetadata">
                     <v-container>
                         <v-row>
@@ -52,7 +52,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="showMpksDialog(cfg.mpk, cfg.accountname, cfg.mac)"
+                                                @click="showMpksDialog(cfg.mpk, cfg.accountname, cfg.mac)"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -64,7 +64,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="console.error('Yoink!')"
+                                                    @click="downloadPhoneConfig(cfg.mac, cfg.filename)"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -97,22 +97,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                             :title="`${fw.filename}`"
                                             :subtitle="`${FormatUtils.bytesToHumanReadableString(fw.filesize)}`"
                                             class="mb-1"
-                                        >
-                                            <template v-slot:append>
-                                                <v-btn
-                                                    color="primary"
-                                                    @click="console.error('Yoink!')"
-                                                    density="comfortable"
-                                                    variant="text"
-                                                    icon
-                                                >
-                                                    <v-icon>mdi-download</v-icon>
-                                                    <v-tooltip activator="parent">
-                                                        Download
-                                                    </v-tooltip>
-                                                </v-btn>
-                                            </template>
-                                        </v-list-item>
+                                        ></v-list-item>
                                         <v-list-item
                                             v-if="provisionMetadata.firmware.length === 0"
                                             title="No firmware files found"
@@ -161,7 +146,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="console.error('Yoink!')"
+                                                    @click="downloadPhonebook(pb.filename)"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -209,7 +194,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                                 </v-btn>
                                                 <v-btn
                                                     color="primary"
-                                                    @click="console.error('Yoink!')"
+                                                    @click="downloadWallpaper"
                                                     density="comfortable"
                                                     variant="text"
                                                     icon
@@ -392,7 +377,6 @@ import {FormatUtils} from "@/classes/util/FormatUtils";
 import {defineComponent} from "vue";
 import {useProvisionStore} from "@/store/provision";
 import {ProvisionMetadata} from "@/types/ProvisionMetadata";
-import {FormatUtils} from "@/classes/util/FormatUtils";
 
 const provisionStore = useProvisionStore();
 
@@ -494,7 +478,36 @@ export default defineComponent({
             this.phonebookEntriesDialog.subtitle = `Phonebook: ${filename}`;
             this.phonebookEntriesDialog.entries = entries;
             this.phonebookEntriesDialog.show = true;
-        }
+        },
+
+        downloadXML(xml: string, filename: string) {
+            let blob = new Blob([xml], {type: 'text/xml'});
+            let a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+        },
+
+        downloadPhoneConfig(mac: string, filename: string) {
+            provisionStore.fetchPhoneConfig(mac).then((resp) => {
+                this.downloadXML(resp.data, filename);
+            });
+        },
+
+        downloadPhonebook(filename: string) {
+            provisionStore.fetchPhonebook(filename.split('.')[0]).then((resp) => {
+                this.downloadXML(resp.data, filename);
+            });
+        },
+
+        downloadWallpaper() {
+            provisionStore.fetchWallpaper().then((resp) => {
+                let a = document.createElement('a');
+                a.href = `data:image/jpg;base64,${resp.data}`;
+                a.download = 'wallpaper.jpg';
+                a.click();
+            });
+        },
     }
 })
 </script>
