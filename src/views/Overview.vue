@@ -227,7 +227,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import {defineComponent} from "vue";
 
 import {useBindingsStore} from "@/store/bindings";
-import {SystemStatistics} from "@/types/SystemStatistics";
+import type {SystemStatistics} from "@/types/SystemStatistics";
 import EventTimeline from "@/components/EventTimeline.vue";
 import {useEventLogStore} from "@/store/eventlog";
 import LastUpdated from "@/components/LastUpdated.vue";

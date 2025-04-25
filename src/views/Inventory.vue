@@ -232,7 +232,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import {defineComponent} from "vue";
 
 import {useBindingsStore} from "@/store/bindings";
-import {SystemStatistics} from "@/types/SystemStatistics";
+import type {SystemStatistics} from "@/types/SystemStatistics";
 
 import { Doughnut } from 'vue-chartjs'
 import { Chart as ChartJS, RadialLinearScale, ArcElement, Tooltip, Legend } from 'chart.js'

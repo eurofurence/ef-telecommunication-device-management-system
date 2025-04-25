@@ -59,7 +59,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {LogEvent, LogEventType} from "@/types/LogEvent";
+import {LogEventType} from "@/types/LogEvent";
+import type {LogEvent} from "@/types/LogEvent";
 
 export default defineComponent({
     name: "EventTimeline",

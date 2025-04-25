@@ -17,7 +17,7 @@
 
 import { defineStore } from 'pinia'
 import {APIUtils} from "@/classes/util/APIUtils";
-import {SystemStatistics} from "@/types/SystemStatistics";
+import type {SystemStatistics} from "@/types/SystemStatistics";
 
 export const useBindingsStore = defineStore("bindings", {
     state: () => ({}),

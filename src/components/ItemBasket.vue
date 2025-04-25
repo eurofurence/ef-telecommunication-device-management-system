@@ -92,7 +92,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
-import {ItemTemplateTypeMetadata, ItemTypeMetadata} from "@/types/ItemType";
+import type {ItemTemplateTypeMetadata, ItemTypeMetadata} from "@/types/ItemType";
 
 export const emptyItemsBasket = () => new Map<number, { type: ItemTypeMetadata, item: any }>();
 export const emptyItemTemplatesBasket = () => new Array<{ type: ItemTemplateTypeMetadata, template: any }>;

@@ -15,7 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {ItemType, ItemTypeMetadata} from "@/types/ItemType";
+import {ItemType} from "@/types/ItemType";
+import type {ItemTypeMetadata} from "@/types/ItemType";
 
 export class IconUtils {
 

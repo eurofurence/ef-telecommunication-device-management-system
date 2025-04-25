@@ -394,7 +394,7 @@ import {FormatUtils} from "@/classes/util/FormatUtils";
 <script lang="ts">
 import {defineComponent} from "vue";
 import {useProvisionStore} from "@/store/provision";
-import {ProvisionMetadata} from "@/types/ProvisionMetadata";
+import type {ProvisionMetadata} from "@/types/ProvisionMetadata.ts";
 
 const provisionStore = useProvisionStore();
 

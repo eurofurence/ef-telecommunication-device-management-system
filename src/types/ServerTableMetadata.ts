@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {TableHeader} from "@/types/TableHeader";
-import {ExpandedRowProp} from "@/types/ExpandedRowProps";
+import type {TableHeader} from "@/types/TableHeader";
+import type {ExpandedRowProp} from "@/types/ExpandedRowProps";
 
 /**
  * Metadata required to construct a generic server side table with dynamic

@@ -17,7 +17,7 @@
 
 import { defineStore } from 'pinia'
 import {APIUtils} from "@/classes/util/APIUtils";
-import {ItemCoordinates} from "@/types/ItemCoordinates";
+import type {ItemCoordinates} from "@/types/ItemCoordinates";
 
 export const useItemsStore = defineStore("item", {
     state: () => ({}),
