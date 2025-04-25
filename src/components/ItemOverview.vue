@@ -90,13 +90,6 @@ import ItemTable from "@/components/ItemTable.vue";
 export default defineComponent({
     name: "ItemOverview",
 
-    expose: [
-        'reloadItems',
-        'reloadTemplates',
-        'deselectItemsByKey',
-        'deselectTemplatesByKey',
-    ],
-
     components: {
         ItemTable,
     },

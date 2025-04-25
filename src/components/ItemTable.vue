@@ -262,16 +262,11 @@ import { defineComponent } from "vue";
 import type { PropType } from "vue";
 
 import {PropUtils} from "@/classes/util/PropUtils";
-import {ExpandedRowProp} from "@/types/ExpandedRowProps";
-import {TableHeader} from "@/types/TableHeader";
+import type {ExpandedRowProp} from "@/types/ExpandedRowProps";
+import type {TableHeader} from "@/types/TableHeader";
 
 export default defineComponent({
     name: "ItemTable",
-
-    expose: [
-        'reload',
-        'deselectItemsByKey',
-    ],
 
     emits: [
         'click:createItem',
