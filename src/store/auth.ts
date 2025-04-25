@@ -18,9 +18,7 @@
 import { defineStore } from 'pinia'
 import axios from '@/plugins/axios'
 
-export const useAuthStore = defineStore({
-    id: 'auth',
-
+export const useAuthStore = defineStore('auth', {
     state: () => {
         // Restore the access token from localStorage, if it exists
         if (localStorage.getItem('auth.accessToken') !== null) {
