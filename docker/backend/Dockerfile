@@ -1,7 +1,7 @@
 ######################################
 # Stage 0: Build backend application #
 ######################################
-FROM python:3.11-alpine AS build
+FROM python:3.13-alpine AS build
 
 RUN set -ex && \
     apk add --no-cache curl
@@ -36,7 +36,7 @@ RUN set -ex && \
 #######################################
 # Stage 1: Django runtime environment #
 #######################################
-FROM python:3.11-alpine
+FROM python:3.13-alpine
 
 # Inject application
 WORKDIR /app

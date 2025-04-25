@@ -3,6 +3,7 @@
 ## Version X.Y.Z (YYYY-MM-DD)
 
 - [Maintenance] Update Python dependencies
+- [Maintenance] Update Python runtime to v3.13
 
 
 ## Version 1.8.2 (2024-09-30)
