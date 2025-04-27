@@ -5,6 +5,7 @@
 - [Maintenance] Update Python dependencies
 - [Maintenance] Update Python runtime to v3.13
 - [Maintenance] Update JavaScript dependencies
+- [Maintenance] Update Docker base images
 
 
 ## Version 1.8.2 (2024-09-30)
