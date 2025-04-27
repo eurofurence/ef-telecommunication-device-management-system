@@ -125,7 +125,7 @@ This section contains various screenshots of some of the features of the EF-TDMS
 
 Eurofurence Telecommunication Device Management System (EF-TDMS)
 
-Copyright (C) 2024 Niels Gandraß <niels@gandrass.de>
+Copyright (C) 2025 Niels Gandraß <niels@gandrass.de>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

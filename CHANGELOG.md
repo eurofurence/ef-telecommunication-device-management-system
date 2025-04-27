@@ -1,5 +1,11 @@
 # Changelog
 
+## Version X.Y.Z (YYYY-MM-DD)
+
+- [Bugfix] Fix Poetry environment installation in Docker backend image
+- [Maintenance] Update copyright year
+ 
+
 ## Version 1.8.3 (2025-04-27)
 
 - [Maintenance] Update Python dependencies
