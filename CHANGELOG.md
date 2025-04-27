@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.8.3 (2025-04-27)
 
 - [Maintenance] Update Python dependencies
 - [Maintenance] Update Python runtime to v3.13

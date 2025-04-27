@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ef-tdms-backend"
-version = "1.8.2"
+version = "1.8.3"
 description = "Eurofurence Telecommunication Device Management System"
 authors = ["Niels Gandraß <niels@gandrass.de>"]
 license = "MIT"
