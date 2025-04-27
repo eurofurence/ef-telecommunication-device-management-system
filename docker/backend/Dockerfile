@@ -22,7 +22,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock /app/
 RUN set -ex && \
     /opt/poetry/bin/poetry config virtualenvs.in-project true && \
-    /opt/poetry/bin/poetry install
+    /opt/poetry/bin/poetry install --no-root
 
 # Inject app code and build static files
 COPY backend /app/backend
