@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.9.0 (2025-05-25)
+
+- [Feature] Add management command for cleaning up the database between events
+- [Bugfix] Display log entries with missing user information as "Unknown user"
+
+
 ## Version 1.8.5 (2025-05-25)
 
 - [Bugfix] Revert `djangorestframework-simplejwt` to v5.4.0 to fix token refresh endpoint issues
