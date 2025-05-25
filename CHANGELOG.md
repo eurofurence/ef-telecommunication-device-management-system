@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.8.5 (2025-05-25)
+
+- [Bugfix] Revert `djangorestframework-simplejwt` to v5.4.0 to fix token refresh endpoint issues
+
+
 ## Version 1.8.4 (2025-04-27)
 
 - [Bugfix] Fix Poetry environment installation in Docker backend image
