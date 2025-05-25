@@ -78,7 +78,7 @@ export default defineComponent({
                 return {
                     id: entry.id,
                     date: entry.timestamp,
-                    user: entry.user.pretty_name,
+                    user: entry.user?.pretty_name ?? 'Unknown',
                     type: type,
                     message: type.label,
                     description: type.description(entry.data),
