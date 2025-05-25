@@ -85,6 +85,20 @@ obeyed:
 - `provision/wallpaper.jpg` - Wallpaper file for the phones
 
 
+## Cleanup
+
+You can easily clean up the database to prepare the system for an upcoming
+event. To do so, execute all or a desired subset of the following commands:
+
+```text
+docker compose exec -it backend python manage.py deletebindings
+docker compose exec -it backend python manage.py deleteorders
+docker compose exec -it backend python manage.py deleteitemcoordinates
+docker compose exec -it backend python manage.py deleteefusers
+docker compose exec -it backend python manage.py deletelogs
+```
+
+
 ## Screenshots
 
 This section contains various screenshots of some of the features of the EF-TDMS.
