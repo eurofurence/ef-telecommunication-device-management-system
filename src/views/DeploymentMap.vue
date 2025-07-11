@@ -28,6 +28,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     >
         <!-- Base map images -->
         <l-image-overlay
+            v-if="floor == -1"
+            :url="maplayerFloorN1"
+            :bounds="[[0, 0], [100, 100]]"
+        ></l-image-overlay>
+        <l-image-overlay
             v-if="floor == 0"
             :url="maplayerFloor0"
             :bounds="[[0, 0], [100, 100]]"
@@ -178,6 +183,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 </template>
 
 <script lang="ts" setup>
+import maplayerFloorN1 from '@/assets/deploymentmap/-1.svg';
 import maplayerFloor0 from '@/assets/deploymentmap/0.svg';
 import maplayerFloor1 from '@/assets/deploymentmap/1.svg';
 import maplayerFloor2 from '@/assets/deploymentmap/2.svg';

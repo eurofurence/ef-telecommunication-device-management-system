@@ -40,6 +40,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         <v-tooltip text="Deployment Map" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                     </v-list-item>
                 </template>
+                <v-list-item prepend-icon="mdi-numeric-negative-1" title="Basement" value="deployment-map-n1" to="/deployment-map/-1">
+                    <v-tooltip text="Basement" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
                 <v-list-item prepend-icon="mdi-numeric-0" title="Ground Floor" value="deployment-map-0" to="/deployment-map/0">
                     <v-tooltip text="Ground Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
