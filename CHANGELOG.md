@@ -3,6 +3,7 @@
 ## Version X.Y.Z (YYYY-MM-DD)
 
 - [Feature] Add basement (floor -1) to deployment map
+- [Feature] Improve layout of sub-navigation items if sidebar is collapsed
 - [Bugfix] Fix item table reloading upon change
 - [Bugfix] Hide "Show on deployment map" button for items without coordinates if not forced to display
 - [Maintenance] Update Python dependencies

@@ -40,24 +40,26 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         <v-tooltip text="Deployment Map" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                     </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-numeric-negative-1" title="Basement" value="deployment-map-n1" to="/deployment-map/-1">
+                <v-divider v-if="collapsed" class="mb-1"></v-divider>
+                <v-list-item prepend-icon="mdi-numeric-negative-1" title="Basement" value="deployment-map-n1" to="/deployment-map/-1" :class="listChildCssClasses">
                     <v-tooltip text="Basement" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-0" title="Ground Floor" value="deployment-map-0" to="/deployment-map/0">
+                <v-list-item prepend-icon="mdi-numeric-0" title="Ground Floor" value="deployment-map-0" to="/deployment-map/0" :class="listChildCssClasses">
                     <v-tooltip text="Ground Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-1" title="First Floor" value="deployment-map-1" to="/deployment-map/1">
+                <v-list-item prepend-icon="mdi-numeric-1" title="First Floor" value="deployment-map-1" to="/deployment-map/1" :class="listChildCssClasses">
                     <v-tooltip text="First Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-2" title="Second Floor" value="deployment-map-2" to="/deployment-map/2">
+                <v-list-item prepend-icon="mdi-numeric-2" title="Second Floor" value="deployment-map-2" to="/deployment-map/2" :class="listChildCssClasses">
                     <v-tooltip text="Second Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-3" title="Third Floor" value="deployment-map-3" to="/deployment-map/3">
+                <v-list-item prepend-icon="mdi-numeric-3" title="Third Floor" value="deployment-map-3" to="/deployment-map/3" :class="listChildCssClasses">
                     <v-tooltip text="Third Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-4" title="Fourth Floor" value="deployment-map-4" to="/deployment-map/4">
+                <v-list-item prepend-icon="mdi-numeric-4" title="Fourth Floor" value="deployment-map-4" to="/deployment-map/4" :class="listChildCssClasses">
                     <v-tooltip text="Fourth Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
+                <v-divider v-if="collapsed"></v-divider>
             </v-list-group>
             <v-list-group value="Bindings">
                 <template v-slot:activator="{ props }">
@@ -65,18 +67,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         <v-tooltip text="Bindings" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                     </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-basket-outline" title="Overview" value="bindings-overview" to="/bindings/overview">
+                <v-divider v-if="collapsed" class="mb-1"></v-divider>
+                <v-list-item prepend-icon="mdi-basket-outline" title="Overview" value="bindings-overview" to="/bindings/overview" :class="listChildCssClasses">
                     <v-tooltip text="Bindings Overview" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-basket-fill" title="Pre-Orders" value="bindings-preorders" to="/bindings/preorders">
+                <v-list-item prepend-icon="mdi-basket-fill" title="Pre-Orders" value="bindings-preorders" to="/bindings/preorders" :class="listChildCssClasses">
                     <v-tooltip text="Pre-Orders" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-basket-plus-outline" title="Hand out" value="bindings-issue" to="/bindings/issue">
+                <v-list-item prepend-icon="mdi-basket-plus-outline" title="Hand out" value="bindings-issue" to="/bindings/issue" :class="listChildCssClasses">
                     <v-tooltip text="Hand out" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-basket-minus-outline" title="Return" value="bindings-return" to="/bindings/return">
+                <v-list-item prepend-icon="mdi-basket-minus-outline" title="Return" value="bindings-return" to="/bindings/return" :class="listChildCssClasses">
                     <v-tooltip text="Return" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
+                <v-divider v-if="collapsed"></v-divider>
             </v-list-group>
             <v-list-group value="People">
                 <template v-slot:activator="{ props }">
@@ -84,12 +88,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         <v-tooltip text="People" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                     </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users" to="/users">
+                <v-divider v-if="collapsed" class="mb-1"></v-divider>
+                <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users" to="/users" :class="listChildCssClasses">
                     <v-tooltip text="Users" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-account-arrow-right" title="Item Owners" value="itemowners" to="/itemowners">
+                <v-list-item prepend-icon="mdi-account-arrow-right" title="Item Owners" value="itemowners" to="/itemowners" :class="listChildCssClasses">
                     <v-tooltip text="Item Owners" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
+                <v-divider v-if="collapsed"></v-divider>
             </v-list-group>
             <v-list-group value="Radios">
                 <template v-slot:activator="{ props }">
@@ -97,18 +103,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         <v-tooltip text="Radios" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                     </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-cellphone-basic" title="Devices" value="radio-radios" to="/radio/devices">
+                <v-divider v-if="collapsed" class="mb-1"></v-divider>
+                <v-list-item prepend-icon="mdi-cellphone-basic" title="Devices" value="radio-radios" to="/radio/devices" :class="listChildCssClasses">
                     <v-tooltip text="Radio Devices" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-headset" title="Accessories" value="radio-accessories" to="/radio/accessories">
+                <v-list-item prepend-icon="mdi-headset" title="Accessories" value="radio-accessories" to="/radio/accessories" :class="listChildCssClasses">
                     <v-tooltip text="Radio Accessories" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-bell-ring-outline" title="Pagers" value="radio-pagers" to="/radio/pagers">
+                <v-list-item prepend-icon="mdi-bell-ring-outline" title="Pagers" value="radio-pagers" to="/radio/pagers" :class="listChildCssClasses">
                     <v-tooltip text="Pagers" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-sim" title="Codings" value="radio-codings" to="/radio/codings">
+                <v-list-item prepend-icon="mdi-sim" title="Codings" value="radio-codings" to="/radio/codings" :class="listChildCssClasses">
                     <v-tooltip text="Radio Codings" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
+                <v-divider v-if="collapsed"></v-divider>
             </v-list-group>
             <v-list-group value="VoIP">
                 <template v-slot:activator="{ props }">
@@ -116,15 +124,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         <v-tooltip text="VoIP" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                     </v-list-item>
                 </template>
-                <v-list-item prepend-icon="mdi-phone" title="Phones" value="voip-phones" to="/voip/phones">
+                <v-divider v-if="collapsed" class="mb-1"></v-divider>
+                <v-list-item prepend-icon="mdi-phone" title="Phones" value="voip-phones" to="/voip/phones" :class="listChildCssClasses">
                     <v-tooltip text="Phones" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-webcam" title="Callboxes" value="voip-callboxes" to="/voip/callboxes">
+                <v-list-item prepend-icon="mdi-webcam" title="Callboxes" value="voip-callboxes" to="/voip/callboxes" :class="listChildCssClasses">
                     <v-tooltip text="Callboxes" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
-                <v-list-item prepend-icon="mdi-database-cog-outline" title="Provisioning" value="voip-provisioning" to="/voip/provisioning">
+                <v-list-item prepend-icon="mdi-database-cog-outline" title="Provisioning" value="voip-provisioning" to="/voip/provisioning" :class="listChildCssClasses">
                     <v-tooltip text="Provisioning" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
+                <v-divider v-if="collapsed"></v-divider>
             </v-list-group>
             <v-list-item prepend-icon="mdi-clipboard-text-search-outline" title="Event Log" value="eventlog" to="/eventlog">
                 <v-tooltip text="Event Log" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
@@ -184,5 +194,11 @@ export default defineComponent({
     data: () => ({
         collapsed: false,
     }),
+
+    computed: {
+        listChildCssClasses() {
+            return this.collapsed ? 'border-s-lg rounded-s-0' : '';
+        },
+    }
 })
 </script>
