@@ -4,6 +4,7 @@
 
 - [Feature] Add basement (floor -1) to deployment map
 - [Bugfix] Fix item table reloading upon change
+- [Bugfix] Hide "Show on deployment map" button for items without coordinates if not forced to display
 - [Maintenance] Update Python dependencies
 - [Maintenance] Update JavaScript dependencies
 

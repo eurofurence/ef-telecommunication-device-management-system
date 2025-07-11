@@ -233,7 +233,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     </v-btn>
 
                     <v-btn
-                        v-if="item.coordinates !== null || alwaysShowMapButton"
+                        v-if="(item.coordinates !== undefined && item.coordinates !== null) || alwaysShowMapButton"
                         class="ml-4 mb-4"
                         color="primary"
                         :disabled="item.coordinates === null"
