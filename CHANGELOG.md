@@ -4,6 +4,8 @@
 
 - [Feature] Add basement (floor -1) to deployment map
 - [Bugfix] Fix item table reloading upon change
+- [Maintenance] Update Python dependencies
+- [Maintenance] Update JavaScript dependencies
 
 
 ## Version 1.9.0 (2025-05-25)
