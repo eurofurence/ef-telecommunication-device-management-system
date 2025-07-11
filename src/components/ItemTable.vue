@@ -274,6 +274,11 @@ export default defineComponent({
         'click:deleteItems',
     ],
 
+    expose: [
+        'deselectItemsByKey',
+        'reload',
+    ],
+
     computed: {
         PropUtils() {
             return PropUtils

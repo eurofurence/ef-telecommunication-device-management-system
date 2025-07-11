@@ -3,6 +3,7 @@
 ## Version X.Y.Z (YYYY-MM-DD)
 
 - [Feature] Add basement (floor -1) to deployment map
+- [Bugfix] Fix item table reloading upon change
 
 
 ## Version 1.9.0 (2025-05-25)

@@ -103,6 +103,13 @@ export default defineComponent({
         'click:deleteItemTemplates',
     ],
 
+    expose: [
+        'reloadItems',
+        'reloadTemplates',
+        'deselectItemsByKey',
+        'deselectTemplatesByKey',
+    ],
+
     props: {
         title: {type: String, required: true},
         icon: {type: String, required: false},
