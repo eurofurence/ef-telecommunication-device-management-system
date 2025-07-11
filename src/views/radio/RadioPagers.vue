@@ -134,7 +134,7 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id || (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0))) {
+            if (!data.template || !data.template.id || (data.has_coordinates && (data.coordinates.floor < -1 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0))) {
                 console.error("Received incomplete data from PagerForm:", data);
                 toast.error("Failed to create pager.\r\nReceived incomplete data.");
                 return;
@@ -172,7 +172,7 @@ export default {
                 return;
             }
 
-            if (!data.template || !data.template.id || (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0))) {
+            if (!data.template || !data.template.id || (data.has_coordinates && (data.coordinates.floor < -1 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0))) {
                 console.error("Received incomplete data from PagerForm:", data);
                 toast.error("Failed to update pager.\r\nReceived incomplete data.");
                 return;

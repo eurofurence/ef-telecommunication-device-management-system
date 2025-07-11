@@ -141,7 +141,7 @@ export default {
             }
 
             if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null || data.has_camera === null ||
-                (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0)))
+                (data.has_coordinates && (data.coordinates.floor < -1 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0)))
             {
                 console.error("Received incomplete data from VoipCallboxForm:", data);
                 toast.error("Failed to create callbox.\r\nReceived incomplete data.");
@@ -192,7 +192,7 @@ export default {
             }
 
             if (!data.template || !data.template.id || !data.extension || !data.network || data.dhcp === null || data.has_camera === null ||
-                (data.has_coordinates && (data.coordinates.floor < 0 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0)))
+                (data.has_coordinates && (data.coordinates.floor < -1 || data.coordinates.latitude < 0 || data.coordinates.longitude < 0)))
             {
                 console.error("Received incomplete data from VoipCallboxForm:", data);
                 toast.error("Failed to update callbox.\r\nReceived incomplete data.");

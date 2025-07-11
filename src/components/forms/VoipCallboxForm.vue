@@ -196,7 +196,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 <div v-if="data.has_coordinates" class="d-inline-flex mt-n3 ga-3 align-center">
                     <v-select
                         v-model="data.coordinates.floor"
-                        :items="[0, 1, 2, 3, 4].map(i => ({title: `Floor ${i}`, value: i}))"
+                        :items="[-1, 0, 1, 2, 3, 4].map(i => ({title: `Floor ${i}`, value: i}))"
                         :rules="rules.coordinates_floor"
                         variant="outlined"
                         density="comfortable"
@@ -329,7 +329,7 @@ export default defineComponent({
                     (v: string) => (v.length <= 256) || 'Notes must be less than 256 characters',
                 ],
                 coordinates_floor: [
-                    (v: number) => (v >= 0 && v <= 4) || 'Floor must be between 0 and 4',
+                    (v: number) => (v >= -1 && v <= 4) || 'Floor must be between -1 and 4',
                 ],
                 coordinates_latitude: [
                     (v: number) => (v >= 0 && v <= 100) || 'Latitude must be between 0 and 100',

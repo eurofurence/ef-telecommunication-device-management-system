@@ -1,5 +1,10 @@
 # Changelog
 
+## Version X.Y.Z (YYYY-MM-DD)
+
+- [Feature] Add basement (floor -1) to deployment map
+
+
 ## Version 1.9.0 (2025-05-25)
 
 - [Feature] Add management command for cleaning up the database between events
