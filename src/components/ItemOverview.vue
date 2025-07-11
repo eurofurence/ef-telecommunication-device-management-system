@@ -104,6 +104,12 @@ export default defineComponent({
     ],
 
     expose: [
+        'title',
+        'icon',
+        'itemsTable',
+        'templatesTable',
+        'tab',
+        'switchTab',
         'reloadItems',
         'reloadTemplates',
         'deselectItemsByKey',
