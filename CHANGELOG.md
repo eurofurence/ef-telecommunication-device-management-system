@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.10.0 (2025-07-11)
 
 - [Feature] Add basement (floor -1) to deployment map
 - [Feature] Improve layout of sub-navigation items if sidebar is collapsed
