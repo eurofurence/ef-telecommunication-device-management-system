@@ -105,7 +105,7 @@ class ItemCoordinatesViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = '__all__'
     ordering = ['id']
 
-    @action(detail=False, methods=['get'], url_path='floor/(?P<floor>[0-9]+)')
+    @action(detail=False, methods=['get'], url_path='floor/(?P<floor>-?[0-9]+)')
     def by_floor(self, request, floor):
         coordinates = self.queryset.filter(floor=floor)
         page = self.paginate_queryset(coordinates)
