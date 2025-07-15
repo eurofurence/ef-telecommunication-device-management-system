@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.11.0 (2025-07-15)
 
 - [Feature] Add intermediate floor between ground and first floor to deployment map
 - [Bugfix] Hide "Show on deployment map" button for items without coordinates if not forced to display
