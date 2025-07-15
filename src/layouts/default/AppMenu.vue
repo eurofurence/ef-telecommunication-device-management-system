@@ -47,6 +47,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 <v-list-item prepend-icon="mdi-numeric-0" title="Ground Floor" value="deployment-map-0" to="/deployment-map/0" :class="listChildCssClasses">
                     <v-tooltip text="Ground Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
+                <v-list-item title="Intermediate Floor" value="deployment-map-100" to="/deployment-map/100" :class="listChildCssClasses">
+                    <template v-slot:prepend>
+                        <v-icon size="x-small" class="mx-1">mdi-fraction-one-half</v-icon>
+                    </template>
+                    <v-tooltip text="Intermediate Floor (between floor 0 and floor 1)" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                </v-list-item>
                 <v-list-item prepend-icon="mdi-numeric-1" title="First Floor" value="deployment-map-1" to="/deployment-map/1" :class="listChildCssClasses">
                     <v-tooltip text="First Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>

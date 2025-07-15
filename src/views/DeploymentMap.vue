@@ -38,6 +38,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             :bounds="[[0, 0], [100, 100]]"
         ></l-image-overlay>
         <l-image-overlay
+            v-if="floor == 100"
+            :url="maplayerFloor100"
+            :bounds="[[0, 0], [100, 100]]"
+        ></l-image-overlay>
+        <l-image-overlay
             v-if="floor == 1"
             :url="maplayerFloor1"
             :bounds="[[0, 0], [100, 100]]"
@@ -189,6 +194,9 @@ import maplayerFloor1 from '@/assets/deploymentmap/1.svg';
 import maplayerFloor2 from '@/assets/deploymentmap/2.svg';
 import maplayerFloor3 from '@/assets/deploymentmap/3.svg';
 import maplayerFloor4 from '@/assets/deploymentmap/4.svg';
+
+// Special partial floor between floor 0 and floor 1 ("Zwischenebene")
+import maplayerFloor100 from '@/assets/deploymentmap/100.svg';
 </script>
 
 <script lang="ts">

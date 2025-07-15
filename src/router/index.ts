@@ -77,7 +77,7 @@ const routes = [{
             beforeEnter: (to: any, from: any, next: any) => {
                 to.params.floor = parseInt(to.params.floor)
                 // Redirect to the ground floor if the floor parameter is invalid
-                if (isNaN(to.params.floor) || to.params.floor < -1 || to.params.floor > 4) {
+                if (isNaN(to.params.floor) || [-1, 0, 1, 2, 3, 4, 100].indexOf(to.params.floor) === -1) {
                     next('/deployment-map/0')
                 } else {
                     next()
