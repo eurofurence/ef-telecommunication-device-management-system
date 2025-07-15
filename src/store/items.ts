@@ -18,6 +18,7 @@
 import { defineStore } from 'pinia'
 import {APIUtils} from "@/classes/util/APIUtils";
 import type {ItemCoordinates} from "@/types/ItemCoordinates";
+import {Floor} from "@/types/Floor";
 
 export const useItemsStore = defineStore("item", {
     state: () => ({}),
@@ -1097,7 +1098,7 @@ export const useItemsStore = defineStore("item", {
          * @return Items with their coordinates for the given floor.
          */
         async fetchItemCoordinatesForFloor(floor: number) {
-            if (isNaN(floor) || floor < -1 || floor > 999) {
+            if (isNaN(floor) || Floor.get(floor) === null) {
                 return [];
             }
             return APIUtils.fetchPage(`/item_coordinates/floor/${floor}`, 1, 9999, [], '');

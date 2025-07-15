@@ -41,29 +41,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     </v-list-item>
                 </template>
                 <v-divider v-if="collapsed" class="mb-1"></v-divider>
-                <v-list-item prepend-icon="mdi-numeric-negative-1" title="Basement" value="deployment-map-n1" to="/deployment-map/-1" :class="listChildCssClasses">
-                    <v-tooltip text="Basement" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-0" title="Ground Floor" value="deployment-map-0" to="/deployment-map/0" :class="listChildCssClasses">
-                    <v-tooltip text="Ground Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
-                </v-list-item>
-                <v-list-item title="Intermediate Floor" value="deployment-map-100" to="/deployment-map/100" :class="listChildCssClasses">
+                <v-list-item
+                    v-for="floor in Floor.getAll()"
+                    :title="floor.title"
+                    :value="`deployment-map-${floor.value}`"
+                    :to="`/deployment-map/${floor.value}`"
+                    :class="listChildCssClasses"
+                >
                     <template v-slot:prepend>
-                        <v-icon size="x-small" class="mx-1">mdi-fraction-one-half</v-icon>
+                        <v-icon
+                            :icon="floor.icon"
+                            :size="floor.value != 100 ? 'default' : 'x-small'"
+                            :class="floor.value != 100 ? '' : 'mx-1'"
+                        ></v-icon>
                     </template>
-                    <v-tooltip text="Intermediate Floor (between floor 0 and floor 1)" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-1" title="First Floor" value="deployment-map-1" to="/deployment-map/1" :class="listChildCssClasses">
-                    <v-tooltip text="First Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-2" title="Second Floor" value="deployment-map-2" to="/deployment-map/2" :class="listChildCssClasses">
-                    <v-tooltip text="Second Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-3" title="Third Floor" value="deployment-map-3" to="/deployment-map/3" :class="listChildCssClasses">
-                    <v-tooltip text="Third Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-numeric-4" title="Fourth Floor" value="deployment-map-4" to="/deployment-map/4" :class="listChildCssClasses">
-                    <v-tooltip text="Fourth Floor" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
+                    <v-tooltip :text="floor.title" activator="parent" location="right" :disabled="!collapsed"></v-tooltip>
                 </v-list-item>
                 <v-divider v-if="collapsed"></v-divider>
             </v-list-group>
@@ -183,6 +175,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 </style>
 
 <script lang="ts" setup>
+import {Floor} from "@/types/Floor.ts";
+
 const appVersion = import.meta.env.APP_VERSION;
 const railWidth = 56;
 </script>
