@@ -264,6 +264,10 @@ export default defineComponent({
 
     computed: {
         itemsFiltered(): any[] {
+            if (!this.items) {
+                return [];
+            }
+
             return this.items.filter((item: any) => {
                 return this.selectedItemTypes.includes(item.item.resourcetype);
             });
@@ -307,7 +311,9 @@ export default defineComponent({
 
     methods: {
         async updateItems(forceRerender: boolean = false) {
+            this.items = [];
             this.itemsLoading = true;
+
             return itemsStore.fetchItemCoordinatesForFloor(this.floor as number).then((resp: any) => {
                 this.items = resp.items;
                 this.itemsLoading = false;
