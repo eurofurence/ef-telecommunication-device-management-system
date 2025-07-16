@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.11.1 (2025-07-16)
 
 - [Bugfix] Fix loading of pins on deployment map after layer change
 - [Bugfix] Hide map pins from previous layer instantly upon layer change
