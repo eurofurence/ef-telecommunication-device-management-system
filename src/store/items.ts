@@ -1098,9 +1098,13 @@ export const useItemsStore = defineStore("item", {
          * @return Items with their coordinates for the given floor.
          */
         async fetchItemCoordinatesForFloor(floor: number) {
+            // Force convert floor to an integer
+            floor = parseInt(floor as any);
+
             if (isNaN(floor) || Floor.get(floor) === null) {
                 return [];
             }
+
             return APIUtils.fetchPage(`/item_coordinates/floor/${floor}`, 1, 9999, [], '');
         }
     },

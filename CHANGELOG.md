@@ -1,5 +1,10 @@
 # Changelog
 
+## Version X.Y.Z (YYYY-MM-DD)
+
+- [Bugfix] Fix loading of pins on deployment map after layer change
+
+
 ## Version 1.11.0 (2025-07-15)
 
 - [Feature] Add intermediate floor between ground and first floor to deployment map
