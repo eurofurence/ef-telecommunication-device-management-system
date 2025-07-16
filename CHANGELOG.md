@@ -4,6 +4,7 @@
 
 - [Bugfix] Fix loading of pins on deployment map after layer change
 - [Bugfix] Hide map pins from previous layer instantly upon layer change
+- [Maintenance] Update JavaScript dependencies
 
 
 ## Version 1.11.0 (2025-07-15)
