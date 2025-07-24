@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.11.2 (2025-07-24)
 
 - [Maintenance] Update Python dependencies
 - [Maintenance] Update JavaScript dependencies
