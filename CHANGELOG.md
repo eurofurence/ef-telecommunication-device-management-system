@@ -1,5 +1,10 @@
 # Changelog
 
+## Version X.Y.Z (YYYY-MM-DD)
+
+- [Maintenance] Update JavaScript dependencies
+
+
 ## Version 1.11.1 (2025-07-16)
 
 - [Bugfix] Fix loading of pins on deployment map after layer change
