@@ -1,5 +1,10 @@
 # Changelog
 
+## Version X.Y.Z (YYYY-MM-DD)
+
+- [Feature] Add serial number and MAC address to admin overview of voip phones
+
+
 ## Version 1.11.2 (2025-07-24)
 
 - [Maintenance] Update Python dependencies

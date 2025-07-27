@@ -73,8 +73,8 @@ class CallboxAdmin(admin.ModelAdmin):
 
 @admin.register(phone.Phone)
 class PhoneAdmin(admin.ModelAdmin):
-    list_display = ['get_name', 'notes', 'location', 'extension', 'network', 'dhcp']
-    search_fields = ['get_name', 'notes', 'location', 'extension']
+    list_display = ['get_name', 'notes', 'location', 'extension', 'network', 'dhcp', 'mac_address', 'serialnumber']
+    search_fields = ['get_name', 'notes', 'location', 'extension', 'mac_address', 'serialnumber']
     inlines = [ItemCoordinatesAdminInline]
 
     @admin.display(description="Name", ordering='template__name')
