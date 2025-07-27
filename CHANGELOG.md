@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.12.0 (2025-07-27)
 
 - [Feature] Add serial number and MAC address to admin overview of voip phones
 
