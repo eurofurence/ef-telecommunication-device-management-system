@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.12.1 (2025-08-28)
+
+- [Maintenance] Update public on-site information on home page
+
+
 ## Version 1.12.0 (2025-07-27)
 
 - [Feature] Add serial number and MAC address to admin overview of voip phones
