@@ -100,6 +100,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                         </v-list>
                                     </v-card-text>
                                 </v-card>
+                                <!--
                                 <v-card title="Staff Radio Training" prepend-icon="mdi-school-outline" flat>
                                     <v-card-text>
                                         <p>
@@ -122,6 +123,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                         </v-list>
                                     </v-card-text>
                                 </v-card>
+                                -->
                                 <v-card title="Radio Handout and Service" prepend-icon="mdi-basket-unfill" flat>
                                     <v-card-text>
                                         <p>
@@ -131,22 +133,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                             contact us directly via <a :href="telegramContactUrl" target="_blank">Telegram</a>.
                                         </p>
                                         <v-list density="compact" slim>
-                                            <v-list-subheader>Tuesday (17.09.24), Room 031</v-list-subheader>
-                                            <v-list-item title="16:00 - 17:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
-                                            <v-list-item title="18:00 - 20:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
+                                            <v-list-subheader>Tuesday (02.09.25), Room 201</v-list-subheader>
+                                            <v-list-item title="18:30 - 19:30" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
 
-                                            <v-list-subheader>Tuesday (17.09.24), Room 201</v-list-subheader>
-                                            <v-list-item title="13:00 - 14:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
-                                            <v-list-item title="15:00 - 16:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
-                                            <v-list-item title="19:00 - 20:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
+                                            <v-list-subheader>Wednesday (03.09.25), Room 201</v-list-subheader>
+                                            <v-list-item title="13:00 - 13:30" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
+                                            <v-list-item title="18:00 - 18:30" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
                                         </v-list>
                                     </v-card-text>
                                 </v-card>
                                 <v-card title="Radio Returns" prepend-icon="mdi-basket-fill" flat>
                                     <v-card-text>
                                         <p>
-                                            Please return your radio at the radio desk <b>no later than Sunday (22.09.24)
-                                            11:00</b>. Belated returns may result in additional costs for shipping and
+                                            Please return your radio at the radio desk <b>no later than Sunday (07.09.25)
+                                            12:00</b>. Belated returns may result in additional costs for shipping and
                                             compensation beverages. You can already return your radio on Saturday to
                                             avoid having to get up early on Sunday.
                                         </p>
@@ -154,12 +154,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                             Radio return is possible during the following times:
                                         </p>
                                         <v-list density="compact" slim>
-                                            <v-list-subheader>Saturday (21.09.24), Room 201</v-list-subheader>
-                                            <v-list-item title="15:00 - 16:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
-                                            <v-list-item title="21:00 - 22:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
+                                            <v-list-subheader>Saturday (06.09.24), Room 201</v-list-subheader>
+                                            <v-list-item title="15:00 - 15:30" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
+                                            <v-list-item title="21:00 - 21:30" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
 
-                                            <v-list-subheader>Sunday (22.09.24), Room 201</v-list-subheader>
-                                            <v-list-item title="09:00 - 11:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
+                                            <v-list-subheader>Sunday (07.09.24), Room 201</v-list-subheader>
+                                            <v-list-item title="10:00 - 12:00" prepend-icon="mdi-chevron-right" class="ml-3"></v-list-item>
                                         </v-list>
                                     </v-card-text>
                                 </v-card>
@@ -259,15 +259,15 @@ const telegramContactUrl = new URL('https://t.me/EFTelecom').href;
 const dialogOnSiteInfo = ref(false);
 
 const radioDesks = [
-    {
-        title: "Room 031, Ground Floor",
-        subtitle: "Tuesday (17.09.24)",
-        locationMap: new URL("@/assets/Radiodesk_Location_MoTue.png", import.meta.url).href,
-    },
+//    {
+//        title: "Room 031, Ground Floor",
+//        subtitle: "Tuesday (17.09.24)",
+//        locationMap: new URL("@/assets/Radiodesk_Location_MoTue.png", import.meta.url).href,
+//    },
     {
         title: "Room 201, Second Floor",
-        subtitle: "Wednesday (18.09.24) to Sunday (22.09.24)",
-        locationMap: new URL("@/assets/Radiodesk_Location_WeSu.png", import.meta.url).href,
+        subtitle: "Tuesday (02.09.25) to Sunday (07.09.25)",
+        locationMap: new URL("@/assets/Radiodesk_Location.png", import.meta.url).href,
     }
 ];
 </script>
