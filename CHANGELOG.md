@@ -1,5 +1,10 @@
 # Changelog
 
+## Version X.Y.Z (YYYY-MM-DD)
+
+- [Maintenance] Update JavaScript dependencies
+
+
 ## Version 1.12.1 (2025-08-28)
 
 - [Maintenance] Update public on-site information on home page
