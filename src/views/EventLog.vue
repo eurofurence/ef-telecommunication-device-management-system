@@ -38,7 +38,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 >
                     <template v-slot:selection="{ item, index }">
                         <v-chip v-if="index < 2">
-                            <span>{{ item.title }}</span>
+                            <span>{{ item.label }}</span>
                         </v-chip>
                         <span
                             v-if="index === 2"
