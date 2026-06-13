@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.13.1 (2026-06-13)
 
 - [Bugfix] Fix backend Docker base image version
 
