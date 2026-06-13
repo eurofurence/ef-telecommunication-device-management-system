@@ -230,6 +230,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 <script lang="ts">
 import {defineComponent} from "vue";
+import type {Component} from "vue";
 
 import {useBindingsStore} from "@/store/bindings";
 import type {SystemStatistics} from "@/types/SystemStatistics";
@@ -241,12 +242,13 @@ import LastUpdated from "@/components/LastUpdated.vue";
 
 ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend)
 
+const DoughnutChart: Component = Doughnut
 const bindingsStore = useBindingsStore();
 
-export default defineComponent({
+const InventoryView = defineComponent({
     name: "Inventory",
 
-    components: {LastUpdated, Doughnut},
+    components: {LastUpdated, Doughnut: DoughnutChart},
 
     data() {
         return {
@@ -417,4 +419,6 @@ export default defineComponent({
         this.refreshData();
     },
 })
+
+export default InventoryView
 </script>

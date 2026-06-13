@@ -87,6 +87,11 @@ import type { PropType } from "vue";
 import type { ServerTableMetadata } from "@/types/ServerTableMetadata";
 import ItemTable from "@/components/ItemTable.vue";
 
+type ItemTableExposed = {
+    reload: () => void;
+    deselectItemsByKey: (keys: number[]) => void;
+};
+
 export default defineComponent({
     name: "ItemOverview",
 
@@ -137,19 +142,19 @@ export default defineComponent({
         },
 
         reloadItems() {
-            (this.$refs.itemsTable as InstanceType<typeof ItemTable>).reload();
+            (this.$refs.itemsTable as ItemTableExposed).reload();
         },
 
         reloadTemplates() {
-            (this.$refs.templatesTable as InstanceType<typeof ItemTable>).reload();
+            (this.$refs.templatesTable as ItemTableExposed).reload();
         },
 
         deselectItemsByKey(keys: number[]) {
-            (this.$refs.itemsTable as InstanceType<typeof ItemTable>).deselectItemsByKey(keys);
+            (this.$refs.itemsTable as ItemTableExposed).deselectItemsByKey(keys);
         },
 
         deselectTemplatesByKey(keys: number[]) {
-            (this.$refs.templatesTable as InstanceType<typeof ItemTable>).deselectItemsByKey(keys);
+            (this.$refs.templatesTable as ItemTableExposed).deselectItemsByKey(keys);
         },
     },
 })
