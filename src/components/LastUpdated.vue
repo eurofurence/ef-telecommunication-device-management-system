@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 <template>
     <v-fade-transition>
-        <span class="text-caption" v-show="animationTrigger">
+        <span class="text-body-small" v-show="animationTrigger">
             {{ label }} {{ dateTimeFormat.format(date) }}
         </span>
     </v-fade-transition>

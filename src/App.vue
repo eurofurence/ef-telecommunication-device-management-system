@@ -37,7 +37,7 @@ html {
         padding: 16px;
         flex-basis: 100px !important;
     }
-    .v-stepper-header hr.v-divider {
+    .v-stepper-header .v-divider {
         display: none;
     }
 }

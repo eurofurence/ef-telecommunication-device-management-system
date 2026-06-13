@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <template>
-    <v-container>
+    <v-container fluid>
         <v-row>
             <v-col>
                 <h1>Profile</h1>

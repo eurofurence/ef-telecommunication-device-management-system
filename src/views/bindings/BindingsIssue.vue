@@ -89,7 +89,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                     @update:selection="onItemSelect"
                                 ></ServerItemSelector>
 
-                                <p class="text-overline">
+                                <p class="text-label-medium">
                                     Quick Add Templates
                                 </p>
                                 <span v-if="!showAllQuickAddTemplates && compatibleQuickAddTemplates.length === 0 && basketIsEmpty">

@@ -64,7 +64,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         @click="$emit('click:deleteItems', selected)"
                         class="my-3 mx-1"
                     >
-                        <v-icon left>mdi-trash-can-outline</v-icon>
+                        <v-icon start>mdi-trash-can-outline</v-icon>
                         Delete
                         <v-tooltip activator="parent" location="top">
                             Delete selected items
@@ -77,7 +77,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         @click="$emit('click:createItem')"
                         class="my-3 mx-1"
                     >
-                        <v-icon left>mdi-plus</v-icon>
+                        <v-icon start>mdi-plus</v-icon>
                         Create
                         <v-tooltip activator="parent" location="top">
                             Create a new item
@@ -108,7 +108,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             <v-chip
                 v-if="!item.template.private"
                 :color="item.handed_out ? 'error' : 'success'"
-                text-color="white"
             >
                 {{ item.handed_out ? 'Handed out' : 'Available' }}
                 <v-tooltip
@@ -120,7 +119,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             <v-chip
                 v-if="item.template.private"
                 color="grey"
-                text-color="white"
             >
                 Private
             </v-chip>
@@ -129,7 +127,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         <template v-slot:item.private="{item}: {item: any}">
             <v-chip
                 :color="item.private ? 'error' : 'success'"
-                text-color="white"
             >
                 {{ item.private ? 'Yes' : 'No' }}
             </v-chip>
@@ -138,7 +135,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         <template v-slot:item.allow_quickadd="{item}: {item: any}">
             <v-chip
                 :color="item.allow_quickadd ? 'success' : 'error'"
-                text-color="white"
             >
                 {{ item.allow_quickadd ? 'Yes' : 'No' }}
             </v-chip>
@@ -147,7 +143,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         <template v-slot:item.has_camera="{item}: {item: any}">
             <v-chip
                 :color="item.has_camera ? 'success' : 'error'"
-                text-color="white"
             >
                 {{ item.has_camera ? 'Yes' : 'No' }}
             </v-chip>
@@ -218,7 +213,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         :disabled="preventEdit"
                         @click="$emit('click:editItem', item)"
                     >
-                        <v-icon left>mdi-pencil</v-icon>
+                        <v-icon start>mdi-pencil</v-icon>
                         Edit
                     </v-btn>
 
@@ -228,7 +223,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         :disabled="preventDelete"
                         @click="$emit('click:deleteItems', [item.id])"
                     >
-                        <v-icon left>mdi-trash-can-outline</v-icon>
+                        <v-icon start>mdi-trash-can-outline</v-icon>
                         Delete
                     </v-btn>
 
@@ -244,7 +239,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                             :text="`[Floor ${item.coordinates?.floor}] Lat: ${item.coordinates?.latitude}, Lon: ${item.coordinates?.longitude}`"
                             location="top"
                         ></v-tooltip>
-                        <v-icon left>mdi-map-marker</v-icon>
+                        <v-icon start>mdi-map-marker</v-icon>
                         Show on Map
                     </v-btn>
                 </td>
@@ -356,8 +351,10 @@ export default defineComponent({
     },
 
     watch: {
-        itemsPerPage() {
-            this.currentItemsPerPage = this.itemsPerPage;
+        itemsPerPage: {
+            handler() {
+                this.currentItemsPerPage = this.itemsPerPage;
+            },
         },
     },
 

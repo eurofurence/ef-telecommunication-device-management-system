@@ -26,14 +26,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             fill-dot
         >
             <template v-slot:opposite>
-                <div class="text-right">
-                    <p>{{ event.user }}</p>
-                    <p class="text-caption">{{ event.date }}</p>
+                <div class="text-right py-1">
+                    <p class="my-0">{{ event.user }}</p>
+                    <p class="my-0 text-body-small">{{ event.date }}</p>
                 </div>
             </template>
-            <div class="text-left">
-                <p>{{ event.message }}</p>
-                <p class="text-caption">{{ event.description }}</p>
+            <div class="text-left py-1">
+                <p class="my-0">{{ event.message }}</p>
+                <p class="my-0 text-body-small">{{ event.description }}</p>
             </div>
         </v-timeline-item>
     </v-timeline>

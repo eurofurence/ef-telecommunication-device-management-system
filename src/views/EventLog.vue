@@ -42,7 +42,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         </v-chip>
                         <span
                             v-if="index === 2"
-                            class="text-grey text-caption align-self-center"
+                            class="text-grey text-body-small align-self-center"
                         >
                         (+{{ filterEventTypes.length - 2 }} others)
                       </span>

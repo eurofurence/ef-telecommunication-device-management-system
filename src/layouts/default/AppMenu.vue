@@ -143,7 +143,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             <div class="d-flex align-content-end">
                 <v-sheet v-if="!collapsed" class="flex-grow-0" :width="railWidth"></v-sheet>
                 <v-sheet v-if="!collapsed" class="flex-grow-1 align-content-center">
-                    <p class="text-center text-caption font-weight-light">
+                    <p class="text-center text-body-small font-weight-light">
                         EF-TDMS&nbsp;v{{ appVersion }}
                     </p>
                 </v-sheet>

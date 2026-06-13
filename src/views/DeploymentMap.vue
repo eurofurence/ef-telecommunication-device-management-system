@@ -340,4 +340,10 @@ export default defineComponent({
         align-items: center;
     }
 }
+
+.leaflet-popup {
+    a.v-btn {
+        color: #fff;
+    }
+}
 </style>

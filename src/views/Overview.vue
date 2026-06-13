@@ -170,7 +170,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             </v-col>
         </v-row>
         <v-row class="mt-0">
-            <v-col class="pt-0 text-center">
+            <v-col class="pt-0 pb-3 text-center">
                 <LastUpdated :date="statisticsUpdated"/>
             </v-col>
         </v-row>
@@ -210,7 +210,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         </v-row>
         <v-row>
             <v-col>
-                <h2>Latest Events</h2>
+                <h2 class="mt-0">Latest Events</h2>
             </v-col>
         </v-row>
         <v-row>
