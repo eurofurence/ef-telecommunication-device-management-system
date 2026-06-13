@@ -1,6 +1,6 @@
 # Changelog
 
-## Version X.Y.Z (YYYY-MM-DD)
+## Version 1.13.0 (2026-06-13)
 
 - [Maintenance] Migrate to Django 6 and Vuetify 4
 - [Maintenance] Update Python dependencies
