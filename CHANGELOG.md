@@ -1,5 +1,10 @@
 # Changelog
 
+## Version X.Y.Z (YYYY-MM-DD)
+
+- [Bugfix] Fix backend Docker base image version
+
+
 ## Version 1.13.0 (2026-06-13)
 
 - [Maintenance] Migrate to Django 6 and Vuetify 4

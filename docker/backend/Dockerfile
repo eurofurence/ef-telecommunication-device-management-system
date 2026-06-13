@@ -36,7 +36,7 @@ RUN set -ex && \
 #######################################
 # Stage 1: Django runtime environment #
 #######################################
-FROM python:3.13-alpine
+FROM python:3.14-alpine
 
 # Inject application
 WORKDIR /app
