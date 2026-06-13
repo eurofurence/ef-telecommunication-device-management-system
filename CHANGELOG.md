@@ -2,6 +2,7 @@
 
 ## Version X.Y.Z (YYYY-MM-DD)
 
+- [Maintenance] Migrate to Django 6 and Vuetify 4
 - [Maintenance] Update Python dependencies
 - [Maintenance] Update JavaScript dependencies
 
