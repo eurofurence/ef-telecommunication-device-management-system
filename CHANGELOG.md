@@ -3,6 +3,7 @@
 ## Version X.Y.Z (YYYY-MM-DD)
 
 - [Maintenance] Update Python dependencies
+- [Maintenance] Update JavaScript dependencies
 
 
 ## Version 1.12.3 (2025-12-30)
