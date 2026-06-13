@@ -170,17 +170,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         :to="`/bindings/issue?itemid=${item.item.id}&skipbasket=true&returnpath=${returnPathEncoded}`"
                         color="success"
                         size="small"
-                    >
-                        Hand Out
-                    </v-btn>
+                        text="Hand Out"
+                    ></v-btn>
                     <v-btn
                         v-if="item.item.handed_out"
                         :to="`/bindings/return?itemid=${item.item.id}&skipbasket=true&returnpath=${returnPathEncoded}`"
                         color="error"
                         size="small"
-                    >
-                        Return
-                    </v-btn>
+                        text="Return"
+                    ></v-btn>
                 </div>
             </l-popup>
         </l-marker>
